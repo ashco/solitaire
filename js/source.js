@@ -52,7 +52,7 @@ function shuffle() {
 
 //distributes first 28 cards into board array
 function deal(){
-  col0 = deckOrder.splice(0, 1); 
+  // col0 = deckOrder.splice(0, 1); 
   col1 = deckOrder.splice(0, 2);
   col2 = deckOrder.splice(0, 3);
   col3 = deckOrder.splice(0, 4);
@@ -61,36 +61,34 @@ function deal(){
   col6 = deckOrder.splice(0, 7);
 }
 
-//function to move card from 1 col to another
-function boardMove(start, target){
-  //if red to black, black to red
-  //and if target is 1 value above start
-  console.log((cards[start[start.length-1]]).value);
-  console.log((cards[target[target.length-1]]).value)
-  if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
-  (cards[start[start.length-1]]).value + 1 === (cards[target[target.length-1]]).value){
-      //execute
-      target.push(start.pop());
-      console.log('card moved!');
-    }else{
-    console.log('card cannot move');
-  }
-} 
-
-//move card if array is 0 and card is king (value === 13)
-function kingMove(start, target){
-  if(cards[start[start.length-1]].value === 13 &&
+function moveCard(start, target){
+  //no card selected
+  if(start.length === 0){
+    console.log('no card in array!');
+    return 
+  //move king to empty column array  
+  }else if(cards[start[start.length-1]].value !== 13 &&
   target.length === 0){
-      target.push(start.pop());
-      console.log('king card added to new array!');
-    }else{
+    target.push(start.pop());
+    console.log('card is not a king!');
+    return;
+  }else if(cards[start[start.length-1]].value === 13 && 
+  target.length === 0){
+    target.push(start.pop());
+    console.log('king card added to new array!');
+    return;
+  //move card on top of card with alt color
+  }else if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
+  //move card on top of card with +1 higher value 
+  (cards[start[start.length-1]]).value + 1 === (cards[target[target.length-1]]).value){
+    target.push(start.pop());
+    console.log('card moved!');
+    return;
+  }else{
     console.log('card cannot move');
+    return;
   }
-} 
-
-
-//add in check for empty array
-//add in check for sequential order
+}
 
 
 //logic that determines if card can be moved to sideline storage area
