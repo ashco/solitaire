@@ -13,25 +13,28 @@ var col4 = []
 var col5 = []
 var col6 = []
 
-
-
 //generates card object attributes
-function card(value, name, suit){
+function card(value, name, suit, color){
   this.value = value;
   this.name = name;
   this.suit = suit;
+  this.color = color;
 }
 
 //generates 52 card deck list
 function deck(){
   this.names = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   this.suits = ['Hearts','Diamonds','Spades','Clubs'];
-  this.color = ['Red', 'Black'];
-  for( var s = 0; s < this.suits.length; s++ ) {
-    for( var n = 0; n < this.names.length; n++ ) {
-      cards.push( new card( n+1, this.names[n], this.suits[s] ));
+  this.color = ['Black', 'Red'];
+  for(var s = 0; s < this.suits.length; s++){
+    for(var n = 0; n < this.names.length; n++){
+      if(s > 1){
+        cards.push(new card( n+1, this.names[n], this.suits[s], this.color[0]));
+      }else{
+        cards.push(new card( n+1, this.names[n], this.suits[s], this.color[1]));
+      }
     }
-  }
+  }  
   return cards;
 }
 
@@ -59,22 +62,40 @@ function deal(){
 }
 
 //function to move card from 1 col to another
-function move(start, target) {
-  //if red to black, black to red, execute
-  // if(cards[].suit)
-    target.push(start.pop());
+function boardMove(start, target){
+  //if red to black, black to red
+  //and if target is 1 value above start
+  console.log((cards[start[start.length-1]]).value);
+  console.log((cards[target[target.length-1]]).value)
+  if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
+    (cards[start[start.length-1]]).value+1 === (cards[target[target.length-1]]).value){
+      //execute
+      target.push(start.pop());
+      console.log('card moved!');
+    }else{
+    console.log('card cannot move');
+  }
+} 
+
+//add in check for empty array
+//add in check for sequential order
+
+
+//logic that determines if card can be moved to sideline storage area
+function sideMove(start, target){
+
+}
+
+//logic that cycles through shuffled deck
+function cycle(){
 
 }
 
 
 
-
-
-
-
-
 //present info in console
 function present(){
+  console.log(cards);
   console.log(col0);
   console.log(col1);
   console.log(col2);
