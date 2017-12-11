@@ -52,7 +52,7 @@ function shuffle() {
 
 //distributes first 28 cards into board array
 function deal(){
-  col0 = deckOrder.splice(0, 1);
+  col0 = deckOrder.splice(0, 1); 
   col1 = deckOrder.splice(0, 2);
   col2 = deckOrder.splice(0, 3);
   col3 = deckOrder.splice(0, 4);
@@ -68,7 +68,7 @@ function boardMove(start, target){
   console.log((cards[start[start.length-1]]).value);
   console.log((cards[target[target.length-1]]).value)
   if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
-    (cards[start[start.length-1]]).value+1 === (cards[target[target.length-1]]).value){
+  (cards[start[start.length-1]]).value + 1 === (cards[target[target.length-1]]).value){
       //execute
       target.push(start.pop());
       console.log('card moved!');
@@ -76,6 +76,18 @@ function boardMove(start, target){
     console.log('card cannot move');
   }
 } 
+
+//move card if array is 0 and card is king (value === 13)
+function kingMove(start, target){
+  if(cards[start[start.length-1]].value === 13 &&
+  target.length === 0){
+      target.push(start.pop());
+      console.log('king card added to new array!');
+    }else{
+    console.log('card cannot move');
+  }
+} 
+
 
 //add in check for empty array
 //add in check for sequential order
