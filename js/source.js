@@ -1,9 +1,8 @@
 //array of 52 cards
 var cards = [];
 //array of 52 ran gen card values 
-var deckOrder = [];
-//array of 28 ran gen card value numbers indicating board position 
-// var boardOrder = [];
+var deckArray = [];
+var drawnArray = [];
 //Column arrays
 var col0 = []
 var col1 = []
@@ -42,23 +41,23 @@ function deck(){
 function shuffle() {
   for(var i = 0; i < 52; i++){
     var cardSelect = (Math.floor(Math.random() * 52));
-    if(deckOrder.includes(cardSelect)){
+    if(deckArray.includes(cardSelect)){
       i-=1;
     }else{
-      deckOrder.push(cardSelect);
+      deckArray.push(cardSelect);
     }
   }
 }
 
 //distributes first 28 cards into board array
 function deal(){
-  // col0 = deckOrder.splice(0, 1); 
-  col1 = deckOrder.splice(0, 2);
-  col2 = deckOrder.splice(0, 3);
-  col3 = deckOrder.splice(0, 4);
-  col4 = deckOrder.splice(0, 5);
-  col5 = deckOrder.splice(0, 6);
-  col6 = deckOrder.splice(0, 7);
+  col0 = deckArray.splice(0, 1); 
+  col1 = deckArray.splice(0, 2);
+  col2 = deckArray.splice(0, 3);
+  col3 = deckArray.splice(0, 4);
+  col4 = deckArray.splice(0, 5);
+  col5 = deckArray.splice(0, 6);
+  col6 = deckArray.splice(0, 7);
 }
 
 function moveCard(start, target){
@@ -90,7 +89,6 @@ function moveCard(start, target){
   }
 }
 
-
 //logic that determines if card can be moved to sideline storage area
 function sideMove(start, target){
 
@@ -98,10 +96,17 @@ function sideMove(start, target){
 
 //logic that cycles through shuffled deck
 function cycle(){
-
+  //if deckArray is empty, flip cards
+  if(deckArray.length === 0){
+    deckArray = drawnArray.reverse();
+    drawnArray = [];
+    console.log('no more cards, start from the beginning')
+    return;
+  }
+  drawnArray.push(deckArray.pop());
+  console.log(deckArray);
+  console.log(drawnArray);
 }
-
-
 
 //present info in console
 function present(){
@@ -113,9 +118,9 @@ function present(){
   console.log(col4);
   console.log(col5);
   console.log(col6);
-  console.log('Cards in deck: ', deckOrder);
+  console.log('Cards in deckArray: ', deckArray);
+  console.log('Cards in drawnArray: ', drawnArray);
 }
-
 
 function init(){
   deck();
