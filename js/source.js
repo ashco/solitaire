@@ -3,6 +3,11 @@ var cards = [];
 //array of 52 ran gen card values 
 var deckArray = [];
 var drawnArray = [];
+//suit holder arrays
+var heartsArray = [];
+var diamondsArray = [];
+var spadesArray = [];
+var clubsArray = [];
 //Column arrays
 var col0 = []
 var col1 = []
@@ -91,7 +96,18 @@ function moveCard(start, target){
 
 //logic that determines if card can be moved to sideline storage area
 function sideMove(start, target){
-
+    //no card selected
+  if(start.length === 0){
+    console.log('no card in array!');
+    return;
+  //start card is not same suit
+  }else if(cards[start[start.length-1]].suit !== 'Hearts'){
+    console.log('suit does not match!');
+    return;
+  }else if(cards[start[start.length-1]].value === 1 && target.length === 0){
+    target.push(start.pop());
+    console.log('added Ace');
+  }
 }
 
 //logic that cycles through shuffled deck
@@ -120,6 +136,10 @@ function present(){
   console.log(col6);
   console.log('Cards in deckArray: ', deckArray);
   console.log('Cards in drawnArray: ', drawnArray);
+  console.log(heartsArray);
+  console.log(diamondsArray);
+  console.log(spadesArray);
+  console.log(clubsArray);
 }
 
 function init(){
