@@ -24,7 +24,6 @@ var boardState = {
 //generates card object attributes
 function card(value, name, suit, color){
   this.value = value;
-  //is name necessary?
   this.name = name;
   this.suit = suit;
   this.color = color;
@@ -130,16 +129,29 @@ function moveSuit(start, target){
 //logic that cycles through shuffled deck
 function cycle(){
   //if deckArray is empty, flip cards
-  if(deckArray.length === 0){
+  if(deckArray.length === 1){
     deckArray = drawnArray.reverse();
     drawnArray = [];
+    $('.deck').html('<img src="./img/extra/card_empty.png">');
     console.log('no more cards, start from the beginning');
     return;
   }
   drawnArray.push(deckArray.pop());
+  drawnImg();
   console.log(deckArray);
   console.log(drawnArray);
 }
+
+//Event Listeners
+$('.deck').click(cycle);
+
+
+//function to update board image representation
+function drawnImg (){
+  $('.flipped').html('<img src="./img/cards/card_' + cards[drawnArray[drawnArray.length-1]].suit + '_' + cards[drawnArray[drawnArray.length-1]].name + '.png">');
+}
+
+
 
 //present info in console
 function present(){
