@@ -3,23 +3,28 @@ var cards = [];
 //array of 52 ran gen card values 
 var deckArray = [];
 var drawnArray = [];
-//suit holder arrays
-var heartsArray = [];
-var diamondsArray = [];
-var spadesArray = [];
-var clubsArray = [];
-//Column arrays
-var col0 = []
-var col1 = []
-var col2 = []
-var col3 = []
-var col4 = []
-var col5 = []
-var col6 = []
+//suit object holder
+var suitState = {
+  heartsArray: ['Hearts'],
+  diamondsArray: ['Diamonds'],
+  spadesArray: ['Spades'],
+  clubsArray: ['Clubs']
+};
+//board object and column arrays
+var boardState = {
+  col0: [],
+  col1: [],
+  col2: [],
+  col3: [],
+  col4: [],
+  col5: [],
+  col6: []  
+};
 
 //generates card object attributes
 function card(value, name, suit, color){
   this.value = value;
+  //is name necessary?
   this.name = name;
   this.suit = suit;
   this.color = color;
@@ -27,7 +32,7 @@ function card(value, name, suit, color){
 
 //generates 52 card deck list
 function deck(){
-  this.names = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  this.names = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   this.suits = ['Hearts','Diamonds','Spades','Clubs'];
   this.color = ['Black', 'Red'];
   for(var s = 0; s < this.suits.length; s++){
@@ -43,9 +48,10 @@ function deck(){
 }
 
 //creates 52 card order array
-function shuffle() {
+function shuffle(){
   for(var i = 0; i < 52; i++){
     var cardSelect = (Math.floor(Math.random() * 52));
+    //ensures shuffle function runs until 52 unique values are chosen
     if(deckArray.includes(cardSelect)){
       i-=1;
     }else{
@@ -56,20 +62,20 @@ function shuffle() {
 
 //distributes first 28 cards into board array
 function deal(){
-  col0 = deckArray.splice(0, 1); 
-  col1 = deckArray.splice(0, 2);
-  col2 = deckArray.splice(0, 3);
-  col3 = deckArray.splice(0, 4);
-  col4 = deckArray.splice(0, 5);
-  col5 = deckArray.splice(0, 6);
-  col6 = deckArray.splice(0, 7);
+  boardState.col0 = deckArray.splice(0, 1); 
+  boardState.col1 = deckArray.splice(0, 2);
+  boardState.col2 = deckArray.splice(0, 3);
+  boardState.col3 = deckArray.splice(0, 4);
+  boardState.col4 = deckArray.splice(0, 5);
+  boardState.col5 = deckArray.splice(0, 6);
+  boardState.col6 = deckArray.splice(0, 7);
 }
 
 function moveCard(start, target){
   //no card selected
   if(start.length === 0){
     console.log('no card in array!');
-    return 
+    return ;
   //move king to empty column array  
   }else if(cards[start[start.length-1]].value !== 13 &&
   target.length === 0){
@@ -95,11 +101,12 @@ function moveCard(start, target){
 }
 
 //logic that determines if card can be moved to sideline storage area
-function suitMove(start, target){
+function moveSuit(start, target){
     //no card selected
   if(start.length === 0){
     console.log('no card in array!');
     return;
+  //WORK IN PROGRESS
   //start card is not same suit
   }else if(cards[start[start.length-1]].suit !== 'Hearts'){
     console.log('suit does not match!');
@@ -112,7 +119,7 @@ function suitMove(start, target){
     target.push(start.pop());
     console.log('added Ace');
     return;
-  }else if((cards[start[start.length-1]]).value === (cards[target[target.length-1]]).value+1){
+  }else if((cards[start[start.length-1]]).value === (cards[target[target.length-1]].value+1)){
     target.push(start.pop());
     console.log('stored suit');
   }else{
@@ -126,7 +133,7 @@ function cycle(){
   if(deckArray.length === 0){
     deckArray = drawnArray.reverse();
     drawnArray = [];
-    console.log('no more cards, start from the beginning')
+    console.log('no more cards, start from the beginning');
     return;
   }
   drawnArray.push(deckArray.pop());
@@ -137,19 +144,10 @@ function cycle(){
 //present info in console
 function present(){
   console.log(cards);
-  console.log(col0);
-  console.log(col1);
-  console.log(col2);
-  console.log(col3);
-  console.log(col4);
-  console.log(col5);
-  console.log(col6);
+  console.log(boardState);
   console.log('Cards in deckArray: ', deckArray);
   console.log('Cards in drawnArray: ', drawnArray);
-  console.log(heartsArray);
-  console.log(diamondsArray);
-  console.log(spadesArray);
-  console.log(clubsArray);
+  console.log(suitState);
 }
 
 function init(){
@@ -157,7 +155,6 @@ function init(){
   shuffle();
   deal();
 }
-
 
 init();
 present();
