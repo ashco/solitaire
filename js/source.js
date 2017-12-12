@@ -129,27 +129,54 @@ function moveSuit(start, target){
 //logic that cycles through shuffled deck
 function cycle(){
   //if deckArray is empty, flip cards
-  if(deckArray.length === 1){
+  if(deckArray.length === 0){
+    //img state: deck moves from empty to card back
     deckArray = drawnArray.reverse();
     drawnArray = [];
-    $('.deck').html('<img src="./img/extra/card_empty.png">');
-    console.log('no more cards, start from the beginning');
-    return;
+  }else{
+    drawnArray.push(deckArray.pop());
   }
-  drawnArray.push(deckArray.pop());
+  //update images of deck and drawn
+  deckImg();
   drawnImg();
-  console.log(deckArray);
-  console.log(drawnArray);
+  console.log('deckArray ' + deckArray);
+  console.log('drawnArray ' + drawnArray);
 }
+
+function deckImg(){
+  if(deckArray.length === 0){
+    $('.deck').html('<img src="./img/extra/card_empty.png">');
+  }else{
+    $('.deck').html('<img src="./img/decks/small/deck_3.png">');
+  }
+}
+
+function drawnImg(){
+  if(drawnArray.length === 0){
+    $('.drawn').html('<img src="./img/extra/card_empty.png">');
+  }else{
+    $('.drawn').html('<img src="./img/cards/card_' + cards[drawnArray[drawnArray.length-1]].suit + '_' + cards[drawnArray[drawnArray.length-1]].name + '.png">');
+  }
+}
+
+// //logic that cycles through shuffled deck
+// function cycle(){
+//   //if deckArray is empty, flip cards
+//   if(deckArray.length === 1){
+//     deckArray = drawnArray.reverse();
+//     drawnArray = [];
+//     $('.deck').html('<img src="./img/extra/card_empty.png">');
+//     console.log('no more cards, start from the beginning');
+//     return;
+//   }
+//   drawnArray.push(deckArray.pop());
+//   drawnImg();
+//   console.log(deckArray);
+//   console.log(drawnArray);
+// }
 
 //Event Listeners
 $('.deck').click(cycle);
-
-
-//function to update board image representation
-function drawnImg (){
-  $('.flipped').html('<img src="./img/cards/card_' + cards[drawnArray[drawnArray.length-1]].suit + '_' + cards[drawnArray[drawnArray.length-1]].name + '.png">');
-}
 
 
 
