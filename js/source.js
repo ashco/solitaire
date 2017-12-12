@@ -84,7 +84,7 @@ function moveCard(start, target){
   //move card on top of card with alt color
   }else if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
   //move card on top of card with +1 higher value 
-  (cards[start[start.length-1]]).value + 1 === (cards[target[target.length-1]]).value){
+  (cards[start[start.length-1]]).value+1 === (cards[target[target.length-1]]).value){
     target.push(start.pop());
     console.log('card moved!');
     return;
@@ -95,7 +95,7 @@ function moveCard(start, target){
 }
 
 //logic that determines if card can be moved to sideline storage area
-function sideMove(start, target){
+function suitMove(start, target){
     //no card selected
   if(start.length === 0){
     console.log('no card in array!');
@@ -104,9 +104,19 @@ function sideMove(start, target){
   }else if(cards[start[start.length-1]].suit !== 'Hearts'){
     console.log('suit does not match!');
     return;
+  }else if(cards[start[start.length-1]].value !== 1 && target.length === 0){
+    target.push(start.pop());
+    console.log('not an Ace, idiot!');
+    return;
   }else if(cards[start[start.length-1]].value === 1 && target.length === 0){
     target.push(start.pop());
     console.log('added Ace');
+    return;
+  }else if((cards[start[start.length-1]]).value === (cards[target[target.length-1]]).value+1){
+    target.push(start.pop());
+    console.log('stored suit');
+  }else{
+    console.log('card is not 1+ in value');
   }
 }
 
