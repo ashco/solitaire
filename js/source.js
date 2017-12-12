@@ -139,8 +139,8 @@ function cycle(){
   //update images of deck and drawn
   deckImg();
   drawnImg();
-  console.log('deckArray ' + deckArray);
-  console.log('drawnArray ' + drawnArray);
+  // console.log('deckArray ' + deckArray);
+  // console.log('drawnArray ' + drawnArray);
 }
 
 function deckImg(){
@@ -159,26 +159,23 @@ function drawnImg(){
   }
 }
 
-// //logic that cycles through shuffled deck
-// function cycle(){
-//   //if deckArray is empty, flip cards
-//   if(deckArray.length === 1){
-//     deckArray = drawnArray.reverse();
-//     drawnArray = [];
-//     $('.deck').html('<img src="./img/extra/card_empty.png">');
-//     console.log('no more cards, start from the beginning');
-//     return;
-//   }
-//   drawnArray.push(deckArray.pop());
-//   drawnImg();
-//   console.log(deckArray);
-//   console.log(drawnArray);
-// }
+
+function boardAddImg(){
+  var addCard = $('<img>');
+  addCard.attr('src', './img/decks/small/deck_3.png');
+  $(this).append(addCard);
+}
+
 
 //Event Listeners
 $('.deck').click(cycle);
 
-
+function addColClick(){
+  for(var i = 0; i < 6; i++){
+    $('.col'+i).click(boardAddImg);
+    console.log('added .col'+i);
+  }
+}
 
 //present info in console
 function present(){
@@ -193,6 +190,7 @@ function init(){
   deck();
   shuffle();
   deal();
+  addColClick();
 }
 
 init();
