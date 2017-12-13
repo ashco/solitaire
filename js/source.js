@@ -62,8 +62,6 @@ function shuffle(){
   }
 }
 
-
-
 //MOVE CARDS BETWEEN ARRAYS
 //distributes first 28 cards into board array
 function deal(){
@@ -189,15 +187,18 @@ function topImg(){
   }  
 }
 
-//update board representation when arrays move
+//update number of card images based off of array length
+function cardImgAdd(){
+  //insert image as last element 
+
+
+}
+
+
 function cardImgDelete(){
   
 }
 
-
-function cardImgAdd(){
-  
-}
 
 
 
