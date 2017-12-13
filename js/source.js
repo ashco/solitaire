@@ -148,17 +148,17 @@ function cycle(){
 
 function deckImg(){
   if(deckArray.length === 0){
-    $('.deck').html('<img src="./img/extra/card_empty.png">');
+    $('.deck').find('img').attr('src', './img/extra/card_empty.png');
   }else{
-    $('.deck').html('<img src="./img/decks/small/deck_3.png">');
+    $('.deck').find('img').attr('src', './img/decks/small/deck_3.png');
   }
 }
 
 function drawnImg(){
   if(drawnArray.length === 0){
-    $('.drawn').html('<img src="./img/extra/card_empty.png">');
+    $('.drawn').find('img').attr('src', './img/extra/card_empty.png');
   }else{
-    $('.drawn').html('<img src="./img/cards/card_' + cards[drawnArray[drawnArray.length-1]].suit + '_' + cards[drawnArray[drawnArray.length-1]].name + '.png">');
+    $('.drawn').find('img').attr('src', './img/cards/card_' + cards[drawnArray[drawnArray.length-1]].suit + '_' + cards[drawnArray[drawnArray.length-1]].name + '.png');
   }
 }
 
@@ -177,9 +177,10 @@ function gameStartImg(){
 //!!!Need to integrate into moveSuit function
 //adds image to clicked column
 function boardAddImg(){
-  var addCard = $('<img>');
-  addCard.attr('src', './img/decks/small/deck_3.png');
-  $(this).append(addCard);
+  console.log('hi mom!');
+  // var addCard = $('<img>');
+  // addCard.attr('src', './img/decks/small/deck_3.png');
+  // $(this).append(addCard);
 }
 
 //Event Listeners
@@ -188,8 +189,7 @@ $('.deck').click(cycle);
 //adds event listener to columns
 function addColClick(){
   for(var i = 0; i < 6; i++){
-    console.log('hi mom!');
-    // $('.col'+i).click(boardAddImg);
+    $('.col'+i).click(boardAddImg);
   }
 }
 
