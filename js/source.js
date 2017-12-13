@@ -62,6 +62,9 @@ function shuffle(){
   }
 }
 
+
+
+//MOVE CARDS BETWEEN ARRAYS
 //distributes first 28 cards into board array
 function deal(){
   boardState.col0 = deckArray.splice(0, 1); 
@@ -146,6 +149,9 @@ function cycle(){
   // console.log('drawnArray ' + drawnArray);
 }
 
+
+
+//BOARD STATE IMAGES
 function deckImg(){
   if(deckArray.length === 0){
     $('.deck').find('img').attr('src', './img/extra/card_empty.png');
@@ -162,15 +168,36 @@ function drawnImg(){
   }
 }
 
-function gameStartImg(){
+//top cards presented at start of game
+// function gameStartImg(){
+//   for(var col in boardState){
+//     // console.log(cards[(boardState[col][boardState[col].length-1])]);
+//     var topImg = $('<img>');
+//     topImg.attr('src', './img/cards/card_' + cards[(boardState[col][boardState[col].length-1])].suit + '_' + cards[(boardState[col][boardState[col].length-1])].name + '.png');
+//     $('.' + col).append(topImg);
+//   }  
+// }
+
+function topImg(){
   for(var col in boardState){
-    console.log(cards[(boardState[col][boardState[col].length-1])]);
-    var topImg = $('<img>');
-    topImg.attr('src', './img/cards/card_' + cards[(boardState[col][boardState[col].length-1])].suit + '_' + cards[(boardState[col][boardState[col].length-1])].name + '.png');
-    $('.' + col).append(topImg);
+    console.log(boardState[col].length);
+    if(boardState[col].length === 0){
+      $('.'+col).find('img').last().attr('src', './img/extra/card_empty.png');
+    }else{    
+      $('.'+col).find('img').last().attr('src', './img/cards/card_' + cards[(boardState[col][boardState[col].length-1])].suit + '_' + cards[(boardState[col][boardState[col].length-1])].name + '.png')
+    }
   }  
 }
 
+//update board representation when arrays move
+function cardImgDelete(){
+  
+}
+
+
+function cardImgAdd(){
+  
+}
 
 
 
@@ -183,7 +210,7 @@ function boardAddImg(){
   // $(this).append(addCard);
 }
 
-//Event Listeners
+//EVENT LISTENERS
 $('.deck').click(cycle);
 
 //adds event listener to columns
@@ -192,6 +219,9 @@ function addColClick(){
     $('.col'+i).click(boardAddImg);
   }
 }
+
+
+
 
 //present info in console
 function present(){
@@ -207,7 +237,7 @@ function init(){
   shuffle();
   deal();
   addColClick();
-  gameStartImg();
+  topImg();
 }
 
 init();
