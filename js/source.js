@@ -159,7 +159,16 @@ function drawnImg(){
   }
 }
 
+function gameStartImg(){
+  for(var col in boardState){
+    console.log(cards[(boardState[col][boardState[col].length-1])]);
+    var topImg = $('<img>');
+    topImg.attr('src', './img/cards/card_' + cards[(boardState[col][boardState[col].length-1])].suit + '_' + cards[(boardState[col][boardState[col].length-1])].name + '.png');
+    $('.' + col).append(topImg);
+  }  
+}
 
+//Need to integrate into moveSuit function
 function boardAddImg(){
   var addCard = $('<img>');
   addCard.attr('src', './img/decks/small/deck_3.png');
@@ -173,7 +182,6 @@ $('.deck').click(cycle);
 function addColClick(){
   for(var i = 0; i < 6; i++){
     $('.col'+i).click(boardAddImg);
-    console.log('added .col'+i);
   }
 }
 
@@ -181,9 +189,9 @@ function addColClick(){
 function present(){
   console.log(cards);
   console.log(boardState);
+  console.log(suitState);
   console.log('Cards in deckArray: ', deckArray);
   console.log('Cards in drawnArray: ', drawnArray);
-  console.log(suitState);
 }
 
 function init(){
@@ -191,6 +199,7 @@ function init(){
   shuffle();
   deal();
   addColClick();
+  gameStartImg();
 }
 
 init();
