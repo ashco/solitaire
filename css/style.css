@@ -74,9 +74,9 @@ body {
     grid-template-columns: repeat(9, 1fr);
     grid-auto-rows: minmax(100px, auto);
     grid-template-areas: 
-      "deck    col0 col1 col2 col3 col4 col5 col6 hearts"
+      "deck  col0 col1 col2 col3 col4 col5 col6 hearts"
       "drawn col0 col1 col2 col3 col4 col5 col6 diamonds"
-      ".       col0 col1 col2 col3 col4 col5 col6 spades"
-      ".       col0 col1 col2 col3 col4 col5 col6 clubs";
+      ".     col0 col1 col2 col3 col4 col5 col6 spades"
+      ".     col0 col1 col2 col3 col4 col5 col6 clubs";
 }
 

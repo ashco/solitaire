@@ -1,3 +1,5 @@
+//Selected card
+var selected
 //array of 52 cards
 var cards = [];
 //array of 52 ran gen card values 
@@ -10,6 +12,7 @@ var suitState = {
   spadesArray: ['Spades'],
   clubsArray: ['Clubs']
 };
+
 //board object and column arrays
 var boardState = {
   col0: [],
@@ -75,16 +78,16 @@ function moveCard(start, target){
   if(start.length === 0){
     console.log('no card in array!');
     return ;
-  //move king to empty column array  
+  //move king to empty column array 
+  //add || to combine this with top if 
   }else if(cards[start[start.length-1]].value !== 13 &&
   target.length === 0){
-    target.push(start.pop());
     console.log('card is not a king!');
     return;
   }else if(cards[start[start.length-1]].value === 13 && 
   target.length === 0){
     target.push(start.pop());
-    console.log('king card added to new array!');
+    console.log('king card added to empty column!');
     return;
   //move card on top of card with alt color
   }else if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
@@ -168,20 +171,25 @@ function gameStartImg(){
   }  
 }
 
-//Need to integrate into moveSuit function
+
+
+
+//!!!Need to integrate into moveSuit function
+//adds image to clicked column
 function boardAddImg(){
   var addCard = $('<img>');
   addCard.attr('src', './img/decks/small/deck_3.png');
   $(this).append(addCard);
 }
 
-
 //Event Listeners
 $('.deck').click(cycle);
 
+//adds event listener to columns
 function addColClick(){
   for(var i = 0; i < 6; i++){
-    $('.col'+i).click(boardAddImg);
+    console.log('hi mom!');
+    // $('.col'+i).click(boardAddImg);
   }
 }
 
