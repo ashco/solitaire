@@ -75,9 +75,9 @@ function deal(){
 
 function moveCard(start, target, targetArr){
   //finds names of arrays that contain start/target values
-  for(var focus in board){
-    if(board[focus].indexOf(start) >= 0){
-      startArr = focus;
+  for(var area in board){
+    if(board[area].indexOf(start) >= 0){
+      startArr = area;
     }
   }
   console.log('this is the TARGET length', board[targetArr].length);
@@ -96,6 +96,8 @@ function moveCard(start, target, targetArr){
   board[targetArr].length === 0){
     //find targets array
     board[targetArr].push(board[startArr].pop());
+    addCardImg(targetArr);
+    removeCardImg();
     console.log('MOVE: king card added to empty column!');
     return;
   //move card on top of card with alt color
@@ -104,6 +106,8 @@ function moveCard(start, target, targetArr){
   (cards[start]).value + 1 === (cards[target]).value){
     //find targets array
     board[targetArr].push(board[startArr].pop());
+    addCardImg(targetArr);
+    removeCardImg();
     console.log('card moved!');
     return;
   }else{
@@ -189,8 +193,8 @@ function topImg(){
   }  
 }
 
-function addCardImg(focus){
-  $('.' + focus).append('<img>');
+function addCardImg(colName){
+  $('.' + colName).append('<img>');
 }
 
 function removeCardImg(){
@@ -235,8 +239,6 @@ function decider(){
   moveCard(selected, target, focus);
   // addCardImg();
   deselect();
-  addCardImg(focus);
-  removeCardImg();
   topImg();
 }
 
