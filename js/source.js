@@ -1,13 +1,11 @@
-//Selected card
-var selected
+//Selected card number
+var selected;
 //array of 52 cards
 var cards = [];
-//array of 52 ran gen card values 
-
 //board object containing arrays
 var board = {
-  deckArr: [],
-  drawnArray: [],
+  deck: [],
+  drawn: [],
   col0: [],
   col1: [],
   col2: [],
@@ -15,10 +13,10 @@ var board = {
   col4: [],
   col5: [],
   col6: [],  
-  heartsArray: [],
-  diamondsArray: [],
-  spadesArray: [],
-  clubsArray: []
+  hearts: [],
+  diamonds: [],
+  spades: [],
+  clubs: []
 };
 
 //generates card object attributess
@@ -30,7 +28,7 @@ function card(value, name, suit, color){
 }
 
 //generates 52 card deck list
-function deck(){
+function deckCreate(){
   this.names = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   this.suits = ['Hearts','Diamonds','Spades','Clubs'];
   this.color = ['Black', 'Red'];
@@ -51,10 +49,10 @@ function shuffle(){
   for(var i = 0; i < 52; i++){
     var cardSelect = (Math.floor(Math.random() * 52));
     //ensures shuffle function runs until 52 unique values are chosen
-    if(board.deckArr.includes(cardSelect)){
+    if(board.deck.includes(cardSelect)){
       i-=1;
     }else{
-      board.deckArr.push(cardSelect);
+      board.deck.push(cardSelect);
     }
   }
 }
@@ -62,13 +60,13 @@ function shuffle(){
 //MOVE CARDS BETWEEN ARRAYS
 //distributes first 28 cards into board array
 function deal(){
-  board.col0 = board.deckArr.splice(0, 1); 
-  board.col1 = board.deckArr.splice(0, 2);
-  board.col2 = board.deckArr.splice(0, 3);
-  board.col3 = board.deckArr.splice(0, 4);
-  board.col4 = board.deckArr.splice(0, 5);
-  board.col5 = board.deckArr.splice(0, 6);
-  board.col6 = board.deckArr.splice(0, 7);
+  board.col0 = board.deck.splice(0, 1); 
+  board.col1 = board.deck.splice(0, 2);
+  board.col2 = board.deck.splice(0, 3);
+  board.col3 = board.deck.splice(0, 4);
+  board.col4 = board.deck.splice(0, 5);
+  board.col5 = board.deck.splice(0, 6);
+  board.col6 = board.deck.splice(0, 7);
 }
 
 function moveCard(start, target){
@@ -129,26 +127,26 @@ function moveSuit(start, target){
 
 //logic that cycles through shuffled deck
 function cycle(){
-  //if board.deckArr is empty, flip cards
-  if(board.deckArr.length === 0){
+  //if board.deck is empty, flip cards
+  if(board.deck.length === 0){
     //img state: deck moves from empty to card back
-    board.deckArr = board.drawnArray.reverse();
-    board.drawnArray = [];
+    board.deck = board.drawn.reverse();
+    board.drawn = [];
   }else{
-    board.drawnArray.push(board.deckArr.pop());
+    board.drawn.push(board.deck.pop());
   }
   //update images of deck and drawn
   deckImg();
   drawnImg();
-  // console.log('board.deckArr ' + board.deckArr);
-  // console.log('board.drawnArray ' + board.drawnArray);
+  // console.log('board.deck ' + board.deck);
+  // console.log('board.drawn ' + board.drawn);
 }
 
 
 
 //BOARD STATE IMAGES
 function deckImg(){
-  if(board.deckArr.length === 0){
+  if(board.deck.length === 0){
     $('.deck').find('img').attr('src', './img/extra/card_empty.png');
   }else{
     $('.deck').find('img').attr('src', './img/decks/small/deck_3.png');
@@ -156,10 +154,10 @@ function deckImg(){
 }
 
 function drawnImg(){
-  if(board.drawnArray.length === 0){
+  if(board.drawn.length === 0){
     $('.drawn').find('img').attr('src', './img/extra/card_empty.png');
   }else{
-    $('.drawn').find('img').attr('src', './img/cards/card_' + cards[board.drawnArray[board.drawnArray.length-1]].suit + '_' + cards[board.drawnArray[board.drawnArray.length-1]].name + '.png');
+    $('.drawn').find('img').attr('src', './img/cards/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png');
   }
 }
 
@@ -174,12 +172,14 @@ function drawnImg(){
 // }
 
 function topImg(){
-  for(var col in board){
-    // console.log(board[col].length);
-    if(board[col].length === 0){
-      $('.'+col).find('img').last().attr('src', './img/extra/card_empty.png');
+  for(var stack in board){
+    // console.log(board[stack].length);
+    if(board[stack].length === 0){
+      $('.' + stack).find('img').last().attr('src', './img/extra/card_empty.png');
+    }else if(stack === 'deck'){
+      $('.' + stack).find('img').attr('src', './img/decks/small/deck_3.png');
     }else{    
-      $('.'+col).find('img').last().attr('src', './img/cards/card_' + cards[(board[col][board[col].length-1])].suit + '_' + cards[(board[col][board[col].length-1])].name + '.png')
+      $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
     }
   }  
 }
@@ -201,14 +201,13 @@ function selector(){
     return;
   //deselect if clicked twice  
   }else if(selected === board[selectedCol][board[selectedCol].length-1]){
-    console.log('Deselected: ', selected);
+    console.log('Nothing selected');
     selected = '';
     return;
   }else{
     //this will update selected var with card number
     selected = board[selectedCol][board[selectedCol].length-1];
     console.log('Selected: ', selected);
-
     //this adds selected highlight img
     var selectImg = $('<img>');
     selectImg.addClass('selector').attr('src', './img/extra/card_selected.png');
@@ -222,6 +221,11 @@ $('.deck').click(cycle);
 
 //adds event listener to columns
 function addColClick(){
+  $('.drawn').click(selector);
+  $('.hearts').click(selector);
+  $('.diamonds').click(selector);
+  $('.spades').click(selector);
+  $('.clubs').click(selector);
   for(var i = 0; i <= 6; i++){
     $('.col'+i).click(selector);
     // adds img to column, may need to move function somewhere else
@@ -235,12 +239,12 @@ function addColClick(){
 function present(){
   console.log(cards);
   console.log(board);
-  console.log('Cards in board.deckArr: ', board.deckArr);
-  console.log('Cards in board.drawnArray: ', board.drawnArray);
+  console.log('Cards in board.deck: ', board.deck);
+  console.log('Cards in board.drawn: ', board.drawn);
 }
 
 function init(){
-  deck();
+  deckCreate();
   shuffle();
   deal();
   addColClick();
