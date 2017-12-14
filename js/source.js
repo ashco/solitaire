@@ -200,24 +200,35 @@ function cardImgDelete(){
 }
 
 
-function selector(){
+function selectorAdd(){
+  $('.selector').remove();
   var selectedCol = this;
   selectedCol = $(selectedCol).attr('class');
   if(boardState[selectedCol].length === 0){
     console.log('no cards in column!');
     return;
+  //deselect if clicked twice  
+  }else if(selected === boardState[selectedCol][boardState[selectedCol].length-1]){
+    console.log('Deselected: ', selected);
+    selected = '';
+    return;
   }else{
     //this will update selected var with card number
     selected = boardState[selectedCol][boardState[selectedCol].length-1];
-    console.log('selectedCol is:', selectedCol, 'var selected is: ', selected);
+    console.log('Selected: ', selected);
 
     //this adds selected highlight img
     var selectImg = $('<img>');
-    selectImg.attr('src', './img/extra/card_selected.png');
+    selectImg.addClass('selector').attr('src', './img/extra/card_selected.png');
     $(this).append(selectImg);
   }
 }
 
+// function selectorRemove(){
+//   if(selected === ''){
+//     $('.'+selectedCol).children('img').last().remove();
+//   }
+// }
 
 //!!!Need to integrate into moveSuit function
 
@@ -228,7 +239,7 @@ $('.deck').click(cycle);
 //adds event listener to columns
 function addColClick(){
   for(var i = 0; i <= 6; i++){
-    $('.col'+i).click(selector);
+    $('.col'+i).click(selectorAdd);
     // adds img to column, may need to move function somewhere else
     // $('.col'+i).click(cardImgAdd);
     // console.log('img added');
