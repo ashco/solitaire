@@ -80,11 +80,11 @@ function moveCard(start, target, targetArr){
       startArr = area;
     }
   }
-  console.log('this is the TARGET length', board[targetArr].length);
-  console.log('StartArr Col is ', startArr);  
-  console.log('TargetArr Col is ', targetArr);
-  console.log('Start param  is ', start);
-  console.log('Target param  is ', target);
+  // console.log('this is the TARGET length', board[targetArr].length);
+  // console.log('StartArr Col is ', startArr);  
+  // console.log('TargetArr Col is ', targetArr);
+  // console.log('Start param  is ', start);
+  // console.log('Target param  is ', target);
 
   //switch statement?
   if(cards[start].value !== 13 &&
@@ -187,19 +187,28 @@ function topImg(){
     //   $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
     //adds new img on top of columns 
     }else{    
-      $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
-      // addCardImg();
+      $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png');
     }
   }  
 }
 
 function addCardImg(colName){
+  console.log('colName is ', board[colName].length);
+  if(board[colName].length === 1){
+    return;
+  }
   $('.' + colName).append('<img>');
 }
 
 function removeCardImg(){
-  console.log('removeCardImg function is triggering');
-  // console.log($('.' + startArr + ' img:nth-last-child(2)'));
+  if(board[startArr].length === 0 ||
+  startArr === 'drawn' ||
+  startArr === 'hearts' ||
+  startArr === 'diamonds' ||
+  startArr === 'spades' ||
+  startArr === 'clubs'){
+    return;
+  }
   $('.' + startArr + ' img:nth-last-child(2)').remove();
 }
 
