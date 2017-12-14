@@ -1,5 +1,7 @@
 //Selected card number
 var selected = false;
+var startArr;
+//var targetArr;
 //array of 52 cards
 var cards = [];
 //board object containing arrays
@@ -19,6 +21,8 @@ var board = {
   clubs: []
 };
 
+
+//INITIAL BOARD SETUP
 //generates card object attributess
 function card(value, name, suit, color){
   this.value = value;
@@ -57,7 +61,6 @@ function shuffle(){
   }
 }
 
-//MOVE CARDS BETWEEN ARRAYS
 //distributes first 28 cards into board array
 function deal(){
   board.col0 = board.deck.splice(0, 1); 
@@ -69,64 +72,36 @@ function deal(){
   board.col6 = board.deck.splice(0, 7);
 }
 
-// function moveCard(start, target){
-//   //no card selected
-//   if(start.length === 0){
-//     console.log('no card in array!');
-//     return;
-//   //move king to empty column array 
-//   //add || to combine this with top if 
-//   }else if(cards[start[start.length-1]].value !== 13 &&
-//   target.length === 0){
-//     console.log('card is not a king!');
-//     return;
-//   }else if(cards[start[start.length-1]].value === 13 && 
-//   target.length === 0){
-//     target.push(start.pop());
-//     console.log('king card added to empty column!');
-//     return;
-//   //move card on top of card with alt color
-//   }else if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
-//   //move card on top of card with +1 higher value 
-//   (cards[start[start.length-1]]).value+1 === (cards[target[target.length-1]]).value){
-//     target.push(start.pop());
-//     console.log('card moved!');
-//     return;
-//   }else{
-//     console.log('card cannot move');
-//     return;
-//   }
-// }
 
-
-function moveCard(start, target){
+function moveCard(start, target, targetArr){
   //finds names of arrays that contain start/target values
   for(var focus in board){
     if(board[focus].indexOf(start) >= 0){
-      var startArr = focus;
-      console.log('Start Col is ', startArr);  
-    }else if(board[focus].indexOf(target) >= 0){
-      var targetArr = focus;
-      console.log('Target Col is ', targetArr);
+      startArr = focus;
     }
   }
+  console.log('this is the TARGET length', board[targetArr].length);
+  console.log('StartArr Col is ', startArr);  
+  console.log('TargetArr Col is ', targetArr);
+  console.log('Start param  is ', start);
+  console.log('Target param  is ', target);
+
   //switch statement?
   if(cards[start].value !== 13 &&
-  target.length === 0){
+  board[targetArr].length === 0){
     console.log('NO MOVE: card is not a king!');
     return;
   //Move king into empty array
   }else if(cards[start].value === 13 && 
-  target.length === 0){
+  board[targetArr].length === 0){
     //find targets array
     board[targetArr].push(board[startArr].pop());
-    // console.log(board[targetArr]);
     console.log('MOVE: king card added to empty column!');
     return;
   //move card on top of card with alt color
   }else if(cards[start].color !== cards[target].color &&
   //move card on top of card with +1 higher value 
-  (cards[start]).value+1 === (cards[target]).value){
+  (cards[start]).value + 1 === (cards[target]).value){
     //find targets array
     board[targetArr].push(board[startArr].pop());
     console.log('card moved!');
@@ -136,11 +111,6 @@ function moveCard(start, target){
     return;
   }
 }
-
-
-
-
-
 
 //logic that determines if card can be moved to sideline storage area
 function moveSuit(start, target){
@@ -171,6 +141,7 @@ function moveSuit(start, target){
 
 //logic that cycles through shuffled deck
 function cycle(){
+  deselect();
   //if board.deck is empty, flip cards
   if(board.deck.length === 0){
     //img state: deck moves from empty to card back
@@ -222,15 +193,16 @@ function topImg(){
 
 //determines if card is selected or not
 function decider(){
-  var focus = this;
-  focus = $(focus).attr('class');
+  var focus = $(this).attr('class');
+  console.log('decider fnc: focus is', focus, 'selected is', selected);
   //Selector
   if(selected === false){
+    console.log('selected is false')
     //cannot select empty array
     if(board[focus].length === 0){
       console.log('no cards in column!');
-      return;
-    }else{
+    }
+    else{
       //this will update selected var with card number
       selected = board[focus][board[focus].length-1];
       console.log('Selected: ', selected);
@@ -242,12 +214,20 @@ function decider(){
     return;
   }
   //Executor
-  var target = board[focus][board[focus].length-1]
+  console.log('assigning target' )
+  var target = board[focus][board[focus].length-1] || -1;
   console.log('executed on :', target);
-  moveCard(selected, target);
+  moveCard(selected, target, focus);
+  deselect();
+}
+
+
+function deselect(){
   selected = false;
   $('.selected').remove();
 }
+
+
 
 // function selector(){
 //   $('.selected').remove();
@@ -271,9 +251,6 @@ function decider(){
 //     $(this).append(selectImg);
 //   }
 // }
-
-
-
 
 //EVENT LISTENERS
 $('.deck').click(cycle);
@@ -300,6 +277,7 @@ function present(){
   console.log(board);
   console.log('Cards in board.deck: ', board.deck);
   console.log('Cards in board.drawn: ', board.drawn);
+  topImg();
 }
 
 function init(){
