@@ -7,10 +7,10 @@ var deckArray = [];
 var drawnArray = [];
 //suit object holder
 var suitState = {
-  heartsArray: ['Hearts'],
-  diamondsArray: ['Diamonds'],
-  spadesArray: ['Spades'],
-  clubsArray: ['Clubs']
+  heartsArray: [],
+  diamondsArray: [],
+  spadesArray: [],
+  clubsArray: []
 };
 
 //board object and column arrays
@@ -115,7 +115,7 @@ function moveSuit(start, target){
     console.log('suit does not match!');
     return;
   }else if(cards[start[start.length-1]].value !== 1 && target.length === 0){
-    target.push(start.pop());
+    // target.push(start.pop());
     console.log('not an Ace, idiot!');
     return;
   }else if(cards[start[start.length-1]].value === 1 && target.length === 0){
@@ -190,8 +190,8 @@ function topImg(){
 //update number of card images based off of array length
 function cardImgAdd(){
   //insert image as last element 
-
-
+  var addCard = $('<img>');
+  $(this).append(addCard);b
 }
 
 
@@ -203,13 +203,7 @@ function cardImgDelete(){
 
 
 //!!!Need to integrate into moveSuit function
-//adds image to clicked column
-function boardAddImg(){
-  console.log('hi mom!');
-  // var addCard = $('<img>');
-  // addCard.attr('src', './img/decks/small/deck_3.png');
-  // $(this).append(addCard);
-}
+
 
 //EVENT LISTENERS
 $('.deck').click(cycle);
@@ -217,12 +211,9 @@ $('.deck').click(cycle);
 //adds event listener to columns
 function addColClick(){
   for(var i = 0; i < 6; i++){
-    $('.col'+i).click(boardAddImg);
+    $('.col'+i).click(cardImgAdd);
   }
 }
-
-
-
 
 //present info in console
 function present(){
