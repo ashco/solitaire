@@ -201,10 +201,21 @@ function cardImgDelete(){
 
 
 function selector(){
-  console.log('this works');
-  var selectImg = $('<img>');
-  selectImg.attr('src', './img/extra/card_selected.png');
-  $(this).append(selectImg);
+  var selectedCol = this;
+  selectedCol = $(selectedCol).attr('class');
+  if(boardState[selectedCol].length === 0){
+    console.log('no cards in column!');
+    return;
+  }else{
+    //this will update selected var with card number
+    selected = boardState[selectedCol][boardState[selectedCol].length-1];
+    console.log('selectedCol is:', selectedCol, 'var selected is: ', selected);
+
+    //this adds selected highlight img
+    var selectImg = $('<img>');
+    selectImg.attr('src', './img/extra/card_selected.png');
+    $(this).append(selectImg);
+  }
 }
 
 
@@ -216,7 +227,7 @@ $('.deck').click(cycle);
 
 //adds event listener to columns
 function addColClick(){
-  for(var i = 0; i < 6; i++){
+  for(var i = 0; i <= 6; i++){
     $('.col'+i).click(selector);
     // adds img to column, may need to move function somewhere else
     // $('.col'+i).click(cardImgAdd);
