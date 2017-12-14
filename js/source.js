@@ -178,10 +178,20 @@ function topImg(){
       $('.' + stack).find('img').last().attr('src', './img/extra/card_empty.png');
     }else if(stack === 'deck'){
       $('.' + stack).find('img').attr('src', './img/decks/small/deck_3.png');
+    //shows top card for suits
+    }else if(stack === 'hearts' || stack === 'diamonds' || stack === 'spades' || stack === 'clubs'){    
+      $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+    //adds new img on top of columns 
     }else{    
       $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+      // addCardImg();
     }
   }  
+}
+
+function addCardImg(){
+  var addCard = $('img').attr('src', './img/decks/small/deck_3.png');
+  $('.col1').append(addCard);
 }
 
 //update number of card images based off of array length
@@ -218,6 +228,7 @@ function decider(){
   var target = board[focus][board[focus].length-1] || -1;
   console.log('executed on :', target);
   moveCard(selected, target, focus);
+  // addCardImg();
   deselect();
 }
 
@@ -227,30 +238,6 @@ function deselect(){
   $('.selected').remove();
 }
 
-
-
-// function selector(){
-//   $('.selected').remove();
-//   var focus = this;
-//   focus = $(focus).attr('class');
-//   if(board[focus].length === 0){
-//     console.log('no cards in column!');
-//     return;
-//   //deselect if clicked twice  
-//   }else if(selected === board[focus][board[focus].length-1]){
-//     console.log('Nothing selected');
-//     selected = false;
-//     return;
-//   }else{
-//     //this will update selected var with card number
-//     selected = board[focus][board[focus].length-1];
-//     console.log('Selected: ', selected);
-//     //this adds selected highlight img
-//     var selectImg = $('<img>');
-//     selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
-//     $(this).append(selectImg);
-//   }
-// }
 
 //EVENT LISTENERS
 $('.deck').click(cycle);
