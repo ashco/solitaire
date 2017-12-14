@@ -34,7 +34,7 @@ function card(value, name, suit, color){
 //generates 52 card deck list
 function deckCreate(){
   this.names = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-  this.suits = ['Hearts','Diamonds','Spades','Clubs'];
+  this.suits = ['hearts','diamonds','spades','clubs'];
   this.color = ['Black', 'Red'];
   for(var s = 0; s < this.suits.length; s++){
     for(var n = 0; n < this.names.length; n++){
@@ -117,27 +117,36 @@ function moveCard(start, target, targetArr){
 }
 
 //logic that determines if card can be moved to sideline storage area
-function moveSuit(start, target){
-    //no card selected
-  if(start.length === 0){
-    console.log('no card in array!');
-    return;
-  //WORK IN PROGRESS
+function moveSuit(start, target, targetArr){
+  //REPEAT - can turn into function
+  for(var area in board){
+    if(board[area].indexOf(start) >= 0){
+      startArr = area;
+    }
+  }
+
+
+  console.log('start is ', start, 'target is : ', target, 'startArr is: ', startArr, 'targetArr is :', targetArr);
+  
+
   //start card is not same suit
-  }else if(cards[start[start.length-1]].suit !== 'Hearts'){
+  if(cards[start].suit !== targetArr){
     console.log('suit does not match!');
     return;
-  }else if(cards[start[start.length-1]].value !== 1 && target.length === 0){
-    // target.push(start.pop());
+  }else if(cards[start].value !== 1 && board[targetArr].length === 0){
     console.log('not an Ace, idiot!');
     return;
-  }else if(cards[start[start.length-1]].value === 1 && target.length === 0){
-    target.push(start.pop());
+  }else if(cards[start].value === 1 && board[targetArr].length === 0){
+    board[targetArr].push(board[startArr].pop());
+    addCardImg(targetArr);
+    removeCardImg();
     console.log('added Ace');
     return;
-  }else if((cards[start[start.length-1]]).value === (cards[target[target.length-1]].value+1)){
-    target.push(start.pop());
+  }else if((cards[start]).value === (cards[target].value+1)){
+    board[targetArr].push(board[startArr].pop());
+    removeCardImg();
     console.log('stored suit');
+    return;
   }else{
     console.log('card is not 1+ in value');
   }
@@ -193,7 +202,6 @@ function topImg(){
 }
 
 function addCardImg(colName){
-  console.log('colName is ', board[colName].length);
   if(board[colName].length === 1){
     return;
   }
@@ -222,18 +230,16 @@ function removeCardImg(){
 //determines if card is selected or not
 function decider(){
   var focus = $(this).attr('class');
-  console.log('decider fnc: focus is', focus, 'selected is', selected);
-  //Selector
+  // console.log('decider fnc: focus is', focus, 'selected is', selected);
+  //SELECTOR
   if(selected === false){
-    console.log('selected is false')
     //cannot select empty array
     if(board[focus].length === 0){
       console.log('no cards in column!');
-    }
-    else{
-      //this will update selected var with card number
+    //this will update selected var with card number
+    }else{
       selected = board[focus][board[focus].length-1];
-      console.log('Selected: ', selected);
+      // console.log('Selected: ', selected);
       //adds highlight img
       var selectImg = $('<img>');
       selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
@@ -241,15 +247,21 @@ function decider(){
     }
     return;
   }
-  //Executor
-  console.log('assigning target' )
+  //EXECUTOR
   var target = board[focus][board[focus].length-1] || -1;
-  console.log('executed on :', target);
-  moveCard(selected, target, focus);
-  // addCardImg();
+  if(focus === 'hearts' ||
+  focus === 'diamonds' ||
+  focus === 'spades' ||
+  focus === 'clubs'){
+    moveSuit(selected, target, focus);
+  }else{
+    moveCard(selected, target, focus);
+  }
   deselect();
   topImg();
 }
+
+
 
 
 function deselect(){
