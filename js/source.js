@@ -179,8 +179,8 @@ function topImg(){
     }else if(stack === 'deck'){
       $('.' + stack).find('img').attr('src', './img/decks/small/deck_3.png');
     //shows top card for suits
-    }else if(stack === 'hearts' || stack === 'diamonds' || stack === 'spades' || stack === 'clubs'){    
-      $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+    // }else if(stack === 'hearts' || stack === 'diamonds' || stack === 'spades' || stack === 'clubs'){    
+    //   $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
     //adds new img on top of columns 
     }else{    
       $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
@@ -189,9 +189,14 @@ function topImg(){
   }  
 }
 
-function addCardImg(){
-  var addCard = $('img').attr('src', './img/decks/small/deck_3.png');
-  $('.col1').append(addCard);
+function addCardImg(focus){
+  $('.' + focus).append('<img>');
+}
+
+function removeCardImg(){
+  console.log('removeCardImg function is triggering');
+  // console.log($('.' + startArr + ' img:nth-last-child(2)'));
+  $('.' + startArr + ' img:nth-last-child(2)').remove();
 }
 
 //update number of card images based off of array length
@@ -230,6 +235,9 @@ function decider(){
   moveCard(selected, target, focus);
   // addCardImg();
   deselect();
+  addCardImg(focus);
+  removeCardImg();
+  topImg();
 }
 
 
