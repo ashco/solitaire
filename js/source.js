@@ -1,5 +1,5 @@
 //Selected card number
-var selected;
+var selected = false;
 //array of 52 cards
 var cards = [];
 //board object containing arrays
@@ -69,27 +69,72 @@ function deal(){
   board.col6 = board.deck.splice(0, 7);
 }
 
+// function moveCard(start, target){
+//   //no card selected
+//   if(start.length === 0){
+//     console.log('no card in array!');
+//     return;
+//   //move king to empty column array 
+//   //add || to combine this with top if 
+//   }else if(cards[start[start.length-1]].value !== 13 &&
+//   target.length === 0){
+//     console.log('card is not a king!');
+//     return;
+//   }else if(cards[start[start.length-1]].value === 13 && 
+//   target.length === 0){
+//     target.push(start.pop());
+//     console.log('king card added to empty column!');
+//     return;
+//   //move card on top of card with alt color
+//   }else if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
+//   //move card on top of card with +1 higher value 
+//   (cards[start[start.length-1]]).value+1 === (cards[target[target.length-1]]).value){
+//     target.push(start.pop());
+//     console.log('card moved!');
+//     return;
+//   }else{
+//     console.log('card cannot move');
+//     return;
+//   }
+// }
+
+
 function moveCard(start, target){
-  //no card selected
-  if(start.length === 0){
-    console.log('no card in array!');
-    return ;
-  //move king to empty column array 
-  //add || to combine this with top if 
-  }else if(cards[start[start.length-1]].value !== 13 &&
+  //switch statement?
+  if(cards[start].value !== 13 &&
   target.length === 0){
-    console.log('card is not a king!');
+    console.log('NO MOVE: card is not a king!');
     return;
-  }else if(cards[start[start.length-1]].value === 13 && 
+  //Move king into empty array
+  }else if(cards[start].value === 13 && 
   target.length === 0){
+
+
+
+    //find targets array
     target.push(start.pop());
-    console.log('king card added to empty column!');
+    
+
+
+
+    console.log('MOVE: king card added to empty column!');
     return;
   //move card on top of card with alt color
-  }else if(cards[start[start.length-1]].color !== cards[target[target.length-1]].color &&
+  }else if(cards[start].color !== cards[target].color &&
   //move card on top of card with +1 higher value 
-  (cards[start[start.length-1]]).value+1 === (cards[target[target.length-1]]).value){
+  (cards[start]).value+1 === (cards[target]).value){
+    
+
+    
+
+
+    //find targets array
     target.push(start.pop());
+    
+
+
+
+
     console.log('card moved!');
     return;
   }else{
@@ -97,6 +142,8 @@ function moveCard(start, target){
     return;
   }
 }
+
+
 
 //logic that determines if card can be moved to sideline storage area
 function moveSuit(start, target){
@@ -138,11 +185,7 @@ function cycle(){
   //update images of deck and drawn
   deckImg();
   drawnImg();
-  // console.log('board.deck ' + board.deck);
-  // console.log('board.drawn ' + board.drawn);
 }
-
-
 
 //BOARD STATE IMAGES
 function deckImg(){
@@ -161,19 +204,8 @@ function drawnImg(){
   }
 }
 
-//top cards presented at start of game
-// function gameStartImg(){
-//   for(var col in board){
-//     // console.log(cards[(board[col][board[col].length-1])]);
-//     var topImg = $('<img>');
-//     topImg.attr('src', './img/cards/card_' + cards[(board[col][board[col].length-1])].suit + '_' + cards[(board[col][board[col].length-1])].name + '.png');
-//     $('.' + col).append(topImg);
-//   }  
-// }
-
 function topImg(){
   for(var stack in board){
-    // console.log(board[stack].length);
     if(board[stack].length === 0){
       $('.' + stack).find('img').last().attr('src', './img/extra/card_empty.png');
     }else if(stack === 'deck'){
@@ -185,35 +217,68 @@ function topImg(){
 }
 
 //update number of card images based off of array length
-function cardImgAdd(){
-  //insert image as last element 
-  var addCard = $('<img>');
-  $(this).append(addCard);
-}
+// function cardImgAdd(){
+//   //insert image as last element 
+//   var addCard = $('<img>');
+//   $(this).append(addCard);
+// }
 
-
-function selector(){
-  $('.selector').remove();
-  var selectedCol = this;
-  selectedCol = $(selectedCol).attr('class');
-  if(board[selectedCol].length === 0){
-    console.log('no cards in column!');
+//determines if card is selected or not
+function decider(){
+  var focus = this;
+  focus = $(focus).attr('class');
+  //Selector
+  if(selected === false){
+    //cannot select empty array
+    if(board[focus].length === 0){
+      console.log('no cards in column!');
+      return;
+    }else{
+      //this will update selected var with card number
+      selected = board[focus][board[focus].length-1];
+      console.log('Selected: ', selected);
+      //adds highlight img
+      var selectImg = $('<img>');
+      selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
+      $(this).append(selectImg);
+    }
     return;
-  //deselect if clicked twice  
-  }else if(selected === board[selectedCol][board[selectedCol].length-1]){
-    console.log('Nothing selected');
-    selected = '';
-    return;
-  }else{
-    //this will update selected var with card number
-    selected = board[selectedCol][board[selectedCol].length-1];
-    console.log('Selected: ', selected);
-    //this adds selected highlight img
-    var selectImg = $('<img>');
-    selectImg.addClass('selector').attr('src', './img/extra/card_selected.png');
-    $(this).append(selectImg);
   }
+  //Executor
+  var target = board[focus][board[focus].length-1]
+  console.log('executed on :', target);
+  moveCard(selected, target);
+  selected = false;
+  $('.selected').remove();
 }
+
+// function selector(){
+//   $('.selected').remove();
+//   var focus = this;
+//   focus = $(focus).attr('class');
+//   if(board[focus].length === 0){
+//     console.log('no cards in column!');
+//     return;
+//   //deselect if clicked twice  
+//   }else if(selected === board[focus][board[focus].length-1]){
+//     console.log('Nothing selected');
+//     selected = false;
+//     return;
+//   }else{
+//     //this will update selected var with card number
+//     selected = board[focus][board[focus].length-1];
+//     console.log('Selected: ', selected);
+//     //this adds selected highlight img
+//     var selectImg = $('<img>');
+//     selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
+//     $(this).append(selectImg);
+//   }
+// }
+
+
+
+
+
 
 
 //EVENT LISTENERS
@@ -221,13 +286,13 @@ $('.deck').click(cycle);
 
 //adds event listener to columns
 function addColClick(){
-  $('.drawn').click(selector);
-  $('.hearts').click(selector);
-  $('.diamonds').click(selector);
-  $('.spades').click(selector);
-  $('.clubs').click(selector);
+  $('.drawn').click(decider);
+  $('.hearts').click(decider);
+  $('.diamonds').click(decider);
+  $('.spades').click(decider);
+  $('.clubs').click(decider);
   for(var i = 0; i <= 6; i++){
-    $('.col'+i).click(selector);
+    $('.col'+i).click(decider);
     // adds img to column, may need to move function somewhere else
     // $('.col'+i).click(cardImgAdd);
     // console.log('img added');
