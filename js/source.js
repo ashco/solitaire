@@ -24,7 +24,7 @@ var boardState = {
   col6: []  
 };
 
-//generates card object attributes
+//generates card object attributess
 function card(value, name, suit, color){
   this.value = value;
   this.name = name;
@@ -178,7 +178,7 @@ function drawnImg(){
 
 function topImg(){
   for(var col in boardState){
-    console.log(boardState[col].length);
+    // console.log(boardState[col].length);
     if(boardState[col].length === 0){
       $('.'+col).find('img').last().attr('src', './img/extra/card_empty.png');
     }else{    
@@ -191,7 +191,7 @@ function topImg(){
 function cardImgAdd(){
   //insert image as last element 
   var addCard = $('<img>');
-  $(this).append(addCard);b
+  $(this).append(addCard);
 }
 
 
@@ -200,6 +200,12 @@ function cardImgDelete(){
 }
 
 
+function selector(){
+  console.log('this works');
+  var selectImg = $('<img>');
+  selectImg.attr('src', './img/extra/card_selected.png');
+  $(this).append(selectImg);
+}
 
 
 //!!!Need to integrate into moveSuit function
@@ -211,9 +217,13 @@ $('.deck').click(cycle);
 //adds event listener to columns
 function addColClick(){
   for(var i = 0; i < 6; i++){
-    $('.col'+i).click(cardImgAdd);
+    $('.col'+i).click(selector);
+    // adds img to column, may need to move function somewhere else
+    // $('.col'+i).click(cardImgAdd);
+    // console.log('img added');
   }
 }
+
 
 //present info in console
 function present(){
