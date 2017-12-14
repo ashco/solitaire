@@ -100,14 +100,14 @@ function deal(){
 
 
 function moveCard(start, target){
+  //finds names of arrays that contain start/target values
   for(var focus in board){
-    //finds column which contains start value, returns array name as startCol;
     if(board[focus].indexOf(start) >= 0){
-      startCol = focus;
-      console.log('Start Col is ', startCol);  
+      var startArr = focus;
+      console.log('Start Col is ', startArr);  
     }else if(board[focus].indexOf(target) >= 0){
-      targetCol = focus;
-      console.log('Target Col is ', targetCol);
+      var targetArr = focus;
+      console.log('Target Col is ', targetArr);
     }
   }
   //switch statement?
@@ -119,7 +119,8 @@ function moveCard(start, target){
   }else if(cards[start].value === 13 && 
   target.length === 0){
     //find targets array
-    target.push(start.pop());
+    board[targetArr].push(board[startArr].pop());
+    // console.log(board[targetArr]);
     console.log('MOVE: king card added to empty column!');
     return;
   //move card on top of card with alt color
@@ -127,7 +128,7 @@ function moveCard(start, target){
   //move card on top of card with +1 higher value 
   (cards[start]).value+1 === (cards[target]).value){
     //find targets array
-    target.push(start.pop());
+    board[targetArr].push(board[startArr].pop());
     console.log('card moved!');
     return;
   }else{
