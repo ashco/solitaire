@@ -3,25 +3,22 @@ var selected
 //array of 52 cards
 var cards = [];
 //array of 52 ran gen card values 
-var deckArray = [];
-var drawnArray = [];
-//suit object holder
-var suitState = {
-  heartsArray: [],
-  diamondsArray: [],
-  spadesArray: [],
-  clubsArray: []
-};
 
-//board object and column arrays
-var boardState = {
+//board object containing arrays
+var board = {
+  deckArr: [],
+  drawnArray: [],
   col0: [],
   col1: [],
   col2: [],
   col3: [],
   col4: [],
   col5: [],
-  col6: []  
+  col6: [],  
+  heartsArray: [],
+  diamondsArray: [],
+  spadesArray: [],
+  clubsArray: []
 };
 
 //generates card object attributess
@@ -54,10 +51,10 @@ function shuffle(){
   for(var i = 0; i < 52; i++){
     var cardSelect = (Math.floor(Math.random() * 52));
     //ensures shuffle function runs until 52 unique values are chosen
-    if(deckArray.includes(cardSelect)){
+    if(board.deckArr.includes(cardSelect)){
       i-=1;
     }else{
-      deckArray.push(cardSelect);
+      board.deckArr.push(cardSelect);
     }
   }
 }
@@ -65,13 +62,13 @@ function shuffle(){
 //MOVE CARDS BETWEEN ARRAYS
 //distributes first 28 cards into board array
 function deal(){
-  boardState.col0 = deckArray.splice(0, 1); 
-  boardState.col1 = deckArray.splice(0, 2);
-  boardState.col2 = deckArray.splice(0, 3);
-  boardState.col3 = deckArray.splice(0, 4);
-  boardState.col4 = deckArray.splice(0, 5);
-  boardState.col5 = deckArray.splice(0, 6);
-  boardState.col6 = deckArray.splice(0, 7);
+  board.col0 = board.deckArr.splice(0, 1); 
+  board.col1 = board.deckArr.splice(0, 2);
+  board.col2 = board.deckArr.splice(0, 3);
+  board.col3 = board.deckArr.splice(0, 4);
+  board.col4 = board.deckArr.splice(0, 5);
+  board.col5 = board.deckArr.splice(0, 6);
+  board.col6 = board.deckArr.splice(0, 7);
 }
 
 function moveCard(start, target){
@@ -132,26 +129,26 @@ function moveSuit(start, target){
 
 //logic that cycles through shuffled deck
 function cycle(){
-  //if deckArray is empty, flip cards
-  if(deckArray.length === 0){
+  //if board.deckArr is empty, flip cards
+  if(board.deckArr.length === 0){
     //img state: deck moves from empty to card back
-    deckArray = drawnArray.reverse();
-    drawnArray = [];
+    board.deckArr = board.drawnArray.reverse();
+    board.drawnArray = [];
   }else{
-    drawnArray.push(deckArray.pop());
+    board.drawnArray.push(board.deckArr.pop());
   }
   //update images of deck and drawn
   deckImg();
   drawnImg();
-  // console.log('deckArray ' + deckArray);
-  // console.log('drawnArray ' + drawnArray);
+  // console.log('board.deckArr ' + board.deckArr);
+  // console.log('board.drawnArray ' + board.drawnArray);
 }
 
 
 
 //BOARD STATE IMAGES
 function deckImg(){
-  if(deckArray.length === 0){
+  if(board.deckArr.length === 0){
     $('.deck').find('img').attr('src', './img/extra/card_empty.png');
   }else{
     $('.deck').find('img').attr('src', './img/decks/small/deck_3.png');
@@ -159,30 +156,30 @@ function deckImg(){
 }
 
 function drawnImg(){
-  if(drawnArray.length === 0){
+  if(board.drawnArray.length === 0){
     $('.drawn').find('img').attr('src', './img/extra/card_empty.png');
   }else{
-    $('.drawn').find('img').attr('src', './img/cards/card_' + cards[drawnArray[drawnArray.length-1]].suit + '_' + cards[drawnArray[drawnArray.length-1]].name + '.png');
+    $('.drawn').find('img').attr('src', './img/cards/card_' + cards[board.drawnArray[board.drawnArray.length-1]].suit + '_' + cards[board.drawnArray[board.drawnArray.length-1]].name + '.png');
   }
 }
 
 //top cards presented at start of game
 // function gameStartImg(){
-//   for(var col in boardState){
-//     // console.log(cards[(boardState[col][boardState[col].length-1])]);
+//   for(var col in board){
+//     // console.log(cards[(board[col][board[col].length-1])]);
 //     var topImg = $('<img>');
-//     topImg.attr('src', './img/cards/card_' + cards[(boardState[col][boardState[col].length-1])].suit + '_' + cards[(boardState[col][boardState[col].length-1])].name + '.png');
+//     topImg.attr('src', './img/cards/card_' + cards[(board[col][board[col].length-1])].suit + '_' + cards[(board[col][board[col].length-1])].name + '.png');
 //     $('.' + col).append(topImg);
 //   }  
 // }
 
 function topImg(){
-  for(var col in boardState){
-    // console.log(boardState[col].length);
-    if(boardState[col].length === 0){
+  for(var col in board){
+    // console.log(board[col].length);
+    if(board[col].length === 0){
       $('.'+col).find('img').last().attr('src', './img/extra/card_empty.png');
     }else{    
-      $('.'+col).find('img').last().attr('src', './img/cards/card_' + cards[(boardState[col][boardState[col].length-1])].suit + '_' + cards[(boardState[col][boardState[col].length-1])].name + '.png')
+      $('.'+col).find('img').last().attr('src', './img/cards/card_' + cards[(board[col][board[col].length-1])].suit + '_' + cards[(board[col][board[col].length-1])].name + '.png')
     }
   }  
 }
@@ -195,26 +192,21 @@ function cardImgAdd(){
 }
 
 
-function cardImgDelete(){
-  
-}
-
-
-function selectorAdd(){
+function selector(){
   $('.selector').remove();
   var selectedCol = this;
   selectedCol = $(selectedCol).attr('class');
-  if(boardState[selectedCol].length === 0){
+  if(board[selectedCol].length === 0){
     console.log('no cards in column!');
     return;
   //deselect if clicked twice  
-  }else if(selected === boardState[selectedCol][boardState[selectedCol].length-1]){
+  }else if(selected === board[selectedCol][board[selectedCol].length-1]){
     console.log('Deselected: ', selected);
     selected = '';
     return;
   }else{
     //this will update selected var with card number
-    selected = boardState[selectedCol][boardState[selectedCol].length-1];
+    selected = board[selectedCol][board[selectedCol].length-1];
     console.log('Selected: ', selected);
 
     //this adds selected highlight img
@@ -224,14 +216,6 @@ function selectorAdd(){
   }
 }
 
-// function selectorRemove(){
-//   if(selected === ''){
-//     $('.'+selectedCol).children('img').last().remove();
-//   }
-// }
-
-//!!!Need to integrate into moveSuit function
-
 
 //EVENT LISTENERS
 $('.deck').click(cycle);
@@ -239,7 +223,7 @@ $('.deck').click(cycle);
 //adds event listener to columns
 function addColClick(){
   for(var i = 0; i <= 6; i++){
-    $('.col'+i).click(selectorAdd);
+    $('.col'+i).click(selector);
     // adds img to column, may need to move function somewhere else
     // $('.col'+i).click(cardImgAdd);
     // console.log('img added');
@@ -250,10 +234,9 @@ function addColClick(){
 //present info in console
 function present(){
   console.log(cards);
-  console.log(boardState);
-  console.log(suitState);
-  console.log('Cards in deckArray: ', deckArray);
-  console.log('Cards in drawnArray: ', drawnArray);
+  console.log(board);
+  console.log('Cards in board.deckArr: ', board.deckArr);
+  console.log('Cards in board.drawnArray: ', board.drawnArray);
 }
 
 function init(){
