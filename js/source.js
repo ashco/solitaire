@@ -87,6 +87,100 @@ function cycle(){
   drawnImg();
 }
 
+
+//BOARD STATE IMAGES
+function deckImg(){
+  if(board.deck.length === 0){
+    $('.deck').find('img').attr('src', './img/extra/card_empty.png');
+  }else{
+    $('.deck').find('img').attr('src', './img/decks/small/deck_3.png');
+  }
+}
+
+function drawnImg(){
+  if(board.drawn.length === 0){
+    $('.drawn').find('img').attr('src', './img/extra/card_empty.png');
+  }else{
+    $('.drawn').find('img').attr('src', './img/cards/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png');
+  }
+}
+
+function topImg(){
+  for(var stack in board){
+    if(board[stack].length === 0){
+      $('.' + stack).find('img').last().attr('src', './img/extra/card_empty.png');
+    }else if(stack === 'deck'){
+      $('.' + stack).find('img').attr('src', './img/decks/small/deck_3.png'); 
+    }else{    
+      $('.' + stack).find('img').last()
+      .attr('class', 'flipped')
+      .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+      .attr('data-cardNum', board[stack][board[stack].length-1]);
+    }
+  }  
+}
+
+function addCardImg(colName){
+  if(board[colName].length === 1){
+    return;
+  }
+  $('.' + colName).append('<img>');
+}
+
+function removeCardImg(){
+  if(board[startArr].length === 0 ||
+  startArr === 'drawn' ||
+  startArr === 'hearts' ||
+  startArr === 'diamonds' ||
+  startArr === 'spades' ||
+  startArr === 'clubs'){
+    return;
+  }
+  $('.' + startArr + ' img:nth-last-child(2)').remove();
+}
+
+
+//determines if card is selected or not
+function decider(){
+  var focus = $(this).parent().attr('class');
+  console.log('decider fnc: this is ', this, 'focus is', focus);
+  //SELECTOR
+  if(selected === false){
+    //cannot select empty array
+    if(board[focus].length === 0){
+      console.log('no cards in column!');
+    //this will update selected var with card number
+    }else{
+      selected = board[focus][board[focus].length-1];
+      console.log('Selected: ', selected);
+      //adds highlight img
+      var selectImg = $('<img>');
+      selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
+      $(this).parent().append(selectImg);
+    }
+    return;
+  }
+  //EXECUTOR
+  var target = board[focus][board[focus].length-1] || -1;
+  if(focus === 'hearts' ||
+  focus === 'diamonds' ||
+  focus === 'spades' ||
+  focus === 'clubs'){
+    moveSuit(selected, target, focus);
+  }else{
+    moveCard(selected, target, focus);
+  }
+  deselect();
+  topImg();
+  addClick();
+}
+
+function deselect(){
+  selected = false;
+  $('.selected').remove();
+}
+
+
 function moveCard(start, target, targetArr){
   //finds names of arrays that contain start/target values
   for(var area in board){
@@ -162,93 +256,8 @@ function moveSuit(start, target, targetArr){
   }
 }
 
-//BOARD STATE IMAGES
-function deckImg(){
-  if(board.deck.length === 0){
-    $('.deck').find('img').attr('src', './img/extra/card_empty.png');
-  }else{
-    $('.deck').find('img').attr('src', './img/decks/small/deck_3.png');
-  }
-}
 
-function drawnImg(){
-  if(board.drawn.length === 0){
-    $('.drawn').find('img').attr('src', './img/extra/card_empty.png');
-  }else{
-    $('.drawn').find('img').attr('src', './img/cards/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png');
-  }
-}
 
-function topImg(){
-  for(var stack in board){
-    if(board[stack].length === 0){
-      $('.' + stack).find('img').last().attr('src', './img/extra/card_empty.png');
-    }else if(stack === 'deck'){
-      $('.' + stack).find('img').attr('src', './img/decks/small/deck_3.png'); 
-    }else{    
-      $('.' + stack).find('img').last().attr('class', 'flipped').attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png');
-    }
-  }  
-}
-
-function addCardImg(colName){
-  if(board[colName].length === 1){
-    return;
-  }
-  $('.' + colName).append('<img>');
-}
-
-function removeCardImg(){
-  if(board[startArr].length === 0 ||
-  startArr === 'drawn' ||
-  startArr === 'hearts' ||
-  startArr === 'diamonds' ||
-  startArr === 'spades' ||
-  startArr === 'clubs'){
-    return;
-  }
-  $('.' + startArr + ' img:nth-last-child(2)').remove();
-}
-
-//determines if card is selected or not
-function decider(){
-  var focus = $(this).parent().attr('class');
-  console.log('decider fnc: this is ', this, 'focus is', focus);
-  //SELECTOR
-  if(selected === false){
-    //cannot select empty array
-    if(board[focus].length === 0){
-      console.log('no cards in column!');
-    //this will update selected var with card number
-    }else{
-      selected = board[focus][board[focus].length-1];
-      console.log('Selected: ', selected);
-      //adds highlight img
-      var selectImg = $('<img>');
-      selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
-      $(this).parent().append(selectImg);
-    }
-    return;
-  }
-  //EXECUTOR
-  var target = board[focus][board[focus].length-1] || -1;
-  if(focus === 'hearts' ||
-  focus === 'diamonds' ||
-  focus === 'spades' ||
-  focus === 'clubs'){
-    moveSuit(selected, target, focus);
-  }else{
-    moveCard(selected, target, focus);
-  }
-  deselect();
-  topImg();
-  addClick();
-}
-
-function deselect(){
-  selected = false;
-  $('.selected').remove();
-}
 
 //EVENT LISTENERS
 $('.deck').click(cycle);
@@ -257,20 +266,7 @@ $('.deck').click(cycle);
 function addClick(){
   $('.flipped').off('click');
   $('.flipped').click(decider);
-  // $('.drawn').click(decider);
-  // $('.hearts').click(decider);
-  // $('.diamonds').click(decider);
-  // $('.spades').click(decider);
-  // $('.clubs').click(decider);
 }
-
-  // console.log($('.flipped'));
-
-    // $('.col'+i).click(decider);
-    // adds img to column, may need to move function somewhere else
-    // $('.col'+i).click(cardImgAdd);
-    // console.log('img added');
-
 
 //present info in console
 function present(){
@@ -290,4 +286,3 @@ function init(){
 }
 
 init();
-present();
