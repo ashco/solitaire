@@ -148,13 +148,21 @@ function removeCardImg(){
 
 function move(){
   //set start info
+    // console.log('This is:', $(this));
   if(startNum === false){
     console.log('START TURN');
     startNum = $(this).data('cardnum');
     startArr = $(this).parent().attr('class');
+
+    //Fix the drawn pile error
+    if(startArr === 'drawn' && board.drawn.length != 0){
+      startNum = board.drawn[board.drawn.length - 1];
+    }
+
     //No cards in selected array
     if(board[startArr].length === 0){
       console.log('no cards in column!');
+      deselect();
       return;
     }else{
       var selectImg = $('<img>');
@@ -171,24 +179,190 @@ function move(){
     }else{
       moveCard(startNum, startArr, targetNum, targetArr);
     }
-    console.log('This is:', $(this));
-    console.log('StartNum param  is ', startNum);
-    console.log('StartArr Col is ', startArr);  
-    console.log('TargetNum param  is ', targetNum);
-    console.log('TargetArr Col is ', targetArr);
+    // console.log('StartNum param  is ', startNum);
+    // console.log('StartArr Col is ', startArr);  
+    // console.log('TargetNum param  is ', targetNum);
+    // console.log('TargetArr Col is ', targetArr);
     //run to reset
     deselect();
   }
 }
 
 
-function moveSuit(){
-  console.log('moveSuit');
+function moveCard(startNum, startArr, targetNum, targetArr){
+  console.log('moveCard FNC');
+  console.log('startNum:', startNum);
+  console.log('startArr:', startArr);
+  console.log('targetNum:', targetNum);
+  console.log('targetArr', targetArr);
+  //Cannot move Non-King to empty spot on board
+  if(cards[startNum].value !== 13 && board[targetArr].length === 0){
+    console.log('NO MOVE: card is not a king!');
+    return;
+  //Can move King to empty spot on board
+  }else if(cards[startNum].value === 13 && board[targetArr].length === 0){
+    // board[targetArr].push(board[startArr].pop());
+    // addCardImg(targetArr);
+    // removeCardImg();
+    console.log('MOVE: king card added to empty array!');
+    return;
+  //move card on top of card with alt color && move card on top of card with +1 higher value 
+  }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
+    // board[targetArr].push(board[startArr].pop());
+    // addCardImg(targetArr);
+    // removeCardImg();
+    console.log('Card moved!');
+    return;
+  }else{
+    console.log('NO MOVE')
+  }
 }
 
-function moveCard(){
-  console.log('moveCard');
+function moveSuit(startNum, startArr, targetNum, targetArr){
+  console.log('moveSuit');
+  console.log('startNum:', startNum);
+  console.log('startArr:', startArr);
+  console.log('targetNum:', targetNum);
+  console.log('targetArr', targetArr);
+  //Logic for when suits do not match
+  if(cards[startNum].suit !== targetArr){
+    console.log('suit does not match!');
+    return;
+  //Logic to start with Aces only
+  }else if(cards[startNum].value !== 1 && board[targetArr].length === 0){
+    console.log('not an Ace, idiot!');
+    return;
+  //Logic to accept Aces
+  }else if(cards[startNum].value === 1 && board[targetArr].length === 0){
+    // board[targetArr].push(board[startArr].pop());
+    // addCardImg(targetArr);
+    // removeCardImg();
+    console.log('Added Ace');
+    return;
+  //Logic to add new cards
+  }else if((cards[startNum]).value === (cards[targetNum].value+1)){
+    // board[targetArr].push(board[startArr].pop());
+    // removeCardImg();
+    console.log('Added suit');
+    return;
+  }else{
+    console.log('card is not 1+ in value');
+  }
 }
+
+// function moveCard(start, target, targetArr){
+//   //finds names of arrays that contain start/target values
+//   for(var area in board){
+//     if(board[area].indexOf(start) >= 0){
+//       startArr = area;
+//     }
+//   }
+//   // console.log('this is the TARGET length', board[targetArr].length);
+//   // console.log('StartArr Col is ', startArr);  
+//   // console.log('TargetArr Col is ', targetArr);
+//   // console.log('Start param  is ', start);
+//   // console.log('Target param  is ', target);
+
+//   //switch statement?
+//   if(cards[start].value !== 13 &&
+//   board[targetArr].length === 0){
+//     console.log('NO MOVE: card is not a king!');
+//     return;
+//   //Move king into empty array
+//   }else if(cards[start].value === 13 && 
+//   board[targetArr].length === 0){
+//     //find targets array
+//     board[targetArr].push(board[startArr].pop());
+//     addCardImg(targetArr);
+//     removeCardImg();
+//     console.log('MOVE: king card added to empty column!');
+//     return;
+//   //move card on top of card with alt color
+//   }else if(cards[start].color !== cards[target].color &&
+//   //move card on top of card with +1 higher value 
+//   (cards[start]).value + 1 === (cards[target]).value){
+//     //find targets array
+//     board[targetArr].push(board[startArr].pop());
+//     addCardImg(targetArr);
+//     removeCardImg();
+//     console.log('card moved!');
+//     return;
+//   }else{
+//     console.log('card cannot move');
+//     return;
+//   }
+// }
+
+
+
+
+function moveSuit(startNum, startArr, targetNum, targetArr){
+  console.log('moveSuit');
+  console.log('startNum:', startNum);
+  console.log('startArr:', startArr);
+  console.log('targetNum:', targetNum);
+  console.log('targetArr', targetArr);
+  //Logic for when suits do not match
+  if(cards[startNum].suit !== targetArr){
+    console.log('suit does not match!');
+    return;
+  //Logic to start with Aces only
+  }else if(cards[startNum].value !== 1 && board[targetArr].length === 0){
+    console.log('not an Ace, idiot!');
+    return;
+  //Logic to accept Aces
+  }else if(cards[startNum].value === 1 && board[targetArr].length === 0){
+    // board[targetArr].push(board[startArr].pop());
+    // addCardImg(targetArr);
+    // removeCardImg();
+    console.log('Added Ace');
+    return;
+  //Logic to add new cards
+  }else if((cards[startNum]).value === (cards[targetNum].value+1)){
+    // board[targetArr].push(board[startArr].pop());
+    // removeCardImg();
+    console.log('Added suit');
+    return;
+  }else{
+    console.log('card is not 1+ in value');
+  }
+}
+  
+
+
+
+
+// //logic that determines if card can be moved to sideline storage area
+// function moveSuit(start, target, targetArr){
+//   //REPEAT - can turn into function
+//   for(var area in board){
+//     if(board[area].indexOf(start) >= 0){
+//       startArr = area;
+//     }
+//   }
+//   // console.log('start is ', start, 'target is : ', target, 'startArr is: ', startArr, 'targetArr is :', targetArr);
+//   //start card is not same suit
+//   if(cards[start].suit !== targetArr){
+//     console.log('suit does not match!');
+//     return;
+//   }else if(cards[start].value !== 1 && board[targetArr].length === 0){
+//     console.log('not an Ace, idiot!');
+//     return;
+//   }else if(cards[start].value === 1 && board[targetArr].length === 0){
+//     board[targetArr].push(board[startArr].pop());
+//     addCardImg(targetArr);
+//     removeCardImg();
+//     console.log('added Ace');
+//     return;
+//   }else if((cards[start]).value === (cards[target].value+1)){
+//     board[targetArr].push(board[startArr].pop());
+//     removeCardImg();
+//     console.log('stored suit');
+//     return;
+//   }else{
+//     console.log('card is not 1+ in value');
+//   }
+// }
 
 
 // //determines if card is selected or not
@@ -255,80 +429,10 @@ function deselect(){
 
 
 
-// function moveCard(start, target, targetArr){
-//   //finds names of arrays that contain start/target values
-//   for(var area in board){
-//     if(board[area].indexOf(start) >= 0){
-//       startArr = area;
-//     }
-//   }
-//   // console.log('this is the TARGET length', board[targetArr].length);
-//   // console.log('StartArr Col is ', startArr);  
-//   // console.log('TargetArr Col is ', targetArr);
-//   // console.log('Start param  is ', start);
-//   // console.log('Target param  is ', target);
 
-//   //switch statement?
-//   if(cards[start].value !== 13 &&
-//   board[targetArr].length === 0){
-//     console.log('NO MOVE: card is not a king!');
-//     return;
-//   //Move king into empty array
-//   }else if(cards[start].value === 13 && 
-//   board[targetArr].length === 0){
-//     //find targets array
-//     board[targetArr].push(board[startArr].pop());
-//     addCardImg(targetArr);
-//     removeCardImg();
-//     console.log('MOVE: king card added to empty column!');
-//     return;
-//   //move card on top of card with alt color
-//   }else if(cards[start].color !== cards[target].color &&
-//   //move card on top of card with +1 higher value 
-//   (cards[start]).value + 1 === (cards[target]).value){
-//     //find targets array
-//     board[targetArr].push(board[startArr].pop());
-//     addCardImg(targetArr);
-//     removeCardImg();
-//     console.log('card moved!');
-//     return;
-//   }else{
-//     console.log('card cannot move');
-//     return;
-//   }
-// }
 
-// //logic that determines if card can be moved to sideline storage area
-// function moveSuit(start, target, targetArr){
-//   //REPEAT - can turn into function
-//   for(var area in board){
-//     if(board[area].indexOf(start) >= 0){
-//       startArr = area;
-//     }
-//   }
-//   // console.log('start is ', start, 'target is : ', target, 'startArr is: ', startArr, 'targetArr is :', targetArr);
-//   //start card is not same suit
-//   if(cards[start].suit !== targetArr){
-//     console.log('suit does not match!');
-//     return;
-//   }else if(cards[start].value !== 1 && board[targetArr].length === 0){
-//     console.log('not an Ace, idiot!');
-//     return;
-//   }else if(cards[start].value === 1 && board[targetArr].length === 0){
-//     board[targetArr].push(board[startArr].pop());
-//     addCardImg(targetArr);
-//     removeCardImg();
-//     console.log('added Ace');
-//     return;
-//   }else if((cards[start]).value === (cards[target].value+1)){
-//     board[targetArr].push(board[startArr].pop());
-//     removeCardImg();
-//     console.log('stored suit');
-//     return;
-//   }else{
-//     console.log('card is not 1+ in value');
-//   }
-// }
+
+
 
 
 
