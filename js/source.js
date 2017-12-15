@@ -1,8 +1,9 @@
 //Selected card number
 var startNum = false;
-var startArr;
-var targetNum;
-var targetArr;
+var startArr = false;
+var targetNum = false;
+var targetArr = false;
+var moveSize;
 
 //var targetArr;
 //array of 52 cards
@@ -127,11 +128,11 @@ function topImg(){
   }  
 }
 
-function addCardImg(colName){
-  if(board[colName].length === 1){
+function addCardImg(targetArr){
+  if(board[targetArr].length === 1){
     return;
   }
-  $('.' + colName).append('<img>');
+  $('.' + targetArr).append('<img>');
 }
 
 function removeCardImg(){
@@ -153,6 +154,7 @@ function move(){
     console.log('START TURN');
     startNum = $(this).data('cardnum');
     startArr = $(this).parent().attr('class');
+    moveSize = board[startArr].length - board[startArr].indexOf(startNum);
 
     //Fix the drawn pile error
     if(startArr === 'drawn' && board.drawn.length != 0){
@@ -174,27 +176,26 @@ function move(){
     console.log('TARGET TURN');
     targetNum = $(this).data('cardnum') || -1;
     targetArr = $(this).parent().attr('class');
+    
+    console.log('startNum:', startNum);
+    console.log('startArr:', startArr);
+    console.log('targetNum:', targetNum);
+    console.log('targetArr', targetArr);
+    console.log('moveSize:', moveSize);
+
     if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
       moveSuit(startNum, startArr, targetNum, targetArr);
     }else{
       moveCard(startNum, startArr, targetNum, targetArr);
     }
-    // console.log('StartNum param  is ', startNum);
-    // console.log('StartArr Col is ', startArr);  
-    // console.log('TargetNum param  is ', targetNum);
-    // console.log('TargetArr Col is ', targetArr);
     //run to reset
     deselect();
+    topImg();
   }
 }
 
-
 function moveCard(startNum, startArr, targetNum, targetArr){
   console.log('moveCard FNC');
-  console.log('startNum:', startNum);
-  console.log('startArr:', startArr);
-  console.log('targetNum:', targetNum);
-  console.log('targetArr', targetArr);
   //Cannot move Non-King to empty spot on board
   if(cards[startNum].value !== 13 && board[targetArr].length === 0){
     console.log('NO MOVE: card is not a king!');
@@ -220,187 +221,27 @@ function moveCard(startNum, startArr, targetNum, targetArr){
 
 function moveSuit(startNum, startArr, targetNum, targetArr){
   console.log('moveSuit');
-  console.log('startNum:', startNum);
-  console.log('startArr:', startArr);
-  console.log('targetNum:', targetNum);
-  console.log('targetArr', targetArr);
   //Logic for when suits do not match
-  if(cards[startNum].suit !== targetArr){
-    console.log('suit does not match!');
-    return;
-  //Logic to start with Aces only
-  }else if(cards[startNum].value !== 1 && board[targetArr].length === 0){
-    console.log('not an Ace, idiot!');
+  if(cards[startNum].suit !== targetArr || cards[startNum].value !== 1 && board[targetArr].length === 0){
+    console.log('not an Ace / suits dont match');
     return;
   //Logic to accept Aces
   }else if(cards[startNum].value === 1 && board[targetArr].length === 0){
-    // board[targetArr].push(board[startArr].pop());
-    // addCardImg(targetArr);
-    // removeCardImg();
+    board[targetArr].push(board[startArr].pop());
+    addCardImg(targetArr);
+    removeCardImg();
     console.log('Added Ace');
     return;
   //Logic to add new cards
   }else if((cards[startNum]).value === (cards[targetNum].value+1)){
-    // board[targetArr].push(board[startArr].pop());
-    // removeCardImg();
+    board[targetArr].push(board[startArr].pop());
+    removeCardImg();
     console.log('Added suit');
     return;
   }else{
     console.log('card is not 1+ in value');
   }
 }
-
-// function moveCard(start, target, targetArr){
-//   //finds names of arrays that contain start/target values
-//   for(var area in board){
-//     if(board[area].indexOf(start) >= 0){
-//       startArr = area;
-//     }
-//   }
-//   // console.log('this is the TARGET length', board[targetArr].length);
-//   // console.log('StartArr Col is ', startArr);  
-//   // console.log('TargetArr Col is ', targetArr);
-//   // console.log('Start param  is ', start);
-//   // console.log('Target param  is ', target);
-
-//   //switch statement?
-//   if(cards[start].value !== 13 &&
-//   board[targetArr].length === 0){
-//     console.log('NO MOVE: card is not a king!');
-//     return;
-//   //Move king into empty array
-//   }else if(cards[start].value === 13 && 
-//   board[targetArr].length === 0){
-//     //find targets array
-//     board[targetArr].push(board[startArr].pop());
-//     addCardImg(targetArr);
-//     removeCardImg();
-//     console.log('MOVE: king card added to empty column!');
-//     return;
-//   //move card on top of card with alt color
-//   }else if(cards[start].color !== cards[target].color &&
-//   //move card on top of card with +1 higher value 
-//   (cards[start]).value + 1 === (cards[target]).value){
-//     //find targets array
-//     board[targetArr].push(board[startArr].pop());
-//     addCardImg(targetArr);
-//     removeCardImg();
-//     console.log('card moved!');
-//     return;
-//   }else{
-//     console.log('card cannot move');
-//     return;
-//   }
-// }
-
-
-
-
-function moveSuit(startNum, startArr, targetNum, targetArr){
-  console.log('moveSuit');
-  console.log('startNum:', startNum);
-  console.log('startArr:', startArr);
-  console.log('targetNum:', targetNum);
-  console.log('targetArr', targetArr);
-  //Logic for when suits do not match
-  if(cards[startNum].suit !== targetArr){
-    console.log('suit does not match!');
-    return;
-  //Logic to start with Aces only
-  }else if(cards[startNum].value !== 1 && board[targetArr].length === 0){
-    console.log('not an Ace, idiot!');
-    return;
-  //Logic to accept Aces
-  }else if(cards[startNum].value === 1 && board[targetArr].length === 0){
-    // board[targetArr].push(board[startArr].pop());
-    // addCardImg(targetArr);
-    // removeCardImg();
-    console.log('Added Ace');
-    return;
-  //Logic to add new cards
-  }else if((cards[startNum]).value === (cards[targetNum].value+1)){
-    // board[targetArr].push(board[startArr].pop());
-    // removeCardImg();
-    console.log('Added suit');
-    return;
-  }else{
-    console.log('card is not 1+ in value');
-  }
-}
-  
-
-
-
-
-// //logic that determines if card can be moved to sideline storage area
-// function moveSuit(start, target, targetArr){
-//   //REPEAT - can turn into function
-//   for(var area in board){
-//     if(board[area].indexOf(start) >= 0){
-//       startArr = area;
-//     }
-//   }
-//   // console.log('start is ', start, 'target is : ', target, 'startArr is: ', startArr, 'targetArr is :', targetArr);
-//   //start card is not same suit
-//   if(cards[start].suit !== targetArr){
-//     console.log('suit does not match!');
-//     return;
-//   }else if(cards[start].value !== 1 && board[targetArr].length === 0){
-//     console.log('not an Ace, idiot!');
-//     return;
-//   }else if(cards[start].value === 1 && board[targetArr].length === 0){
-//     board[targetArr].push(board[startArr].pop());
-//     addCardImg(targetArr);
-//     removeCardImg();
-//     console.log('added Ace');
-//     return;
-//   }else if((cards[start]).value === (cards[target].value+1)){
-//     board[targetArr].push(board[startArr].pop());
-//     removeCardImg();
-//     console.log('stored suit');
-//     return;
-//   }else{
-//     console.log('card is not 1+ in value');
-//   }
-// }
-
-
-// //determines if card is selected or not
-// function decider(){
-//   var focus = $(this).parent().attr('class');
-//   selectedCardNum = $(this).data('cardnum');
-//   console.log('decider fnc: this is ', this, 'focus is', focus, 'selectedCardNum is', selectedCardNum);
-//   //SELECTOR
-//   if(selected === false){
-//     //cannot select empty array
-//     if(board[focus].length === 0){
-//       console.log('no cards in column!');
-//     //this will update selected var with card number
-//     }else{
-//       selected = board[focus][board[focus].length-1];
-//       console.log('Selected: ', selected);
-//       //adds highlight img
-//       var selectImg = $('<img>');
-//       selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
-//       $(this).parent().append(selectImg);
-//     }
-//     return;
-//   }
-//   //EXECUTOR
-//   var target = board[focus][board[focus].length-1] || -1;
-//   if(focus === 'hearts' ||
-//   focus === 'diamonds' ||
-//   focus === 'spades' ||
-//   focus === 'clubs'){
-//     moveSuit(selected, target, focus);
-//   }else{
-//     moveCard(selected, target, focus);
-//   }
-//   deselect();
-//   topImg();
-//   addClick();
-// }
-
 
 function deselect(){
   startNum = false;
@@ -409,33 +250,6 @@ function deselect(){
   targetArr = false;
   $('.selected').remove();
 }
-
-
-
-// function moveCard2(startCardNum){
-//   //identifies column that card is in
-//   for(var area in board){
-//     if(board[area].indexOf(startCardNum) >= 0){
-//       startArr = area; 
-//       // console.log(startArr);
-//     }
-//   }
-//   if(cards[startCardNum].value !== 13 &&
-//   board[targetArr].length === 0){
-//     console.log('No move, card is not king');
-//     return;
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
 
 //EVENT LISTENERS
 $('.deck').click(cycle);
