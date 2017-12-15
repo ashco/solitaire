@@ -21,7 +21,6 @@ var board = {
   clubs: []
 };
 
-
 //INITIAL BOARD SETUP
 //generates card object attributess
 function card(value, name, suit, color){
@@ -72,6 +71,21 @@ function deal(){
   board.col6 = board.deck.splice(0, 7);
 }
 
+//logic that cycles through shuffled deck
+function cycle(){
+  deselect();
+  //if board.deck is empty, flip cards
+  if(board.deck.length === 0){
+    //img state: deck moves from empty to card back
+    board.deck = board.drawn.reverse();
+    board.drawn = [];
+  }else{
+    board.drawn.push(board.deck.pop());
+  }
+  //update images of deck and drawn
+  deckImg();
+  drawnImg();
+}
 
 function moveCard(start, target, targetArr){
   //finds names of arrays that contain start/target values
@@ -124,11 +138,7 @@ function moveSuit(start, target, targetArr){
       startArr = area;
     }
   }
-
-
-  console.log('start is ', start, 'target is : ', target, 'startArr is: ', startArr, 'targetArr is :', targetArr);
-  
-
+  // console.log('start is ', start, 'target is : ', target, 'startArr is: ', startArr, 'targetArr is :', targetArr);
   //start card is not same suit
   if(cards[start].suit !== targetArr){
     console.log('suit does not match!');
@@ -150,22 +160,6 @@ function moveSuit(start, target, targetArr){
   }else{
     console.log('card is not 1+ in value');
   }
-}
-
-//logic that cycles through shuffled deck
-function cycle(){
-  deselect();
-  //if board.deck is empty, flip cards
-  if(board.deck.length === 0){
-    //img state: deck moves from empty to card back
-    board.deck = board.drawn.reverse();
-    board.drawn = [];
-  }else{
-    board.drawn.push(board.deck.pop());
-  }
-  //update images of deck and drawn
-  deckImg();
-  drawnImg();
 }
 
 //BOARD STATE IMAGES
@@ -190,13 +184,9 @@ function topImg(){
     if(board[stack].length === 0){
       $('.' + stack).find('img').last().attr('src', './img/extra/card_empty.png');
     }else if(stack === 'deck'){
-      $('.' + stack).find('img').attr('src', './img/decks/small/deck_3.png');
-    //shows top card for suits
-    // }else if(stack === 'hearts' || stack === 'diamonds' || stack === 'spades' || stack === 'clubs'){    
-    //   $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
-    //adds new img on top of columns 
+      $('.' + stack).find('img').attr('src', './img/decks/small/deck_3.png'); 
     }else{    
-      $('.' + stack).find('img').last().attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png');
+      $('.' + stack).find('img').last().attr('class', 'flipped').attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png');
     }
   }  
 }
@@ -220,17 +210,10 @@ function removeCardImg(){
   $('.' + startArr + ' img:nth-last-child(2)').remove();
 }
 
-//update number of card images based off of array length
-// function cardImgAdd(){
-//   //insert image as last element 
-//   var addCard = $('<img>');
-//   $(this).append(addCard);
-// }
-
 //determines if card is selected or not
 function decider(){
-  var focus = $(this).attr('class');
-  // console.log('decider fnc: focus is', focus, 'selected is', selected);
+  var focus = $(this).parent().attr('class');
+  console.log('decider fnc: this is ', this, 'focus is', focus);
   //SELECTOR
   if(selected === false){
     //cannot select empty array
@@ -239,11 +222,11 @@ function decider(){
     //this will update selected var with card number
     }else{
       selected = board[focus][board[focus].length-1];
-      // console.log('Selected: ', selected);
+      console.log('Selected: ', selected);
       //adds highlight img
       var selectImg = $('<img>');
       selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
-      $(this).append(selectImg);
+      $(this).parent().append(selectImg);
     }
     return;
   }
@@ -259,34 +242,34 @@ function decider(){
   }
   deselect();
   topImg();
+  addClick();
 }
-
-
-
 
 function deselect(){
   selected = false;
   $('.selected').remove();
 }
 
-
 //EVENT LISTENERS
 $('.deck').click(cycle);
 
 //adds event listener to columns
-function addColClick(){
-  $('.drawn').click(decider);
-  $('.hearts').click(decider);
-  $('.diamonds').click(decider);
-  $('.spades').click(decider);
-  $('.clubs').click(decider);
-  for(var i = 0; i <= 6; i++){
-    $('.col'+i).click(decider);
+function addClick(){
+  $('.flipped').off('click');
+  $('.flipped').click(decider);
+  // $('.drawn').click(decider);
+  // $('.hearts').click(decider);
+  // $('.diamonds').click(decider);
+  // $('.spades').click(decider);
+  // $('.clubs').click(decider);
+}
+
+  // console.log($('.flipped'));
+
+    // $('.col'+i).click(decider);
     // adds img to column, may need to move function somewhere else
     // $('.col'+i).click(cardImgAdd);
     // console.log('img added');
-  }
-}
 
 
 //present info in console
@@ -302,8 +285,8 @@ function init(){
   deckCreate();
   shuffle();
   deal();
-  addColClick();
   topImg();
+  addClick();
 }
 
 init();
