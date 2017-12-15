@@ -210,11 +210,11 @@ function moveCard(startNum, startArr, targetNum, targetArr){
   //move card on top of card with alt color && move card on top of card with +1 higher value 
   }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
     
-    // console.log('targetArr before', targetArr);
+    console.log('board[targetArr] before', board[targetArr]);
     console.log(board[startArr].splice(-moveSize));
-    // targetArr = board[targetArr].concat(board[startArr].splice(-moveSize));
+    board[targetArr] = board[targetArr].concat(board[startArr].splice(-moveSize));
 
-    // console.log('targetArr after', targetArr);
+    console.log('board[targetArr] after', board[targetArr]);
 
 
     // board[targetArr].push(board[startArr].pop());
