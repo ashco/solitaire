@@ -89,6 +89,7 @@ function cycle(){
   //update images of deck and drawn
   deckImg();
   drawnImg();
+  flippedImg();
   addClick();
 }
 
@@ -180,27 +181,55 @@ function rmvCard(){
 //   $('.' + startArr + ' img:nth-last-child(2)').remove();
 // }
 
+// function flippedImg(){
+//   console.log('flippedImg FNC trigger');
+//   // for(var stack in board){
+//     var flipCount = $('.flipped').length
+//     for(var i = 0; i < flipCount; i++){
+//       $('.flipped')[i]      
+//         //NEED TO FIGURE OUT HOW TO ADD ATTRIBUTES
+
+//       // console.log(i, $('.flipped')[i]);
+//     }
+
+//     // $('.flipped').length
+//         // .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+//         // .attr('data-cardnum', board[stack][board[stack].length-1]);
+
+
+//     // $('.flipped')
+//   // }
+// }
+
+
+//FIGURE THIS OUT
 function flippedImg(){
-  console.log('flippedImg FNC trigger');
-}
-
-
-function topImg(){
   for(var stack in board){
-    if(board[stack].length === 0){
-      $('.' + stack).find('img').last()
-        .attr('src', './img/extra/card_empty.png');
-    }else if(stack === 'deck'){
-      $('.' + stack).find('img')
-        .attr('src', './img/decks/small/deck_3.png'); 
-    }else{    
-      $('.' + stack).find('img').last()
-        .attr('class', 'flipped')
-        .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
-        .attr('data-cardnum', board[stack][board[stack].length-1]);
-    }
+    $('.' + stack).find('.flipped')
+      .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+      .attr('data-cardnum', board[stack][board[stack].length-1]);
   }  
-}
+}  
+
+
+
+
+// function topImg(){
+//   for(var stack in board){
+//     if(board[stack].length === 0){
+//       $('.' + stack).find('img').last()
+//         .attr('src', './img/extra/card_empty.png');
+//     }else if(stack === 'deck'){
+//       $('.' + stack).find('img')
+//         .attr('src', './img/decks/small/deck_3.png'); 
+//     }else{    
+//       $('.' + stack).find('img').last()
+//         .attr('class', 'flipped')
+//         .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+//         .attr('data-cardnum', board[stack][board[stack].length-1]);
+//     }
+//   }  
+// }
 
 
 function move(){
@@ -244,8 +273,8 @@ function move(){
     // console.log('targetArr', targetArr);
 
     deselect();
-    // flippedImg();
-    topImg();
+    // topImg();
+    flippedImg();
     addClick();
   }
 }
@@ -356,8 +385,9 @@ function init(){
   deckCreate();
   shuffle();
   deal();
-  topImg();
+  // topImg();
   addClick();
+  flippedImg();
 }
 
 init();
