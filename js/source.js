@@ -96,62 +96,107 @@ function cycle(){
 //BOARD STATE IMAGES
 function deckImg(){
   if(board.deck.length === 0){
-    $('.deck').find('img').attr('src', './img/extra/card_empty.png');
+    $('.deck').find('img')
+      .attr('src', './img/extra/card_empty.png');
   }else{
-    $('.deck').find('img').attr('src', './img/decks/small/deck_3.png');
+    $('.deck').find('img')
+      .attr('src', './img/decks/small/deck_3.png');
   }
 }
 
 function drawnImg(){
   if(board.drawn.length === 0){
-    $('.drawn').find('img').attr('src', './img/extra/card_empty.png');
+    $('.drawn').find('img')
+      .attr('src', './img/extra/card_empty.png');
   }else{
     $('.drawn').find('img').removeAttr();
     $('.drawn').find('img')
-    .attr('src', './img/cards/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png')
-    .attr('data-cardnum', board.drawn[board.drawn.length-1]);
+      .attr('src', './img/cards/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png')
+      .attr('data-cardnum', board.drawn[board.drawn.length-1]);
   }
 }
+
+
+function addCard(){
+  //run when adding card to empty array
+  //THIS MIGHT CAUSE 1 EXTRA CARD 
+  if($('.' + targetArr).find('img').hasClass('flipped') === false){
+    $('.' + targetArr).find('img').last().attr('class', 'flipped');
+    console.log('no flipped img, adding flipped')
+  }
+  //add moveSize number of img for flippedImg to transform
+  for(var i = 0; i < moveSize; i++){
+    $('.' + targetArr).append('<img class="flipped">');
+  }
+}
+
+
+function rmvCard(){
+  console.log('rmvCard FNC');
+  //run when column now has no cards
+  if(board[startArr].length === 0){
+    $('.' + startArr).html('<img src=".img/extra/card_empty.png">');
+    return;
+  //run when taking all .flipped cards out of array
+  }else if($('.' + startArr).find('img').hasClass('flipped') === false){
+    $('.' + startArr).find('img').last().attr('class', 'flipped');
+  }else{
+  //logic to determine how many card imgs to remove
+
+  // console.log($('.' + startArr).find('img').hasClass('flipped'));
+
+
+  }
+}
+
+
+// function addCardImg(){
+//   //Protects against adding new cards to empty column arrays and suits
+//   if(board[targetArr].length === 0 || targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
+//     return;
+//   }
+//   $('.' + targetArr).append('<img>');
+// }
+
+// function removeCardImg(){
+//   if(board[startArr].length === 0 ||
+//   startArr === 'drawn' ||
+//   startArr === 'hearts' ||
+//   startArr === 'diamonds' ||
+//   startArr === 'spades' ||
+//   startArr === 'clubs'){
+//     return;
+//   }
+//   $('.' + startArr + ' img:nth-last-child(2)').remove();
+// }
+
+function flippedImg(){
+  console.log('flippedImg FNC trigger');
+}
+
 
 function topImg(){
   for(var stack in board){
     if(board[stack].length === 0){
-      $('.' + stack).find('img').last().attr('src', './img/extra/card_empty.png');
+      $('.' + stack).find('img').last()
+        .attr('src', './img/extra/card_empty.png');
     }else if(stack === 'deck'){
-      $('.' + stack).find('img').attr('src', './img/decks/small/deck_3.png'); 
+      $('.' + stack).find('img')
+        .attr('src', './img/decks/small/deck_3.png'); 
     }else{    
       $('.' + stack).find('img').last()
-      .attr('class', 'flipped')
-      .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
-      .attr('data-cardnum', board[stack][board[stack].length-1]);
+        .attr('class', 'flipped')
+        .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+        .attr('data-cardnum', board[stack][board[stack].length-1]);
     }
   }  
 }
 
-function addCardImg(){
-  //Protects against adding new cards to empty column arrays and suits
-  if(board[targetArr].length === 0 || targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
-    return;
-  }
-  $('.' + targetArr).append('<img>');
-}
-
-function removeCardImg(){
-  if(board[startArr].length === 0 ||
-  startArr === 'drawn' ||
-  startArr === 'hearts' ||
-  startArr === 'diamonds' ||
-  startArr === 'spades' ||
-  startArr === 'clubs'){
-    return;
-  }
-  $('.' + startArr + ' img:nth-last-child(2)').remove();
-}
 
 function move(){
   //set start info
   if(startNum === false){
-    // console.log('START TURN');
+    //assign variables
     startNum = $(this).data('cardnum');
     startArr = $(this).parent().attr('class');
     moveSize = board[startArr].length - board[startArr].indexOf(startNum);
@@ -164,6 +209,7 @@ function move(){
     //No cards in selected array
     if(board[startArr].length === 0){
       deselect();
+    //Create img to indicate selection
     }else{
       var selectImg = $('<img>');
       selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
@@ -173,12 +219,6 @@ function move(){
   }else{
     targetNum = $(this).data('cardnum') || -1;
     targetArr = $(this).parent().attr('class');
-    // console.log('startNum:', startNum);
-    // console.log('startArr:', startArr);
-    // console.log('targetNum:', targetNum);
-    // console.log('targetArr', targetArr);
-    // console.log('moveSize:', moveSize);
-
     //cannot move cards to drawn pile
     if(targetArr === 'drawn'){
       console.log('cannot move cards into drawn pile');
@@ -188,52 +228,59 @@ function move(){
       moveCard();
     }
     //run to reset selection process after execute and add click listeners to updated board state
+    console.log('startNum', startNum);
+    console.log('startArr', startArr);
+    console.log('targetNum', targetNum);
+    console.log('targetArr', targetArr);
+
     addClick();
     deselect();
+    topImg();
+    // flippedImg();
   }
 }
 
 function moveCard(){
-  console.log('moveCard FNC');
+  // console.log('moveCard FNC');
   console.log('board[startArr] before', board[startArr]);
   console.log('board[targetArr] before', board[targetArr]);
-  console.log('moveSize is:', moveSize);
+  // console.log('moveSize is:', moveSize);
   
-  
-
-  
-  console.log('target array length is:', board[targetArr].length);
-  console.log('target card position in array is:', board[targetArr].indexOf(targetNum));
+  // var shiftedArr = board[startArr].splice(-moveSize);
+  // board[targetArr] = board[targetArr].concat(shiftedArr);
+  // console.log('shiftedArr :', shiftedArr);  
+  // console.log('target array length is:', board[targetArr].length);
+  // console.log('target card position in array is:', board[targetArr].indexOf(targetNum));
   //Can only target top card || card is not King
   if(board[targetArr].length !== board[targetArr].indexOf(targetNum) + 1 || cards[startNum].value !== 13 && board[targetArr].length === 0){
     console.log('NO MOVE: can only target top card / card is not king');
   //move card on top of card with alt color && move card on top of card with +1 higher value 
   }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
     //Logic to move card array over
+
     //WORK IN PROGRESS
-    // addCardImg();
-    // removeCardImg();
-    // topImg();
-    console.log('Card moved!');
+    board[targetArr].push(board[startArr].pop());
+    
+
+    addCard();
+    rmvCard();
+    console.log('MOVE');
   //Can move King to empty spot on board
   }else if(cards[startNum].value === 13 && board[targetArr].length === 0){
     //Logic to move card array over
+
+
     //WORK IN PROGRESS 
-    // addCardImg();
-    // removeCardImg();
-    // topImg();
+    board[targetArr].push(board[startArr].pop());
+
+    addCard();
+    rmvCard();
     console.log('MOVE: king card added to empty array!');
   }else{
     console.log('NO MOVE')
   }
-
-
-  // var shiftedArr = board[startArr].splice(-moveSize, moveSize);
-  // board[targetArr] = board[targetArr].concat(shiftedArr);
-  // console.log('shiftedArr :', shiftedArr);
-  // console.log('board[startArr] after', board[startArr]);
-  // console.log('board[targetArr] after', board[targetArr]);
-
+  console.log('board[startArr] after', board[startArr]);
+  console.log('board[targetArr] after', board[targetArr]);
 }
 
 function moveSuit(){
@@ -245,16 +292,11 @@ function moveSuit(){
   //Logic to accept Aces
   }else if(cards[startNum].value === 1 && board[targetArr].length === 0){
     board[targetArr].push(board[startArr].pop());
-    // addCardImg();
-    // removeCardImg();
-    // topImg();
     console.log('Added Ace');
     return;
   //Logic to add new cards
   }else if((cards[startNum]).value === (cards[targetNum].value+1)){
     board[targetArr].push(board[startArr].pop());
-    // removeCardImg();
-    // topImg();
     console.log('Added suit');
     return;
   }else{
@@ -267,6 +309,7 @@ function deselect(){
   startArr = false;
   targetNum = false; 
   targetArr = false;
+  moveSize = false;
   $('.selected').remove();
 }
 
@@ -282,8 +325,6 @@ function addClick(){
 //present info in console
 function present(){
   console.log(board);
-  addCardImg();
-  removeCardImg();
   topImg();
 }
 
