@@ -128,8 +128,9 @@ function topImg(){
   }  
 }
 
-function addCardImg(targetArr){
-  if(board[targetArr].length === 1){
+function addCardImg(){
+  //Protects against adding new cards to empty column arrays and suits
+  if(board[targetArr].length === 0 || targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
     return;
   }
   $('.' + targetArr).append('<img>');
@@ -149,9 +150,8 @@ function removeCardImg(){
 
 function move(){
   //set start info
-    // console.log('This is:', $(this));
   if(startNum === false){
-    console.log('START TURN');
+    // console.log('START TURN');
     startNum = $(this).data('cardnum');
     startArr = $(this).parent().attr('class');
     moveSize = board[startArr].length - board[startArr].indexOf(startNum);
@@ -163,9 +163,7 @@ function move(){
 
     //No cards in selected array
     if(board[startArr].length === 0){
-      console.log('no cards in column!');
       deselect();
-      return;
     }else{
       var selectImg = $('<img>');
       selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
@@ -173,58 +171,67 @@ function move(){
     }
   //set target info
   }else{
-    console.log('TARGET TURN');
     targetNum = $(this).data('cardnum') || -1;
     targetArr = $(this).parent().attr('class');
-    
-    console.log('startNum:', startNum);
-    console.log('startArr:', startArr);
-    console.log('targetNum:', targetNum);
-    console.log('targetArr', targetArr);
-    console.log('moveSize:', moveSize);
+    // console.log('startNum:', startNum);
+    // console.log('startArr:', startArr);
+    // console.log('targetNum:', targetNum);
+    // console.log('targetArr', targetArr);
+    // console.log('moveSize:', moveSize);
 
-    if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
+    //cannot move cards to drawn pile
+    if(targetArr === 'drawn'){
+      console.log('cannot move cards into drawn pile');
+    }else if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
       moveSuit(startNum, startArr, targetNum, targetArr);
     }else{
       moveCard(startNum, startArr, targetNum, targetArr);
     }
-    //run to reset
+    //run to reset selection process after execute and add click listeners to updated board state
     deselect();
-    topImg();
+    addClick();
   }
 }
 
 function moveCard(startNum, startArr, targetNum, targetArr){
+  console.log('board[startArr] before', board[startArr]);
+  console.log('board[targetArr] before', board[targetArr]);
   console.log('moveCard FNC');
+  var shiftArr = board[startArr].splice(-1, moveSize);
+  console.log('shiftArr :', shiftArr);
+  board[targetArr] = board[targetArr].concat(shiftArr);
   //Cannot move Non-King to empty spot on board
   if(cards[startNum].value !== 13 && board[targetArr].length === 0){
     console.log('NO MOVE: card is not a king!');
     return;
-  //Can move King to empty spot on board
-  }else if(cards[startNum].value === 13 && board[targetArr].length === 0){
-    // board[targetArr].push(board[startArr].pop());
-    // addCardImg(targetArr);
-    // removeCardImg();
-    console.log('MOVE: king card added to empty array!');
-    return;
   //move card on top of card with alt color && move card on top of card with +1 higher value 
   }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
+    //Logic to move card array over
+    //WORK IN PROGRESS
     
-    console.log('board[targetArr] before', board[targetArr]);
-    console.log(board[startArr].splice(-moveSize));
-    board[targetArr] = board[targetArr].concat(board[startArr].splice(-moveSize));
+    
 
-    console.log('board[targetArr] after', board[targetArr]);
-
-
-    // board[targetArr].push(board[startArr].pop());
-    // addCardImg(targetArr);
-    // removeCardImg();
+    addCardImg();
+    removeCardImg();
+    topImg();
     console.log('Card moved!');
+    return;
+  //Can move King to empty spot on board
+  }else if(cards[startNum].value === 13 && board[targetArr].length === 0){
+    //Logic to move card array over
+    //WORK IN PROGRESS 
+
+    
+
+    addCardImg();
+    removeCardImg();
+    topImg();
+    console.log('MOVE: king card added to empty array!');
     return;
   }else{
     console.log('NO MOVE')
   }
+
 }
 
 function moveSuit(startNum, startArr, targetNum, targetArr){
@@ -236,14 +243,16 @@ function moveSuit(startNum, startArr, targetNum, targetArr){
   //Logic to accept Aces
   }else if(cards[startNum].value === 1 && board[targetArr].length === 0){
     board[targetArr].push(board[startArr].pop());
-    addCardImg(targetArr);
+    addCardImg();
     removeCardImg();
+    topImg();
     console.log('Added Ace');
     return;
   //Logic to add new cards
   }else if((cards[startNum]).value === (cards[targetNum].value+1)){
     board[targetArr].push(board[startArr].pop());
     removeCardImg();
+    topImg();
     console.log('Added suit');
     return;
   }else{
@@ -270,10 +279,7 @@ function addClick(){
 
 //present info in console
 function present(){
-  console.log(cards);
   console.log(board);
-  console.log('Cards in board.deck: ', board.deck);
-  console.log('Cards in board.drawn: ', board.drawn);
   topImg();
 }
 
