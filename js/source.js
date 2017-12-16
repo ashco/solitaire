@@ -121,25 +121,24 @@ function addCard(){
   //THIS MIGHT CAUSE 1 EXTRA CARD 
   // if($('.' + targetArr).find('img').hasClass('flipped') === false){
     // $('.' + targetArr).find('img').last().attr('class', 'flipped');
-  console.log('board[targetArr].length', board[targetArr].length);
-  console.log('test', targetArr.includes('col'));
+  // console.log('board[targetArr].length', board[targetArr].length);
+  // console.log('test', targetArr.includes('col'));
   //run when adding card to empty array
   if(board[targetArr].length === 1){
-    console.log('empty array')
-    console.log('moveSize before', moveSize);
+    // console.log('empty array')
+    // console.log('moveSize before', moveSize);
     moveSize = moveSize - 1;
-    console.log('moveSize after', moveSize);
-
+    // console.log('moveSize after', moveSize);
   }
   //add moveSize number of img for flippedImg to transform
   for(var i = 0; i < moveSize; i++){
-    console.log(i);
+    // console.log(i);
     $('.' + targetArr).append('<img class="flipped">');
   }
 }
 
 function rmvCard(){
-  console.log('rmvCard FNC');
+  // console.log('rmvCard FNC');
   if(startArr === 'drawn'){
     return;
   //run when column now has no cards
@@ -150,9 +149,9 @@ function rmvCard(){
   //run when taking all .flipped cards out of array
   }else{
   //logic to determine how many card imgs to remove
-    console.log('rmvCard else trigger')
+    // console.log('rmvCard else trigger')
     for(var i = 0; i < moveSize; i++){
-      console.log('i', i)
+      // console.log('i', i)
       $('.' + startArr).find('img:nth-last-child(2)').remove();
     }
     // if($('.' + startArr).find('img').hasClass('flipped') === false){
@@ -160,77 +159,29 @@ function rmvCard(){
   }
 }
 
-
-// function addCardImg(){
-//   //Protects against adding new cards to empty column arrays and suits
-//   if(board[targetArr].length === 0 || targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
-//     return;
-//   }
-//   $('.' + targetArr).append('<img>');
-// }
-
-// function removeCardImg(){
-//   if(board[startArr].length === 0 ||
-//   startArr === 'drawn' ||
-//   startArr === 'hearts' ||
-//   startArr === 'diamonds' ||
-//   startArr === 'spades' ||
-//   startArr === 'clubs'){
-//     return;
-//   }
-//   $('.' + startArr + ' img:nth-last-child(2)').remove();
-// }
-
-// function flippedImg(){
-//   console.log('flippedImg FNC trigger');
-//   // for(var stack in board){
-//     var flipCount = $('.flipped').length
-//     for(var i = 0; i < flipCount; i++){
-//       $('.flipped')[i]      
-//         //NEED TO FIGURE OUT HOW TO ADD ATTRIBUTES
-
-//       // console.log(i, $('.flipped')[i]);
-//     }
-
-//     // $('.flipped').length
-//         // .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
-//         // .attr('data-cardnum', board[stack][board[stack].length-1]);
-
-
-//     // $('.flipped')
-//   // }
-// }
-
-
-//FIGURE THIS OUT
 function flippedImg(){
   for(var stack in board){
-    $('.' + stack).find('.flipped')
-      .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
-      .attr('data-cardnum', board[stack][board[stack].length-1]);
+    //deck img
+    if(stack === 'deck'){
+    //empty arrays  
+    }else if(board[stack].length === 0){
+      $('.' + stack).find('img').last()
+        .attr('src', './img/extra/card_empty.png');
+    
+    //WIP
+    //suits and columns
+    //NEED TO CHANGE TO HIT ALL FLIPPED CARDS IN COLS
+    
+
+
+    }else{
+      $('.' + stack).find('img').last()
+        .attr('class', 'flipped')
+        .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
+        .attr('data-cardnum', board[stack][board[stack].length-1]);
+    }
   }  
-}  
-
-
-
-
-// function topImg(){
-//   for(var stack in board){
-//     if(board[stack].length === 0){
-//       $('.' + stack).find('img').last()
-//         .attr('src', './img/extra/card_empty.png');
-//     }else if(stack === 'deck'){
-//       $('.' + stack).find('img')
-//         .attr('src', './img/decks/small/deck_3.png'); 
-//     }else{    
-//       $('.' + stack).find('img').last()
-//         .attr('class', 'flipped')
-//         .attr('src', './img/cards/card_' + cards[(board[stack][board[stack].length-1])].suit + '_' + cards[(board[stack][board[stack].length-1])].name + '.png')
-//         .attr('data-cardnum', board[stack][board[stack].length-1]);
-//     }
-//   }  
-// }
-
+}
 
 function move(){
   //set start info
@@ -260,7 +211,7 @@ function move(){
     targetArr = $(this).parent().attr('class');
     //cannot move cards to drawn pile
     if(targetArr === 'drawn'){
-      console.log('cannot move cards into drawn pile');
+      // console.log('cannot move cards into drawn pile');
     }else if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
       moveSuit();
     }else{
@@ -281,8 +232,8 @@ function move(){
 
 function moveCard(){
   // console.log('moveCard FNC');
-  console.log('board[startArr] before', board[startArr]);
-  console.log('board[targetArr] before', board[targetArr]);
+  // console.log('board[startArr] before', board[startArr]);
+  // console.log('board[targetArr] before', board[targetArr]);
   // console.log('moveSize is:', moveSize);
   
   // var shiftedArr = board[startArr].splice(-moveSize);
@@ -292,68 +243,86 @@ function moveCard(){
   // console.log('target card position in array is:', board[targetArr].indexOf(targetNum));
   //Can only target top card || card is not King
   if(board[targetArr].length !== board[targetArr].indexOf(targetNum) + 1 || cards[startNum].value !== 13 && board[targetArr].length === 0){
-    console.log('NO MOVE: can only target top card / card is not king');
+    // console.log('NO MOVE: can only target top card / card is not king');
   //Can move King to empty spot on board
   }else if(cards[startNum].value === 13 && board[targetArr].length === 0){
     //Logic to move card array over
 
 
+
+
     //WORK IN PROGRESS 
     board[targetArr].push(board[startArr].pop());
 
+
+
+
+
     addCard();
     rmvCard();
-    console.log('MOVE: king card added to empty array!');
+    // console.log('MOVE: king card added to empty array!');
   //move card on top of card with alt color && move card on top of card with +1 higher value 
   }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
     //Logic to move card array over
 
+
+
+
     //WORK IN PROGRESS
     board[targetArr].push(board[startArr].pop());
-    
+
+
+
 
     addCard();
     rmvCard();
-    console.log('MOVE');
+    // console.log('MOVE');
   //move card from suits to columns
   }else if(startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs' 
   && cards[startNum].color !== cards[targetNum].color 
   && cards[startNum].value + 1 === (cards[targetNum]).value){
 
+
+
+
     //WORK IN PROGRESS
     board[targetArr].push(board[startArr].pop());
+
+
+
+
     
-    console.log('NEW MOVE THING')
+    // console.log('NEW MOVE THING')
     addCard();
   }else{
-    console.log('NO MOVE')
+    // console.log('NO MOVE')
   }
-  console.log('board[startArr] after', board[startArr]);
-  console.log('board[targetArr] after', board[targetArr]);
+  // console.log('board[startArr] after', board[startArr]);
+  // console.log('board[targetArr] after', board[targetArr]);
 }
 
 function moveSuit(){
-  console.log('moveSuit');
+  // console.log('moveSuit');
   //Logic for when suits do not match
   if(cards[startNum].suit !== targetArr || cards[startNum].value !== 1 
   && board[targetArr].length === 0){
-    console.log('not an Ace / suits dont match');
+    // console.log('not an Ace / suits dont match');
     return;
   //Logic to accept Aces
   }else if(cards[startNum].value === 1 
   && board[targetArr].length === 0){
     board[targetArr].push(board[startArr].pop());
     rmvCard();
-    console.log('Added Ace');
+    // console.log('Added Ace');
     return;
   //Logic to add new cards
   }else if((cards[startNum]).value === (cards[targetNum].value+1)){
     board[targetArr].push(board[startArr].pop());
     rmvCard();
-    console.log('Added suit');
+    // console.log('Added suit');
     return;
   }else{
-    console.log('card is not 1+ in value');
+    // console.log('card is not 1+ in value');
   }
 }
 
