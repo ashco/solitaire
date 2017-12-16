@@ -92,7 +92,6 @@ function cycle(){
   addClick();
 }
 
-
 //BOARD STATE IMAGES
 function deckImg(){
   if(board.deck.length === 0){
@@ -111,41 +110,52 @@ function drawnImg(){
   }else{
     $('.drawn').find('img').removeAttr();
     $('.drawn').find('img')
+      .addClass('flipped')
       .attr('src', './img/cards/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png')
       .attr('data-cardnum', board.drawn[board.drawn.length-1]);
   }
 }
 
-
 function addCard(){
-  //run when adding card to empty array
   //THIS MIGHT CAUSE 1 EXTRA CARD 
-  if($('.' + targetArr).find('img').hasClass('flipped') === false){
-    $('.' + targetArr).find('img').last().attr('class', 'flipped');
-    console.log('no flipped img, adding flipped')
+  // if($('.' + targetArr).find('img').hasClass('flipped') === false){
+    // $('.' + targetArr).find('img').last().attr('class', 'flipped');
+  console.log('board[targetArr].length', board[targetArr].length);
+  console.log('test', targetArr.includes('col'));
+  //run when adding card to empty array
+  if(board[targetArr].length === 1){
+    console.log('empty array')
+    console.log('moveSize before', moveSize);
+    moveSize = moveSize - 1;
+    console.log('moveSize after', moveSize);
+
   }
   //add moveSize number of img for flippedImg to transform
   for(var i = 0; i < moveSize; i++){
+    console.log(i);
     $('.' + targetArr).append('<img class="flipped">');
   }
 }
 
-
 function rmvCard(){
   console.log('rmvCard FNC');
+  if(startArr === 'drawn'){
+    return;
   //run when column now has no cards
-  if(board[startArr].length === 0){
-    $('.' + startArr).html('<img src=".img/extra/card_empty.png">');
+  }else if(board[startArr].length === 0){
+    $('.' + startArr).find('img').remove()
+    $('.' + startArr).append('<img class="flipped" src=".img/extra/card_empty.png">');
     return;
   //run when taking all .flipped cards out of array
-  }else if($('.' + startArr).find('img').hasClass('flipped') === false){
-    $('.' + startArr).find('img').last().attr('class', 'flipped');
   }else{
   //logic to determine how many card imgs to remove
-
-  // console.log($('.' + startArr).find('img').hasClass('flipped'));
-
-
+    console.log('rmvCard else trigger')
+    for(var i = 0; i < moveSize; i++){
+      console.log('i', i)
+      $('.' + startArr).find('img:nth-last-child(2)').remove();
+    }
+    // if($('.' + startArr).find('img').hasClass('flipped') === false){
+    //   $('.' + startArr).find('img').last().attr('class', 'flipped');
   }
 }
 
@@ -228,15 +238,15 @@ function move(){
       moveCard();
     }
     //run to reset selection process after execute and add click listeners to updated board state
-    console.log('startNum', startNum);
-    console.log('startArr', startArr);
-    console.log('targetNum', targetNum);
-    console.log('targetArr', targetArr);
+    // console.log('startNum', startNum);
+    // console.log('startArr', startArr);
+    // console.log('targetNum', targetNum);
+    // console.log('targetArr', targetArr);
 
     addClick();
     deselect();
-    topImg();
     // flippedImg();
+    topImg();
   }
 }
 
@@ -254,17 +264,6 @@ function moveCard(){
   //Can only target top card || card is not King
   if(board[targetArr].length !== board[targetArr].indexOf(targetNum) + 1 || cards[startNum].value !== 13 && board[targetArr].length === 0){
     console.log('NO MOVE: can only target top card / card is not king');
-  //move card on top of card with alt color && move card on top of card with +1 higher value 
-  }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
-    //Logic to move card array over
-
-    //WORK IN PROGRESS
-    board[targetArr].push(board[startArr].pop());
-    
-
-    addCard();
-    rmvCard();
-    console.log('MOVE');
   //Can move King to empty spot on board
   }else if(cards[startNum].value === 13 && board[targetArr].length === 0){
     //Logic to move card array over
@@ -276,6 +275,17 @@ function moveCard(){
     addCard();
     rmvCard();
     console.log('MOVE: king card added to empty array!');
+  //move card on top of card with alt color && move card on top of card with +1 higher value 
+  }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
+    //Logic to move card array over
+
+    //WORK IN PROGRESS
+    board[targetArr].push(board[startArr].pop());
+    
+
+    addCard();
+    rmvCard();
+    console.log('MOVE');
   }else{
     console.log('NO MOVE')
   }
@@ -292,11 +302,13 @@ function moveSuit(){
   //Logic to accept Aces
   }else if(cards[startNum].value === 1 && board[targetArr].length === 0){
     board[targetArr].push(board[startArr].pop());
+    rmvCard();
     console.log('Added Ace');
     return;
   //Logic to add new cards
   }else if((cards[startNum]).value === (cards[targetNum].value+1)){
     board[targetArr].push(board[startArr].pop());
+    rmvCard();
     console.log('Added suit');
     return;
   }else{
