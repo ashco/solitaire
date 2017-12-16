@@ -188,7 +188,7 @@ function flippedImg(){
       for(var i = 0; i < numToFlip; i++){
         $(flipList[i])
           .attr('src', './img/cards/card_' + cards[flipArr[i]].suit + '_' + cards[flipArr[i]].name + '.png')
-          .attr('data-cardnum', flipArr);
+          .attr('data-cardnum', flipArr[i]);
       }
     }
   }  
@@ -217,6 +217,7 @@ function move(){
   //set start info
   if(startNum === false){
     //assign variables
+
     startNum = $(this).data('cardnum');
     startArr = $(this).parent().attr('class');
     moveSize = board[startArr].length - board[startArr].indexOf(startNum);
@@ -240,6 +241,7 @@ function move(){
     }
   //set target info
   }else{
+    console.log('Clicked targetNum:', $(this));
     targetNum = $(this).data('cardnum') || -1;
     targetArr = $(this).parent().attr('class');
     //cannot move cards to drawn pile
