@@ -243,10 +243,10 @@ function move(){
     // console.log('targetNum', targetNum);
     // console.log('targetArr', targetArr);
 
-    addClick();
     deselect();
     // flippedImg();
     topImg();
+    addClick();
   }
 }
 
@@ -286,6 +286,16 @@ function moveCard(){
     addCard();
     rmvCard();
     console.log('MOVE');
+  //move card from suits to columns
+  }else if(startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs' 
+  && cards[startNum].color !== cards[targetNum].color 
+  && cards[startNum].value + 1 === (cards[targetNum]).value){
+
+    //WORK IN PROGRESS
+    board[targetArr].push(board[startArr].pop());
+    
+    console.log('NEW MOVE THING')
+    addCard();
   }else{
     console.log('NO MOVE')
   }
@@ -296,11 +306,13 @@ function moveCard(){
 function moveSuit(){
   console.log('moveSuit');
   //Logic for when suits do not match
-  if(cards[startNum].suit !== targetArr || cards[startNum].value !== 1 && board[targetArr].length === 0){
+  if(cards[startNum].suit !== targetArr || cards[startNum].value !== 1 
+  && board[targetArr].length === 0){
     console.log('not an Ace / suits dont match');
     return;
   //Logic to accept Aces
-  }else if(cards[startNum].value === 1 && board[targetArr].length === 0){
+  }else if(cards[startNum].value === 1 
+  && board[targetArr].length === 0){
     board[targetArr].push(board[startArr].pop());
     rmvCard();
     console.log('Added Ace');
