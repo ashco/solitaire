@@ -92,7 +92,7 @@ function cycle(){
 function deckImg(){
   if(board.deck.length === 0){
     $('.deck').find('img')
-      .attr('src', './img/extra/card_empty.png');
+      .attr('src', './img/extra/card_empty_green.png');
   }else{
     $('.deck').find('img')
       .attr('src', './img/decks/small/deck_3.png');
@@ -102,7 +102,7 @@ function deckImg(){
 function drawnImg(){
   if(board.drawn.length === 0){
     $('.drawn').find('img')
-      .attr('src', './img/extra/card_empty.png');
+      .attr('src', './img/extra/card_empty_green.png');
   }else{
     $('.drawn').find('img').removeAttr();
     $('.drawn').find('img')
@@ -119,10 +119,6 @@ function addCard(){
   }
   //Calculates row index
   var rowNum = board[targetArr].indexOf(board[targetArr][board[targetArr].length-1]);
-
-  console.log(rowNum)
-  console.log(moveSize)
-
   //add moveSize number of imgs for flippedImg to transform
   for(var i = 0; i < moveSize; i++){
     $('.' + targetArr).append('<img class="row' + (rowNum - moveSize + i + 1) + ' flipped">');
@@ -135,7 +131,7 @@ function rmvCard(){
   //run when column now has no cards
   }else if(board[startArr].length === 0){
     $('.' + startArr).find('img').remove()
-    $('.' + startArr).append('<img class="flipped" src="./img/extra/card_empty.png">');
+    $('.' + startArr).append('<img class="flipped" src="./img/extra/card_empty_green.png">');
     return;
   //run when taking all .flipped cards out of array
   }else{
@@ -154,7 +150,7 @@ function flippedImg(){
     //empty arrays  
     }else if(board[stack].length === 0){
       $('.' + stack).find('img').last()
-        .attr('src', './img/extra/card_empty.png');
+        .attr('src', './img/extra/card_empty_green.png');
     }else{
       var flipList = $('.' + stack).find('img.flipped');
       var numToFlip = flipList.length;
@@ -184,7 +180,11 @@ function move(){
     //Create img to indicate selection
     }else{
       var selectImg = $('<img>');
-      selectImg.addClass('selected').attr('src', './img/extra/card_selected.png');
+      var selectRow = (board[startArr].length-1)
+      if(startArr === 'drawn' || startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs'){
+        selectRow = 0;
+      }
+      selectImg.addClass('row' + selectRow + ' selected').attr('src', './img/extra/card_selected_low.png');
       $(this).parent().append(selectImg);
     }
   //set target info
