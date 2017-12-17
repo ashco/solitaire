@@ -1,24 +1,45 @@
 body {
   text-align: center;
-  background-color: #008C3C;
-
+  background-color: #159B47;
+  font-family: 'Roboto', sans-serif;
 }
 
 h2 {
   margin: 0;
 }
 
-.wrapper > div.overlay {
-  z-index: 10;
-  grid-column: 1 / 8;
-  grid-row: 1 / 2;
-  border: 1px solid #000;
-  border-radius: 8px;
-  border-top: 100px;
-  /*background-color: rgba(92,148,13,.4);*/
-  /*color: rgb(92,148,13);*/
-  /*font-size: 150%;*/
+.wrapper > div {
+    padding: .2em;
 }
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-row-gap: 7px; 
+    grid-auto-rows: minmax(100px, auto);
+    justify-content: center;  
+    grid-template-areas: 
+      "deck  drawn menu hearts diamonds spades clubs"
+      "col0  col1  col2 col3   col4     col5   col6 ";
+    border: 2px solid #000;
+    border-radius: 5px;
+    background-color: #008C3C;
+    padding: 2em;
+    color: #fff;
+    max-width: 940px;
+    margin: 0 auto;
+    /*z-index: -3;*/
+}
+
+/*.wrapper > div.overlay {
+  grid-column: 1 / 8;
+  grid-row: 2 / 2;
+  border: 2px solid #000;
+  border-radius: 8px;
+  height: 110%;
+  background-color: #159B47;
+  padding: 1em;
+  z-index: ;*/
 
 .deck {
   grid-area: deck;
@@ -38,7 +59,7 @@ h2 {
 
 .hearts{
   grid-area: hearts;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 .diamonds{
@@ -48,19 +69,14 @@ h2 {
 
 .spades{
   grid-area: spades;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 
 }
 
 .clubs{
   grid-area: clubs;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
-
-/*.playArea{
-  position: relative;
-}*/
-
 
 .row0{
   position: relative;
@@ -213,34 +229,4 @@ h2 {
   user-select: none; 
 }
 
-.wrapper {
-    /*border: 2px solid green;*/
-    /*border-radius: 5px;*/
-    /*background-color: #52FF92;*/
-    max-width: 940px;
-    margin: 0 auto;
-}
 
-.wrapper > div {
-    /*border: 2px solid #ffa94d;*/
-    /*border-radius: 5px;*/
-    /*background-color: #ffd8a8;*/
-    padding: .2em;
-    /*color: #d9480f;*/
-}
-
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-row-gap: 7px; 
-    grid-auto-rows: minmax(100px, auto);
-    justify-content: center;  
-    grid-template-areas: 
-      "deck  drawn menu hearts diamonds spades clubs"
-      "col0  col1  col2 col3   col4     col5   col6 ";
-    border: 2px solid #000;
-    border-radius: 5px;
-    background-color: #008C3C;
-    padding: 1em;
-    color: #fff;
-}
