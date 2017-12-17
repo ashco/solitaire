@@ -30,6 +30,123 @@ body {
   grid-area: clubs;
 }
 
+/*.playArea{
+  position: relative;
+}*/
+
+
+.row0{
+  position: relative;
+  z-index: auto;
+}
+
+.row1{
+  position: relative;
+  z-index: 1;
+  top: -150px;
+}
+
+.row2{
+  position: relative;
+  z-index: 2;
+  top: -300px;
+}
+
+.row3{
+  position: relative;
+  z-index: 3;
+  top: -450px;
+}
+
+.row4{
+  position: relative;
+  z-index: 4;
+  top: -600px;
+}
+
+.row5{
+  position: relative;
+  z-index: 5;
+  top: -750px;
+}
+
+.row6{
+  position: relative;
+  z-index: 6;
+  top: -900px;
+}
+
+.row7{
+  position: relative;
+  z-index: 7;
+  top: -1050px;
+}
+
+.row8{
+  position: relative;
+  z-index: 8;
+  top: -1200px;
+}
+
+.row9{
+  position: relative;
+  z-index: 9;
+  top: -1350px;
+}
+
+.row10{
+  position: relative;
+  z-index: 10;
+  top: -1500px;
+}
+
+.row11{
+  position: relative;
+  z-index: 11;
+  top: -1650px;
+}
+
+.row12{
+  position: relative;
+  z-index: 12;
+  top: -1800px;
+}
+
+.row13{
+  position: relative;
+  z-index: 13;
+  top: -1950px;
+}
+
+.row14{
+  position: relative;
+  z-index: 14;
+  top: -2100px;
+}
+
+.row15{
+  position: relative;
+  z-index: 15;
+  top: -2250px;
+}
+.row16{
+  position: relative;
+  z-index: 16;
+  top: -2400px;
+}
+
+.row17{
+  position: relative;
+  z-index: 17;
+  top: -2550px;
+}
+
+.row18{
+  position: relative;
+  z-index: 18;
+  top: -2700px;
+}
+
 .col0{
   grid-area: col0;
 }
