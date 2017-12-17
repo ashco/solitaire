@@ -35,6 +35,12 @@ h2 {
   z-index: 100;
 }
 
+.cardArea {
+  height: 202px;
+  width: 130px;
+  background: #159B47;
+}
+
 .deck {
   grid-area: deck;
 }
