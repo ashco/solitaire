@@ -14,6 +14,9 @@ var board = {
   spades: [],
   clubs: []
 };
+
+// [0,1,2,3,4,5,6,7,8,9,1,2,3]
+
 var startNum = false;
 var startArr = false;
 var targetNum = false;
@@ -101,24 +104,13 @@ function onClick(){
     }
     //Create img indicating selection
     selectImg(this);
-  //set target info
+  //set target and execute
   }else{
     targetNum = parseInt(this.getAttribute('data-cardnum')) || -1;
     targetArr = $(this).parent().attr('class');
-    if(targetArr === 'drawn'){  
-      //cannot move cards to drawn pile
-    }else if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
-      moveSuit();
-    }else{
-      moveCard();
-    }
-    deselect();
-    flippedImg();
-    addClick();
+    execute()
   }
 }
-
-
 
 function moveCard(){
   //Can only move 1 card from drawn array 
@@ -140,6 +132,13 @@ function moveCard(){
     addCard();
     rmvCard();
     moveCounter();
+  }else if(startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs' 
+  && cards[startNum].color !== cards[targetNum].color 
+  && cards[startNum].value + 1 === (cards[targetNum]).value){
+    //this removes and stores end of startArr based off moveSize
+    board[targetArr].push(board[startArr].pop());
+    addCard();
+    moveCounter();
   //move card on top of card with alt color && move card on top of card with +1 higher value 
   }else if(cards[startNum].color !== cards[targetNum].color 
   && (cards[startNum]).value + 1 === (cards[targetNum]).value){
@@ -150,25 +149,15 @@ function moveCard(){
     rmvCard();
     moveCounter();
   //move card from suits to columns
-  }else if(startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs' 
-  && cards[startNum].color !== cards[targetNum].color 
-  && cards[startNum].value + 1 === (cards[targetNum]).value){
-    //this removes and stores end of startArr based off moveSize
-    var shiftedArr = board[startArr].splice(-moveSize);
-    board[targetArr] = board[targetArr].concat(shiftedArr);
-    addCard();
-    moveCounter();
   }else{
     console.log('NO MOVE')
   }
-  // console.log('board[startArr] after', board[startArr]);
-  // console.log('board[targetArr] after', board[targetArr]);
 }
 
 function moveSuit(){
-  //Logic for when suits do not match or not an Ace
-  if(cards[startNum].suit !== targetArr || 
-  cards[startNum].value !== 1 && board[targetArr].length === 0){
+  //Logic for when suits do not match || not an Ace
+  if(cards[startNum].suit !== targetArr 
+  || cards[startNum].value !== 1 && board[targetArr].length === 0){
     return;
   //Logic to add new cards || accept Aces
   }else if(startNum === targetNum + 1 
@@ -176,8 +165,22 @@ function moveSuit(){
     board[targetArr].push(board[startArr].pop());
     rmvCard();
     moveCounter();
+    checkWin();
     return;
   }
+}
+
+function execute(){
+  if(targetArr === 'drawn'){  
+    //cannot move cards to drawn pile
+  }else if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
+    moveSuit();
+  }else{
+    moveCard();
+  }
+  deselect();
+  flippedImg();
+  addClick();
 }
 
 //BOARD STATE IMAGES
@@ -233,6 +236,7 @@ function rmvCard(){
   //run when column now has no cards
   }else if(board[startArr].length === 0){
     $('.' + startArr).find('img').remove()
+    // $('.' + startArr).find('img:nth-last-child(2)').remove()
     $('.' + startArr).append('<img class="flipped" src="./img/extra/card_empty_green.png">');
     return;
   //run when taking all .flipped cards out of array
@@ -240,8 +244,9 @@ function rmvCard(){
   //logic to determine how many card imgs to remove
     for(var i = 0; i < moveSize; i++){
       $('.' + startArr).find('img:nth-last-child(2)').remove();
-      $('.' + startArr).find('img:nth-last-child(2)').addClass('flipped');
     }
+    //MOVE THIS BACK UP A LINE IF THINGS BREAK
+    $('.' + startArr).find('img:nth-last-child(2)').addClass('flipped');
   }
 }
 
@@ -269,6 +274,12 @@ function flippedImg(){
 function moveCounter(){
   moveCount ++
   $('#move-count').text(moveCount);
+}
+
+function checkWin(){
+  if(board.hearts.length === 13 && board.diamonds.length === 13 && board.spades.length === 13 && board.clubs.length === 13){
+    $('.menu').html('<h2>Winner!</h2><h4>Congratulations on your well deserved and lonely victory!</h4>');
+  }
 }
 
 function deselect(){

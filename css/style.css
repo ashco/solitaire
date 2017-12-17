@@ -31,15 +31,9 @@ h2 {
     /*z-index: -3;*/
 }
 
-/*.wrapper > div.overlay {
-  grid-column: 1 / 8;
-  grid-row: 2 / 2;
-  border: 2px solid #000;
-  border-radius: 8px;
-  height: 110%;
-  background-color: #159B47;
-  padding: 1em;
-  z-index: ;*/
+#winner {
+  z-index: 100;
+}
 
 .deck {
   grid-area: deck;
@@ -220,7 +214,6 @@ h2 {
 
 .selected{
   position: relative;
-  /*pointer-events: none;*/
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
