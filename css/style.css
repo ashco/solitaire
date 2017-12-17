@@ -4,17 +4,21 @@ body {
 
 }
 
-/*.wrapper > div.overlay {
+h2 {
+  margin: 0;
+}
+
+.wrapper > div.overlay {
   z-index: 10;
   grid-column: 1 / 8;
   grid-row: 1 / 2;
   border: 1px solid #000;
-  border-radius: 8px;*/
-  /*border: 12px;*/
+  border-radius: 8px;
+  border-top: 100px;
   /*background-color: rgba(92,148,13,.4);*/
   /*color: rgb(92,148,13);*/
   /*font-size: 150%;*/
-/*}*/
+}
 
 .deck {
   grid-area: deck;
@@ -26,6 +30,10 @@ body {
 
 .menu {
   grid-area: menu;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .hearts{

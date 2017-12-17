@@ -19,6 +19,7 @@ var startArr = false;
 var targetNum = false;
 var targetArr = false;
 var moveSize;
+var moveCount = 0;
 
 //INITIAL BOARD SETUP
 //generates card object attributess
@@ -225,6 +226,7 @@ function moveCard(){
     board[targetArr] = board[targetArr].concat(shiftedArr);
     addCard();
     rmvCard();
+    moveCounter();
   //move card on top of card with alt color && move card on top of card with +1 higher value 
   }else if(cards[startNum].color !== cards[targetNum].color && 
   (cards[startNum]).value + 1 === (cards[targetNum]).value){
@@ -233,6 +235,7 @@ function moveCard(){
     board[targetArr] = board[targetArr].concat(shiftedArr);
     addCard();
     rmvCard();
+    moveCounter();
   //move card from suits to columns
   }else if(startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs' 
   && cards[startNum].color !== cards[targetNum].color 
@@ -241,6 +244,7 @@ function moveCard(){
     var shiftedArr = board[startArr].splice(-moveSize);
     board[targetArr] = board[targetArr].concat(shiftedArr);
     addCard();
+    moveCounter();
   }else{
     console.log('NO MOVE')
   }
@@ -258,13 +262,20 @@ function moveSuit(){
   && board[targetArr].length === 0){
     board[targetArr].push(board[startArr].pop());
     rmvCard();
+    moveCounter();
     return;
   //Logic to add new cards
   }else if(startNum === targetNum + 1){
     board[targetArr].push(board[startArr].pop());
     rmvCard();
+    moveCounter();
     return;
   }
+}
+
+function moveCounter(){
+  moveCount ++
+  $('#move-count').text(moveCount);
 }
 
 function deselect(){
