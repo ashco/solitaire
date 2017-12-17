@@ -117,10 +117,8 @@ function moveCard(){
   //Can only target top card || card is not King
   if(board[targetArr].length !== board[targetArr].indexOf(targetNum) + 1
   || cards[startNum].value !== 13 && board[targetArr].length === 0){
-    console.log('NO MOVE: can only target top card / card is not a king');
   //Can move King to empty spot on board
-  }else if(cards[startNum].value === 13 && board[targetArr].length === 0){
-    //Logic to move card array over
+  }else if(cards[startNum].value === 13 && board[targetArr].length === 0){    
     //this removes and stores end of startArr based off moveSize
     var shiftedArr = board[startArr].splice(-moveSize);
     board[targetArr] = board[targetArr].concat(shiftedArr);
@@ -129,13 +127,11 @@ function moveCard(){
     moveCounter();
   }else if(startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs' 
   && cards[startNum].color !== cards[targetNum].color && cards[startNum].value + 1 === (cards[targetNum]).value){
-    //this removes and stores end of startArr based off moveSize
     board[targetArr].push(board[startArr].pop());
     addImg();
     moveCounter();
   //move card on top of card with alt color && move card on top of card with +1 higher value 
   }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
-    //this removes and stores end of startArr based off moveSize
     var shiftedArr = board[startArr].splice(-moveSize);
     board[targetArr] = board[targetArr].concat(shiftedArr);
     addImg();
