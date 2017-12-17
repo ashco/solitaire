@@ -4,6 +4,18 @@ body {
 
 }
 
+/*.wrapper > div.overlay {
+  z-index: 10;
+  grid-column: 1 / 8;
+  grid-row: 1 / 2;
+  border: 1px solid #000;
+  border-radius: 8px;*/
+  /*border: 12px;*/
+  /*background-color: rgba(92,148,13,.4);*/
+  /*color: rgb(92,148,13);*/
+  /*font-size: 150%;*/
+/*}*/
+
 .deck {
   grid-area: deck;
 }
@@ -18,18 +30,23 @@ body {
 
 .hearts{
   grid-area: hearts;
+  margin-bottom: 10px
 }
 
 .diamonds{
   grid-area: diamonds;
+  margin-bottom: 10px
 }
 
 .spades{
   grid-area: spades;
+  margin-bottom: 10px
+
 }
 
 .clubs{
   grid-area: clubs;
+  margin-bottom: 10px
 }
 
 /*.playArea{
@@ -207,6 +224,7 @@ body {
 .wrapper {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    grid-row-gap: 7px; 
     grid-auto-rows: minmax(100px, auto);
     justify-content: center;  
     grid-template-areas: 
