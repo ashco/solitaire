@@ -78,14 +78,13 @@ function cycle(){
   }else{
     board.drawn.push(board.deck.pop());
   }
-  //update images of deck and drawn
   deckImg();
   drawnImg();
   flippedImg();
   addClick();
 }
 
-function move(){
+function onClick(){
   //set start info
   if(startNum === false){
     startNum = $(this).data('cardnum');
@@ -95,19 +94,13 @@ function move(){
     if(startArr === 'drawn' && board.drawn.length != 0){
       startNum = board.drawn[board.drawn.length - 1];
     }
-    //No cards in selected array
+    //When no cards are in selected array
     if(board[startArr].length === 0){
       deselect();
-    //Create img to indicate selection
-    }else{
-      var selectImg = $('<img>');
-      var selectRow = (board[startArr].length-1)
-      if(startArr === 'drawn' || startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs'){
-        selectRow = 0;
-      }
-      selectImg.addClass('row' + selectRow + ' selected').attr('src', './img/extra/card_selected_low.png');
-      $(this).parent().append(selectImg);
+      return;
     }
+    //Create img indicating selection
+    selectImg(this);
   //set target info
   }else{
     targetNum = parseInt(this.getAttribute('data-cardnum')) || -1;
@@ -119,12 +112,13 @@ function move(){
     }else{
       moveCard();
     }
-    //run to reset selection process after execute and add click listeners to updated board state
     deselect();
     flippedImg();
     addClick();
   }
 }
+
+
 
 function moveCard(){
   //Can only move 1 card from drawn array 
@@ -178,15 +172,13 @@ function moveSuit(){
     return;
   //Logic to add new cards || accept Aces
   }else if(startNum === targetNum + 1 
-  || cards[startNum].value === 1 
-  && board[targetArr].length === 0){
+  || cards[startNum].value === 1 && board[targetArr].length === 0){
     board[targetArr].push(board[startArr].pop());
     rmvCard();
     moveCounter();
     return;
   }
 }
-
 
 //BOARD STATE IMAGES
 function deckImg(){
@@ -210,6 +202,16 @@ function drawnImg(){
       .attr('src', './img/cards/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png')
       .attr('data-cardnum', board.drawn[board.drawn.length-1]);
   }
+}
+
+function selectImg(focus){
+  var selectImg = $('<img>');
+  var selectRow = (board[startArr].length-1)
+  if(startArr === 'drawn' || startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs'){
+    selectRow = 0;
+  }
+  selectImg.addClass('row' + selectRow + ' selected').attr('src', './img/extra/card_selected_low.png');
+  $(focus).parent().append(selectImg);
 }
 
 function addCard(){
@@ -264,8 +266,6 @@ function flippedImg(){
   }  
 }
 
-
-
 function moveCounter(){
   moveCount ++
   $('#move-count').text(moveCount);
@@ -286,13 +286,7 @@ $('.deck').click(cycle);
 //adds event listener to columns
 function addClick(){
   $('.flipped').off('click');
-  $('.flipped').click(move);
-}
-
-//present info in console
-function present(){
-  console.log(board);
-  flippedImg();
+  $('.flipped').click(onClick);
 }
 
 function init(){
