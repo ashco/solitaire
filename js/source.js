@@ -191,7 +191,7 @@ function drawnImg(){
     $('.drawn').find('img').removeAttr();
     $('.drawn').find('img')
       .addClass('flipped')
-      .attr('src', './img/cards/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png')
+      .attr('src', './img/cards/small/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png')
       .attr('data-cardnum', board.drawn[board.drawn.length-1]);
   }
 }
@@ -258,7 +258,7 @@ function flippedImg(){
       var flipArr = board[stack].slice(-numToFlip);
       for(var i = 0; i < numToFlip; i++){
         $(flipList[i])
-          .attr('src', './img/cards/card_' + cards[flipArr[i]].suit + '_' + cards[flipArr[i]].name + '.png')
+          .attr('src', './img/cards/small/card_' + cards[flipArr[i]].suit + '_' + cards[flipArr[i]].name + '.png')
           .attr('data-cardnum', flipArr[i]);
       }
     }
