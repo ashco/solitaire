@@ -2,10 +2,17 @@ body {
   text-align: center;
   background-color: #159B47;
   font-family: 'Roboto', sans-serif;
+  max-height: 1200px
 }
 
 h2 {
-  margin: 0;
+  /*margin-top: 0;*/
+}
+
+button {
+  width: 70px;
+  margin: 0 auto;
+
 }
 
 .wrapper > div {
@@ -16,7 +23,7 @@ h2 {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-row-gap: 7px; 
-    grid-auto-rows: minmax(100px, auto);
+    grid-rows: 100px;
     justify-content: center;  
     grid-template-areas: 
       "deck  drawn menu hearts diamonds spades clubs"
@@ -28,17 +35,11 @@ h2 {
     color: #fff;
     max-width: 940px;
     margin: 0 auto;
-    /*z-index: -3;*/
+    max-height: 1200px
 }
 
 #winner {
   z-index: 100;
-}
-
-.cardArea {
-  height: 202px;
-  width: 130px;
-  background: #159B47;
 }
 
 .deck {
@@ -55,6 +56,8 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /*height: 231px;*/
+  margin-bottom: 25px;
 }
 
 .hearts{

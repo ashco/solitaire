@@ -207,20 +207,20 @@ function selectImg(focus){
 }
 
 function addImg(){
+  //Calculates row ID num
+  var rowNum = board[targetArr].indexOf(board[targetArr][board[targetArr].length-1]);
   //suits logic
   if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
     $('.flipped').removeAttr('src').removeAttr('data-cardnum');
   }
   //columns logic
-  //Calculates row index
-  var rowNum = board[targetArr].indexOf(board[targetArr][board[targetArr].length-1]);
   //add moveSize number of imgs for flippedImg to transform
   for(var i = 0; i < moveSize; i++){
     $('.' + targetArr).append('<img class="row' + (rowNum - moveSize + i + 1) + ' flipped">');
   }
+  //
   if(board[targetArr].length === moveSize){
-    console.log('last flipped removed');
-    $('.' + targetArr).find('.flipped').last().remove();
+    $('.' + targetArr).find('img').first().remove();
   }
 }
 
@@ -285,6 +285,32 @@ function deselect(){
   $('.selected').remove();
 }
 
+function reset(){
+  deselect();
+  board.deck = []
+  board.drawn = []
+  board.col0 = []
+  board.col1 = []
+  board.col2 = []
+  board.col3 = []
+  board.col4 = []
+  board.col5 = []
+  board.col6 =[]  
+  board.hearts = []
+  board.diamonds = []
+  board.spades = []
+  board.clubs = []
+  //function to restore imgs per col
+  // for(var i = 0; i < 7; i++){
+  //   $('.col' + i).find('img').remove();
+  //   $('.col' + i).html('<img )
+  // }
+  shuffle();
+  deal();
+  addClick();
+  flippedImg();
+}
+
 //EVENT LISTENERS
 $('.deck').click(cycle);
 
@@ -293,6 +319,8 @@ function addClick(){
   $('.flipped').off('click');
   $('.flipped').click(onClick);
 }
+
+$('#reset').click(reset);
 
 function init(){
   deckCreate();
