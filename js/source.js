@@ -172,6 +172,15 @@ function execute(){
   addClick();
 }
 
+function deselect(){
+  startNum = false;
+  startArr = false;
+  targetNum = false; 
+  targetArr = false;
+  moveSize = false;
+  $('.selected').remove();
+}
+
 //BOARD STATE IMAGES
 function deckImg(){
   if(board.deck.length === 0){
@@ -265,6 +274,7 @@ function flippedImg(){
   }  
 }
 
+//EVER WATCHING LOGIC
 function moveCounter(){
   moveCount ++
   $('#move-count').text(moveCount);
@@ -274,15 +284,6 @@ function checkWin(){
   if(board.hearts.length === 13 && board.diamonds.length === 13 && board.spades.length === 13 && board.clubs.length === 13){
     $('.menu').html('<h2>Winner!</h2><h4>Congratulations on your well deserved and lonely victory!</h4>');
   }
-}
-
-function deselect(){
-  startNum = false;
-  startArr = false;
-  targetNum = false; 
-  targetArr = false;
-  moveSize = false;
-  $('.selected').remove();
 }
 
 function reset(){

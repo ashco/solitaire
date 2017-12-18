@@ -5,10 +5,6 @@ body {
   max-height: 1200px
 }
 
-h2 {
-  /*margin-top: 0;*/
-}
-
 button {
   width: 70px;
   margin: 0 auto;
@@ -230,5 +226,3 @@ button {
   -ms-user-select: none; 
   user-select: none; 
 }
-
-
