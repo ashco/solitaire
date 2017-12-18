@@ -338,6 +338,7 @@ function init(){
   shuffle();
   deal();
   addClick();
+  $('img').attr('src', './img/decks/small/deck_3.png');
   flippedImg();
 }
 
