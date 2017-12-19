@@ -2,7 +2,9 @@
 
 # Solitaire
 
-<img src="./img/readme/game_screenshot.png" width="900">;
+<img src="./img/readme/game_screenshot.png" width="900">
+
+Game Link: <a href="https://ashco.github.io/solitaire/">
 
 This project was the result of General Assembly's Web Development Immersive Unit 1 project to build a game using what we had learned in the course so far. It served as a great way to understand how Javascript can be used to create a product through small and specific funcitons. I ran into many challenges and subsequent eureka moments during this game's week long development. 
 
@@ -31,8 +33,10 @@ There are a few things that I am still not satisifed about with this project. If
   1) Remove the blank card images and replace them with styled divs. The add/rmv image logic got kind of messy and I think some of it was because adding one card to an empty row kept the image count the same, requiring an if statement that caused more bugs than I care to admit. 
   2) Track the number of flipped cards through another variable. I currently determine which cards are face up with a ".flipped" class on each image. This can be confusing and would likely simplify a lot of things if it was tracked in a variable. 
 - Fix a bug where the Ace of Hearts is not correctly recognized after it is placed in the suits area. Each card has a 'data-cardnum' value. It's value should be 0, but does not work as intended and breaks. I plan on fixing this bug to make the game fully playable. 
+- Add a legit reset button. I wanted to use a function to loop through and replace the images, but ran short on time and could not figure it out. 
 - CSS Grid height is longer than I'd like but I couldn't figure out how to reduce it.
 - Selecting the top right suits cards causes the board to skip down a little to make room for the selector image.  
+- Figure out how to DRY up the CSS. 
 - Better CSS styling. I would like to take every chance I get to improve my CSS skills because they make a huge difference in how any product is perceived. 
 - Add an option to play a harder 3 card draw mode.
 - Sound effects. Gotta appeal to the kids.

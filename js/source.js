@@ -152,7 +152,7 @@ function moveCard(){
     moveCounter();
   //move card from suits to columns
   }else{
-    console.log('NO MOVE')
+    console.log('NO MOVE');
   }
 }
 
