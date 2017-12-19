@@ -32,7 +32,7 @@ function card(value, name, suit, color){
 
 //generates 52 card deck list
 function deckCreate(){
-  this.names = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  this.names = ['a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'];
   this.suits = ['hearts','diamonds','spades','clubs'];
   this.color = ['Black', 'Red'];
   for(var s = 0; s < this.suits.length; s++){
@@ -104,6 +104,19 @@ function onClick(){
   //set target and execute
   }else{
     targetNum = parseInt(this.getAttribute('data-cardnum')) || -1;
+
+
+
+    // //fix heart suit bug
+    // console.log(this); 
+    // console.log($(this).data('cardnum'));
+    // if($(this).data('cardnum') === 0){
+    //   targetNum = 0;
+    //   console.log('targetNum set to:', targetNum);
+    // }
+
+
+
     targetArr = $(this).parent().attr('class');
     execute()
   }
