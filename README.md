@@ -1,6 +1,10 @@
 
 
-### Solitaire
+# Solitaire
+
+<img src="./img/readme/game_screenshot.png" width="600">
+
+## Thoughts
 
 
 
@@ -17,5 +21,5 @@ Click once to select, click again to move.
 ## Lingering Issues
 
 
-## Thoughts
+
 
