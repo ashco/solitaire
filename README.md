@@ -4,7 +4,7 @@
 
 <img src="./img/readme/game_screenshot.png" width="900">
 
-Game Link: <a href="https://ashco.github.io/solitaire/">
+Game Link: <a href="https://ashco.github.io/solitaire/">https://ashco.github.io/solitaire/</a>
 
 This project was the result of General Assembly's Web Development Immersive Unit 1 project to build a game using what we had learned in the course so far. It served as a great way to understand how Javascript can be used to create a product through small and specific funcitons. I ran into many challenges and subsequent eureka moments during this game's week long development. 
 
