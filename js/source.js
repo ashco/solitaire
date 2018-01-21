@@ -21,44 +21,6 @@ var targetArr = false;
 var moveSize;
 var moveCount = 0;
 
-//INITIAL BOARD SETUP
-//generates card object attributess
-function card(value, name, suit, color){
-  this.value = value;
-  this.name = name;
-  this.suit = suit;
-  this.color = color;
-}
-
-//generates 52 card deck list
-function deckCreate(){
-  this.names = ['a', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k'];
-  this.suits = ['hearts','diamonds','spades','clubs'];
-  this.color = ['Black', 'Red'];
-  for(var s = 0; s < this.suits.length; s++){
-    for(var n = 0; n < this.names.length; n++){
-      if(s > 1){
-        cards.push(new card( n+1, this.names[n], this.suits[s], this.color[0]));
-      }else{
-        cards.push(new card( n+1, this.names[n], this.suits[s], this.color[1]));
-      }
-    }
-  }  
-  return cards;
-}
-
-//creates 52 card order array
-function shuffle(){
-  for(var i = 0; i < 52; i++){
-    var cardSelect = (Math.floor(Math.random() * 52));
-    //ensures shuffle function runs until 52 unique values are chosen
-    if(board.deck.includes(cardSelect)){
-      i-=1;
-    }else{
-      board.deck.push(cardSelect);
-    }
-  }
-}
 
 //distributes first 28 cards into board array
 function deal(){
@@ -104,7 +66,8 @@ function onClick(){
   //set target and execute
   }else{
     targetNum = parseInt(this.getAttribute('data-cardnum')) || -1;
-
+    console.log(this);
+    console.log(targetNum);
 
 
     // //fix heart suit bug
@@ -114,7 +77,6 @@ function onClick(){
     //   targetNum = 0;
     //   console.log('targetNum set to:', targetNum);
     // }
-
 
 
     targetArr = $(this).parent().attr('class');
@@ -194,98 +156,7 @@ function deselect(){
   $('.selected').remove();
 }
 
-//BOARD STATE IMAGES
-function deckImg(){
-  if(board.deck.length === 0){
-    $('.deck').find('img')
-      .attr('src', './img/extra/card_empty_green.png');
-  }else{
-    $('.deck').find('img')
-      .attr('src', './img/decks/small/deck_3.png');
-  }
-}
-
-function drawnImg(){
-  if(board.drawn.length === 0){
-    $('.drawn').find('img')
-      .attr('src', './img/extra/card_empty_green.png');
-  }else{
-    $('.drawn').find('img').removeAttr();
-    $('.drawn').find('img')
-      .addClass('flipped')
-      .attr('src', './img/cards/small/card_' + cards[board.drawn[board.drawn.length-1]].suit + '_' + cards[board.drawn[board.drawn.length-1]].name + '.png')
-      .attr('data-cardnum', board.drawn[board.drawn.length-1]);
-  }
-}
-
-function selectImg(focus){
-  var selectImg = $('<img>');
-  var selectRow = (board[startArr].length-1)
-  if(startArr === 'drawn' || startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs'){
-    selectRow = 0;
-  }
-  selectImg.addClass('row' + selectRow + ' selected').attr('src', './img/extra/card_selected_low.png');
-  $(focus).parent().append(selectImg);
-}
-
-function addImg(){
-  //Calculates row ID num
-  var rowNum = board[targetArr].indexOf(board[targetArr][board[targetArr].length-1]);
-  //suits logic
-  if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
-    $('.flipped').removeAttr('src').removeAttr('data-cardnum');
-  }
-  //columns logic
-  //add moveSize number of imgs for flippedImg to transform
-  for(var i = 0; i < moveSize; i++){
-    $('.' + targetArr).append('<img class="row' + (rowNum - moveSize + i + 1) + ' flipped">');
-  }
-  //
-  if(board[targetArr].length === moveSize){
-    $('.' + targetArr).find('img').first().remove();
-  }
-}
-
-function rmvImg(){
-  //drawn pile
-  if(startArr === 'drawn'){
-    return;
-  //suits start
-  }else if(startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs'){
-    $('.flipped').removeAttr('src').removeAttr('data-cardnum');
-  //columns logic - empty array
-  }else if(board[startArr].length === 0){
-    $('.' + startArr).find('.flipped').remove();
-    $('.' + startArr).append('<img class="row0 flipped">');
-  //columns logic 
-  }else{
-    for(var i = 0; i < moveSize; i++){
-      $('.' + startArr).find('img:nth-last-child(2)').remove();
-    }
-    $('.' + startArr).find('img:nth-last-child(2)').addClass('flipped');
-  }
-}
-
-function flippedImg(){
-  for(var stack in board){
-    //deck img
-    if(stack === 'deck'){
-    //empty arrays  
-    }else if(board[stack].length === 0){
-      $('.' + stack).find('.flipped')
-        .attr('src', './img/extra/card_empty_green.png');
-    }else{
-      var flipList = $('.' + stack).find('.flipped');
-      var numToFlip = flipList.length;
-      var flipArr = board[stack].slice(-numToFlip);
-      for(var i = 0; i < numToFlip; i++){
-        $(flipList[i])
-          .attr('src', './img/cards/small/card_' + cards[flipArr[i]].suit + '_' + cards[flipArr[i]].name + '.png')
-          .attr('data-cardnum', flipArr[i]);
-      }
-    }
-  }  
-}
+// 
 
 //EVER WATCHING LOGIC
 function moveCounter(){
