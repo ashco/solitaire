@@ -8,7 +8,7 @@ var board = {
   col3: [],
   col4: [],
   col5: [],
-  col6: [],  
+  col6: [],
   hearts: [],
   diamonds: [],
   spades: [],
@@ -21,23 +21,24 @@ var targetArr = false;
 var moveSize;
 var moveCount = 0;
 
+var tester;
 
 //distributes first 28 cards into board array
-function deal(){
-  for(var i = 0; i < 7; i++){
-    board['col'+i] = board.deck.splice(0, (i + 1)); 
+function deal() {
+  for (var i = 0; i < 7; i++) {
+    board["col" + i] = board.deck.splice(0, i + 1);
   }
 }
 
 //logic that cycles through shuffled deck
-function cycle(){
+function cycle() {
   deselect();
   //if board.deck is empty, flip cards
-  if(board.deck.length === 0){
+  if (board.deck.length === 0) {
     //img state: deck moves from empty to card back
     board.deck = board.drawn.reverse();
     board.drawn = [];
-  }else{
+  } else {
     board.drawn.push(board.deck.pop());
   }
   deckImg();
@@ -46,86 +47,109 @@ function cycle(){
   addClick();
 }
 
-function onClick(){
+function onClick() {
   //set start info
-  if(startNum === false){
-    startNum = $(this).data('cardnum');
-    startArr = $(this).parent().attr('class');
+  if (startNum === false) {
+    startNum = $(this).data("cardnum");
+    startArr = $(this)
+      .parent()
+      .attr("class");
     moveSize = board[startArr].length - board[startArr].indexOf(startNum);
     //Fix the drawn pile error
-    if(startArr === 'drawn' && board.drawn.length != 0){
+    if (startArr === "drawn" && board.drawn.length != 0) {
       startNum = board.drawn[board.drawn.length - 1];
     }
     //When no cards are in selected array
-    if(board[startArr].length === 0){
+    if (board[startArr].length === 0) {
       deselect();
       return;
     }
     //Create img indicating selection
     selectImg(this);
-  //set target and execute
-  }else{
-    targetNum = parseInt(this.getAttribute('data-cardnum')) || -1;
+    //set target and execute
+  } else {
+    console.log(this.dataset.cardnum);
+    if (this.dataset.cardnum === "0") {
+      console.log("triggering!");
+      targetNum = 0;
+    } else {
+      targetNum = parseInt(this.getAttribute("data-cardnum")) || -1;
+    }
     console.log(this);
-    console.log(targetNum);
-
+    console.log({ targetNum });
 
     // //fix heart suit bug
-    // console.log(this); 
+    // console.log(this);
     // console.log($(this).data('cardnum'));
     // if($(this).data('cardnum') === 0){
     //   targetNum = 0;
     //   console.log('targetNum set to:', targetNum);
     // }
 
-
-    targetArr = $(this).parent().attr('class');
-    execute()
+    targetArr = $(this)
+      .parent()
+      .attr("class");
+    execute();
   }
 }
 
-function moveCard(){
-  //Can only move 1 card from drawn array 
-  if(startArr === 'drawn'){
+function moveCard() {
+  //Can only move 1 card from drawn array
+  if (startArr === "drawn") {
     moveSize = 1;
   }
   //Can only target top card || card is not King
-  if(board[targetArr].length !== board[targetArr].indexOf(targetNum) + 1
-  || cards[startNum].value !== 13 && board[targetArr].length === 0){
-  //Can move King to empty spot on board
-  }else if(cards[startNum].value === 13 && board[targetArr].length === 0){    
+  if (
+    board[targetArr].length !== board[targetArr].indexOf(targetNum) + 1 ||
+    (cards[startNum].value !== 13 && board[targetArr].length === 0)
+  ) {
+    //Can move King to empty spot on board
+  } else if (cards[startNum].value === 13 && board[targetArr].length === 0) {
     //this removes and stores end of startArr based off moveSize
     var shiftedArr = board[startArr].splice(-moveSize);
     board[targetArr] = board[targetArr].concat(shiftedArr);
     addImg();
     rmvImg();
     moveCounter();
-  }else if(startArr === 'hearts' || startArr === 'diamonds' || startArr === 'spades' || startArr === 'clubs' 
-  && cards[startNum].color !== cards[targetNum].color && cards[startNum].value + 1 === (cards[targetNum]).value){
+  } else if (
+    startArr === "hearts" ||
+    startArr === "diamonds" ||
+    startArr === "spades" ||
+    (startArr === "clubs" &&
+      cards[startNum].color !== cards[targetNum].color &&
+      cards[startNum].value + 1 === cards[targetNum].value)
+  ) {
     board[targetArr].push(board[startArr].pop());
     addImg();
     moveCounter();
-  //move card on top of card with alt color && move card on top of card with +1 higher value 
-  }else if(cards[startNum].color !== cards[targetNum].color && (cards[startNum]).value + 1 === (cards[targetNum]).value){
+    //move card on top of card with alt color && move card on top of card with +1 higher value
+  } else if (
+    cards[startNum].color !== cards[targetNum].color &&
+    cards[startNum].value + 1 === cards[targetNum].value
+  ) {
     var shiftedArr = board[startArr].splice(-moveSize);
     board[targetArr] = board[targetArr].concat(shiftedArr);
     addImg();
     rmvImg();
     moveCounter();
-  //move card from suits to columns
-  }else{
-    console.log('NO MOVE');
+    //move card from suits to columns
+  } else {
+    console.log("NO MOVE");
   }
 }
 
-function moveSuit(){
+function moveSuit() {
   //Logic for when suits do not match || not an Ace
-  if(cards[startNum].suit !== targetArr 
-  || cards[startNum].value !== 1 && board[targetArr].length === 0){
+  if (
+    cards[startNum].suit !== targetArr ||
+    (cards[startNum].value !== 1 && board[targetArr].length === 0)
+  ) {
     return;
-  //Logic to add new cards || accept Aces
-  }else if(startNum === targetNum + 1 
-  || cards[startNum].value === 1 && board[targetArr].length === 0){
+    //Logic to add new cards || accept Aces
+  } else if (
+    startNum === targetNum + 1 ||
+    (cards[startNum].value === 1 && board[targetArr].length === 0)
+  ) {
     board[targetArr].push(board[startArr].pop());
     rmvImg();
     moveCounter();
@@ -134,12 +158,17 @@ function moveSuit(){
   }
 }
 
-function execute(){
-  if(targetArr === 'drawn'){  
+function execute() {
+  if (targetArr === "drawn") {
     //cannot move cards to drawn pile
-  }else if(targetArr === 'hearts' || targetArr === 'diamonds' || targetArr === 'spades' || targetArr === 'clubs'){
+  } else if (
+    targetArr === "hearts" ||
+    targetArr === "diamonds" ||
+    targetArr === "spades" ||
+    targetArr === "clubs"
+  ) {
     moveSuit();
-  }else{
+  } else {
     moveCard();
   }
   deselect();
@@ -147,30 +176,37 @@ function execute(){
   addClick();
 }
 
-function deselect(){
+function deselect() {
   startNum = false;
   startArr = false;
-  targetNum = false; 
+  targetNum = false;
   targetArr = false;
   moveSize = false;
-  $('.selected').remove();
+  $(".selected").remove();
 }
 
-// 
+//
 
 //EVER WATCHING LOGIC
-function moveCounter(){
-  moveCount ++
-  $('#move-count').text(moveCount);
+function moveCounter() {
+  moveCount++;
+  $("#move-count").text(moveCount);
 }
 
-function checkWin(){
-  if(board.hearts.length === 13 && board.diamonds.length === 13 && board.spades.length === 13 && board.clubs.length === 13){
-    $('.menu').html('<h2>Winner!</h2><h4>Congratulations on your well deserved and lonely victory!</h4>');
+function checkWin() {
+  if (
+    board.hearts.length === 13 &&
+    board.diamonds.length === 13 &&
+    board.spades.length === 13 &&
+    board.clubs.length === 13
+  ) {
+    $(".menu").html(
+      "<h2>Winner!</h2><h4>Congratulations on your well deserved and lonely victory!</h4>"
+    );
   }
 }
 
-function reset(){
+function reset() {
   location.reload();
   // deselect();
   // board.deck = []
@@ -181,7 +217,7 @@ function reset(){
   // board.col3 = []
   // board.col4 = []
   // board.col5 = []
-  // board.col6 =[]  
+  // board.col6 =[]
   // board.hearts = []
   // board.diamonds = []
   // board.spades = []
@@ -208,22 +244,22 @@ function reset(){
 }
 
 //EVENT LISTENERS
-$('.deck').click(cycle);
+$(".deck").click(cycle);
 
 //adds event listener to columns
-function addClick(){
-  $('.flipped').off('click');
-  $('.flipped').click(onClick);
+function addClick() {
+  $(".flipped").off("click");
+  $(".flipped").click(onClick);
 }
 
-$('#reset').click(reset);
+$("#reset").click(reset);
 
-function init(){
+function init() {
   deckCreate();
   shuffle();
   deal();
   addClick();
-  $('img').attr('src', './img/decks/small/deck_3.png');
+  $("img").attr("src", "./img/decks/small/deck_3.png");
   flippedImg();
 }
 
