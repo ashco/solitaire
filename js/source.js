@@ -75,17 +75,6 @@ function onClick() {
     } else {
       targetNum = parseInt(this.getAttribute("data-cardnum")) || -1;
     }
-    console.log(this);
-    console.log({ targetNum });
-
-    // //fix heart suit bug
-    // console.log(this);
-    // console.log($(this).data('cardnum'));
-    // if($(this).data('cardnum') === 0){
-    //   targetNum = 0;
-    //   console.log('targetNum set to:', targetNum);
-    // }
-
     targetArr = $(this)
       .parent()
       .attr("class");
