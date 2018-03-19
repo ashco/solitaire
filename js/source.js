@@ -33,9 +33,9 @@ function deal() {
 //logic that cycles through shuffled deck
 function cycle() {
   deselect();
-  //if board.deck is empty, flip cards
+  // if board.deck is empty, flip cards
   if (board.deck.length === 0) {
-    //img state: deck moves from empty to card back
+    // img state: deck moves from empty to card back
     board.deck = board.drawn.reverse();
     board.drawn = [];
   } else {
@@ -48,14 +48,14 @@ function cycle() {
 }
 
 function onClick() {
-  //set start info
+  // set start info
   if (startNum === false) {
     startNum = $(this).data("cardnum");
     startArr = $(this)
       .parent()
       .attr("class");
     moveSize = board[startArr].length - board[startArr].indexOf(startNum);
-    //Fix the drawn pile error
+    // Fix the drawn pile error
     if (startArr === "drawn" && board.drawn.length != 0) {
       startNum = board.drawn[board.drawn.length - 1];
     }
@@ -68,9 +68,7 @@ function onClick() {
     selectImg(this);
     //set target and execute
   } else {
-    console.log(this.dataset.cardnum);
     if (this.dataset.cardnum === "0") {
-      console.log("triggering!");
       targetNum = 0;
     } else {
       targetNum = parseInt(this.getAttribute("data-cardnum")) || -1;
@@ -123,7 +121,7 @@ function moveCard() {
     moveCounter();
     //move card from suits to columns
   } else {
-    console.log("NO MOVE");
+    return;
   }
 }
 
@@ -174,8 +172,6 @@ function deselect() {
   $(".selected").remove();
 }
 
-//
-
 //EVER WATCHING LOGIC
 function moveCounter() {
   moveCount++;
@@ -196,6 +192,7 @@ function checkWin() {
 }
 
 function reset() {
+  console.log("reload");
   location.reload();
   // deselect();
   // board.deck = []
