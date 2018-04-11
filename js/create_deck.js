@@ -20,11 +20,9 @@ function deckCreate(){
         cards.push(new card( n+1, this.names[n], this.suits[s], this.color[1]));
       }
     }
-  }  
+  }
   return cards;
 }
-
-
 
 //creates 52 card order array
 function shuffle(){
@@ -39,11 +37,9 @@ function shuffle(){
   }
 }
 
-
-
 //distributes first 28 cards into board array
 function deal(){
   for(var i = 0; i < 7; i++){
-    board['col'+i] = board.deck.splice(0, (i + 1)); 
+    board['col'+i] = board.deck.splice(0, (i + 1));
   }
 }

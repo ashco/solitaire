@@ -194,39 +194,6 @@ function checkWin() {
 function reset() {
   console.log("reload");
   location.reload();
-  // deselect();
-  // board.deck = []
-  // board.drawn = []
-  // board.col0 = []
-  // board.col1 = []
-  // board.col2 = []
-  // board.col3 = []
-  // board.col4 = []
-  // board.col5 = []
-  // board.col6 =[]
-  // board.hearts = []
-  // board.diamonds = []
-  // board.spades = []
-  // board.clubs = []
-  // moveCount = -1;
-  // //WIP function to restore imgs per col
-  // for(var i = 0; i < 7; i++){
-  //   $('.col' + c).find('img').remove();
-  // }
-  // var c =
-  // var i = 6
-  // for(var c = 6; c > -1; c--){
-  //   for(i = 6; i > -1; i--){
-  //     console.log(c, i)
-  //     $('.col' + c).html('<img class="row' + i + '" src="./img/decks/small/deck_3.png">');
-  //   }
-  //   c-1;
-  // }
-  // moveCounter();
-  // shuffle();
-  // deal();
-  // addClick();
-  // flippedImg();
 }
 
 //EVENT LISTENERS
