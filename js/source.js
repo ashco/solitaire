@@ -12,7 +12,7 @@ var board = {
   hearts: [],
   diamonds: [],
   spades: [],
-  clubs: []
+  clubs: [],
 };
 var startNum = false;
 var startArr = false;
@@ -51,9 +51,7 @@ function onClick() {
   // set start info
   if (startNum === false) {
     startNum = $(this).data("cardnum");
-    startArr = $(this)
-      .parent()
-      .attr("class");
+    startArr = $(this).parent().attr("class");
     moveSize = board[startArr].length - board[startArr].indexOf(startNum);
     // Fix the drawn pile error
     if (startArr === "drawn" && board.drawn.length != 0) {
@@ -73,9 +71,7 @@ function onClick() {
     } else {
       targetNum = parseInt(this.getAttribute("data-cardnum")) || -1;
     }
-    targetArr = $(this)
-      .parent()
-      .attr("class");
+    targetArr = $(this).parent().attr("class");
     execute();
   }
 }
@@ -212,7 +208,7 @@ function init() {
   shuffle();
   deal();
   addClick();
-  $("img").attr("src", "./img/decks/small/deck_3.png");
+  $("img").attr("src", "./img/decks/large/deck_3.png");
   flippedImg();
 }
 

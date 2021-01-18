@@ -1,31 +1,23 @@
 //BOARD STATE IMAGES
 function deckImg() {
   if (board.deck.length === 0) {
-    $(".deck")
-      .find("img")
-      .attr("src", "./img/extra/card_empty_green.png");
+    $(".deck").find("img").attr("src", "./img/extra/card_empty_green.png");
   } else {
-    $(".deck")
-      .find("img")
-      .attr("src", "./img/decks/small/deck_3.png");
+    $(".deck").find("img").attr("src", "./img/decks/large/deck_3.png");
   }
 }
 
 function drawnImg() {
   if (board.drawn.length === 0) {
-    $(".drawn")
-      .find("img")
-      .attr("src", "./img/extra/card_empty_green.png");
+    $(".drawn").find("img").attr("src", "./img/extra/card_empty_green.png");
   } else {
-    $(".drawn")
-      .find("img")
-      .removeAttr();
+    $(".drawn").find("img").removeAttr();
     $(".drawn")
       .find("img")
       .addClass("flipped")
       .attr(
         "src",
-        "./img/cards/small/card_" +
+        "./img/cards/large/card_" +
           cards[board.drawn[board.drawn.length - 1]].suit +
           "_" +
           cards[board.drawn[board.drawn.length - 1]].name +
@@ -50,9 +42,7 @@ function selectImg(focus) {
   selectImg
     .addClass("row" + selectRow + " selected")
     .attr("src", "./img/extra/card_selected_low.png");
-  $(focus)
-    .parent()
-    .append(selectImg);
+  $(focus).parent().append(selectImg);
 }
 
 function addImg() {
@@ -67,9 +57,7 @@ function addImg() {
     targetArr === "spades" ||
     targetArr === "clubs"
   ) {
-    $(".flipped")
-      .removeAttr("src")
-      .removeAttr("data-cardnum");
+    $(".flipped").removeAttr("src").removeAttr("data-cardnum");
   }
   //columns logic
   //add moveSize number of imgs for flippedImg to transform
@@ -98,9 +86,7 @@ function rmvImg() {
     startArr === "spades" ||
     startArr === "clubs"
   ) {
-    $(".flipped")
-      .removeAttr("src")
-      .removeAttr("data-cardnum");
+    $(".flipped").removeAttr("src").removeAttr("data-cardnum");
     //columns logic - empty array
   } else if (board[startArr].length === 0) {
     $("." + startArr)
@@ -137,7 +123,7 @@ function flippedImg() {
         $(flipList[i])
           .attr(
             "src",
-            "./img/cards/small/card_" +
+            "./img/cards/large/card_" +
               cards[flipArr[i]].suit +
               "_" +
               cards[flipArr[i]].name +

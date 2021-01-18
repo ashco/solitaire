@@ -1,37 +1,46 @@
 body {
   text-align: center;
-  background-color: #159B47;
-  font-family: 'Roboto', sans-serif;
-  max-height: 1200px
+  background-color: #159b47;
+  font-family: "Roboto", sans-serif;
+  /* max-height: 1200px; */
+  color: #fff;
 }
 
 button {
   width: 70px;
   margin: 0 auto;
+}
 
+.flipped,
+.deck,
+button {
+  cursor: pointer;
+}
+
+img,
+.menu {
+  width: 100%;
 }
 
 .wrapper > div {
-    padding: .2em;
+  padding: 0.2em;
 }
 
 .wrapper {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-row-gap: 7px; 
-    grid-rows: 100px;
-    justify-content: center;  
-    grid-template-areas: 
-      "deck  drawn menu hearts diamonds spades clubs"
-      "col0  col1  col2 col3   col4     col5   col6 ";
-    border: 2px solid #000;
-    border-radius: 5px;
-    background-color: #008C3C;
-    padding: 2em;
-    color: #fff;
-    max-width: 940px;
-    margin: 0 auto;
-    max-height: 1200px
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-row-gap: 7px;
+  grid-rows: 100px;
+  justify-content: center;
+  grid-template-areas:
+    "deck  drawn menu hearts diamonds spades clubs"
+    "col0  col1  col2 col3   col4     col5   col6 ";
+  border: 2px solid #000;
+  border-radius: 5px;
+  background-color: #008c3c;
+  padding: 2em;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 #winner {
@@ -52,177 +61,184 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /*height: 231px;*/
   margin-bottom: 25px;
 }
 
-.hearts{
+.hearts {
   grid-area: hearts;
   margin-bottom: 10px;
 }
 
-.diamonds{
+.diamonds {
   grid-area: diamonds;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
-.spades{
+.spades {
   grid-area: spades;
   margin-bottom: 10px;
-
 }
 
-.clubs{
+.clubs {
   grid-area: clubs;
   margin-bottom: 10px;
 }
 
-.row0{
+.row0 {
   position: relative;
   z-index: auto;
 }
 
-.row1{
+.row1 {
   position: relative;
   z-index: 1;
-  top: -150px;
+  top: -12.5%;
 }
 
-.row2{
+.row2 {
   position: relative;
   z-index: 2;
-  top: -300px;
+  top: -25%;
 }
 
-.row3{
+.row3 {
   position: relative;
   z-index: 3;
-  top: -450px;
+  top: -37.5%;
 }
 
-.row4{
+.row4 {
   position: relative;
   z-index: 4;
-  top: -600px;
+  top: -50%;
 }
 
-.row5{
+.row5 {
   position: relative;
   z-index: 5;
-  top: -750px;
+  top: -62.5%;
 }
 
-.row6{
+.row6 {
   position: relative;
   z-index: 6;
-  top: -900px;
+  top: -75%;
 }
 
-.row7{
+.row7 {
   position: relative;
   z-index: 7;
-  top: -1050px;
+  top: -87.5%;
 }
 
-.row8{
+.row8 {
   position: relative;
   z-index: 8;
-  top: -1200px;
+  top: -100%;
 }
 
-.row9{
+.row9 {
   position: relative;
   z-index: 9;
-  top: -1350px;
+  top: -112.5%;
 }
 
-.row10{
+.row10 {
   position: relative;
   z-index: 10;
-  top: -1500px;
+  top: -125%;
 }
 
-.row11{
+.row11 {
   position: relative;
   z-index: 11;
-  top: -1650px;
+  top: -137.5%;
 }
 
-.row12{
+.row12 {
   position: relative;
   z-index: 12;
-  top: -1800px;
+  top: -150%;
 }
 
-.row13{
+.row13 {
   position: relative;
   z-index: 13;
-  top: -1950px;
+  top: -162.5%;
 }
 
-.row14{
+.row14 {
   position: relative;
   z-index: 14;
-  top: -2100px;
+  top: -175%;
 }
 
-.row15{
+.row15 {
   position: relative;
   z-index: 15;
-  top: -2250px;
+  top: -187.5;
 }
-.row16{
+.row16 {
   position: relative;
   z-index: 16;
-  top: -2400px;
+  top: -200%;
 }
 
-.row17{
+.row17 {
   position: relative;
   z-index: 17;
-  top: -2550px;
+  top: -212.5%;
 }
 
-.row18{
+.row18 {
   position: relative;
   z-index: 18;
-  top: -2700px;
+  top: -225%;
 }
 
-.col0{
+.col0 {
   grid-area: col0;
 }
 
-.col1{
+.col1 {
   grid-area: col1;
 }
 
-.col2{
+.col2 {
   grid-area: col2;
 }
 
-.col3{
+.col3 {
   grid-area: col3;
 }
 
-.col4{
+.col4 {
   grid-area: col4;
 }
 
-.col5{
+.col5 {
   grid-area: col5;
 }
 
-.col6{
+.col6 {
   grid-area: col6;
 }
 
-.selected{
+.selected {
   position: relative;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none; 
-  user-select: none; 
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media screen and (max-width: 680px) {
+  .wrapper {
+    padding: 0.5rem;
+  }
+  .menu h2 {
+    font-size: 18px;
+  }
 }
