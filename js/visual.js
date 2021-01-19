@@ -119,9 +119,27 @@ function flippedImg() {
     if (stack === "deck") {
       //empty arrays
     } else if (board[stack].length === 0) {
-      $("." + stack)
-        .find(".flipped")
-        .attr("src", "./img/extra/card_empty_black.png");
+      if (stack === "hearts") {
+        $("." + stack)
+          .find(".flipped")
+          .attr("src", "./img/extra/card_empty_black_hearts.png");
+      } else if (stack === "diamonds") {
+        $("." + stack)
+          .find(".flipped")
+          .attr("src", "./img/extra/card_empty_black_diamonds.png");
+      } else if (stack === "spades") {
+        $("." + stack)
+          .find(".flipped")
+          .attr("src", "./img/extra/card_empty_black_spades.png");
+      } else if (stack === "clubs") {
+        $("." + stack)
+          .find(".flipped")
+          .attr("src", "./img/extra/card_empty_black_clubs.png");
+      } else {
+        $("." + stack)
+          .find(".flipped")
+          .attr("src", "./img/extra/card_empty_black.png");
+      }
     } else {
       var flipList = $("." + stack).find(".flipped");
       var numToFlip = flipList.length;
