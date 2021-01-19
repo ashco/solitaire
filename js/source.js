@@ -1,28 +1,3 @@
-var cards = [];
-var board = {
-  deck: [],
-  drawn: [],
-  col0: [],
-  col1: [],
-  col2: [],
-  col3: [],
-  col4: [],
-  col5: [],
-  col6: [],
-  hearts: [],
-  diamonds: [],
-  spades: [],
-  clubs: [],
-};
-var startNum = false;
-var startArr = false;
-var targetNum = false;
-var targetArr = false;
-var moveSize;
-var moveCount = 0;
-
-var tester;
-
 //distributes first 28 cards into board array
 function deal() {
   for (var i = 0; i < 7; i++) {
@@ -63,6 +38,7 @@ function onClick() {
       return;
     }
     //Create img indicating selection
+    // Add box shadow to selection
     selectImg(this);
     //set target and execute
   } else {
@@ -192,24 +168,8 @@ function reset() {
   location.reload();
 }
 
-//EVENT LISTENERS
-$(".deck").click(cycle);
-
 //adds event listener to columns
 function addClick() {
   $(".flipped").off("click");
   $(".flipped").click(onClick);
 }
-
-$("#reset").click(reset);
-
-function init() {
-  deckCreate();
-  shuffle();
-  deal();
-  addClick();
-  $("img").attr("src", "./img/decks/large/deck_3.png");
-  flippedImg();
-}
-
-init();

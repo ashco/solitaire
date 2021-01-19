@@ -1,7 +1,7 @@
 //BOARD STATE IMAGES
 function deckImg() {
   if (board.deck.length === 0) {
-    $(".deck").find("img").attr("src", "./img/extra/card_empty_green.png");
+    $(".deck").find("img").attr("src", "./img/extra/card_empty_black.png");
   } else {
     $(".deck").find("img").attr("src", "./img/decks/large/deck_3.png");
   }
@@ -9,7 +9,7 @@ function deckImg() {
 
 function drawnImg() {
   if (board.drawn.length === 0) {
-    $(".drawn").find("img").attr("src", "./img/extra/card_empty_green.png");
+    $(".drawn").find("img").attr("src", "./img/extra/card_empty_black.png");
   } else {
     $(".drawn").find("img").removeAttr();
     $(".drawn")
@@ -27,6 +27,11 @@ function drawnImg() {
   }
 }
 
+// function selectImg(focus) {
+//   console.log(focus);
+
+//   $(focus).addClass("selected");
+// }
 function selectImg(focus) {
   var selectImg = $("<img>");
   var selectRow = board[startArr].length - 1;
@@ -41,7 +46,9 @@ function selectImg(focus) {
   }
   selectImg
     .addClass("row" + selectRow + " selected")
-    .attr("src", "./img/extra/card_selected_low.png");
+    .attr("src", "./img/extra/card_selected.png")
+    .click(deselect);
+  // .attr("src", "./img/extra/card_selected.png");
   $(focus).parent().append(selectImg);
 }
 
@@ -114,7 +121,7 @@ function flippedImg() {
     } else if (board[stack].length === 0) {
       $("." + stack)
         .find(".flipped")
-        .attr("src", "./img/extra/card_empty_green.png");
+        .attr("src", "./img/extra/card_empty_black.png");
     } else {
       var flipList = $("." + stack).find(".flipped");
       var numToFlip = flipList.length;

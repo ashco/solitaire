@@ -7,79 +7,82 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <link rel="stylesheet" type="text/css" href="./css/reset.css" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:500"
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class="background">
     <div class="wrapper">
-         
-      <div class="deck"><img /></div>
-         
-      <div class="drawn"><img class="flipped" /></div>
-      <div class="menu">
-        <h2>Solitaire</h2>
-        <br />
-        <h4>Move: <span id="move-count">0</span></h4>
-        <br />
-        <button id="reset">Reset</button>
+      <div class="top-row">
+        <div class="deck"><img /></div>
+        <div class="drawn"><img class="flipped" /></div>
+        <div class="menu">
+          <h4>Move: <span id="move-count">0</span></h4>
+          <h2>Hello, Solitaire</h2>
+          <button id="reset">Reset</button>
+        </div>
+        <div class="hearts">
+          <img class="flipped" src="./img/extra/card_empty_black_heart.png" />
+        </div>
+        <div class="diamonds">
+          <img
+            class="flipped"
+            src="./img/extra/card_empty_black_diamonds.png"
+          />
+        </div>
+        <div class="spades">
+          <img class="flipped" src="./img/extra/card_empty_black_spade.png" />
+        </div>
+        <div class="clubs">
+          <img class="flipped" src="./img/extra/card_empty_black_clubs.png" />
+        </div>
       </div>
-      <div class="hearts"><img class="flipped" />Hearts</div>
-         
-      <div class="diamonds"><img class="flipped" />Diamonds</div>
-         
-      <div class="spades"><img class="flipped" />Spades</div>
-         
-      <div class="clubs"><img class="flipped" />Clubs</div>
-      <div class="col0">
-        <img class="row0 flipped" />
-      </div>
-         
-      <div class="col1">
-        <img class="row0" />
-        <img class="row1 flipped" />
-      </div>
-         
-      <div class="col2">
-        <img class="row0" />
-        <img class="row1" />
-        <img class="row2 flipped" />
-      </div>
-         
-      <div class="col3">
-        <img class="row0" />
-        <img class="row1" />
-        <img class="row2" />
-        <img class="row3 flipped" />
-      </div>
-         
-      <div class="col4">
-        <img class="row0" />
-        <img class="row1" />
-        <img class="row2" />
-        <img class="row3" />
-        <img class="row4 flipped" />
-      </div>
-         
-      <div class="col5">
-        <img class="row0" />
-        <img class="row1" />
-        <img class="row2" />
-        <img class="row3" />
-        <img class="row4" />
-        <img class="row5 flipped" />
-      </div>
-         
-      <div class="col6">
-        <img class="row0" />
-        <img class="row1" />
-        <img class="row2" />
-        <img class="row3" />
-        <img class="row4" />
-        <img class="row5" />
-        <img class="row6 flipped" />
+      <div class="bottom-row">
+        <div class="col0">
+          <img class="row0 flipped" />
+        </div>
+        <div class="col1">
+          <img class="row0" />
+          <img class="row1 flipped" />
+        </div>
+        <div class="col2">
+          <img class="row0" />
+          <img class="row1" />
+          <img class="row2 flipped" />
+        </div>
+        <div class="col3">
+          <img class="row0" />
+          <img class="row1" />
+          <img class="row2" />
+          <img class="row3 flipped" />
+        </div>
+        <div class="col4">
+          <img class="row0" />
+          <img class="row1" />
+          <img class="row2" />
+          <img class="row3" />
+          <img class="row4 flipped" />
+        </div>
+        <div class="col5">
+          <img class="row0" />
+          <img class="row1" />
+          <img class="row2" />
+          <img class="row3" />
+          <img class="row4" />
+          <img class="row5 flipped" />
+        </div>
+        <div class="col6">
+          <img class="row0" />
+          <img class="row1" />
+          <img class="row2" />
+          <img class="row3" />
+          <img class="row4" />
+          <img class="row5" />
+          <img class="row6 flipped" />
+        </div>
       </div>
     </div>
     <script
@@ -90,5 +93,6 @@
     <script type="text/javascript" src="./js/create_deck.js"></script>
     <script type="text/javascript" src="./js/visual.js"></script>
     <script type="text/javascript" src="./js/source.js"></script>
+    <script type="text/javascript" src="./js/init.js"></script>
   </body>
 </html>
