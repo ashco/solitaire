@@ -4,6 +4,14 @@
   --green: hsl(145.8, 100%, 30.6%);
 }
 
+@font-face {
+  font-family: "Rubik";
+  src: url("../fonts/Rubik-Medium.ttf") format("truetype");
+}
+
+* {
+  font-family: "Rubik";
+}
 body {
   text-align: center;
   background-color: var(--black);
@@ -277,8 +285,8 @@ h2 {
 .selected {
   position: absolute;
   box-shadow: 0px 0px 5px 4px hsl(36.6, 96%, 60.8%);
-  height: 201px;
-  width: 129px;
+  height: 186px;
+  width: 119px;
   margin: 1px;
 }
 
