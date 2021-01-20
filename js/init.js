@@ -24,7 +24,6 @@ var moveCount = 0;
 //EVENT LISTENERS
 $(".deck").click(cycle);
 $("#reset").click(reset);
-// $("#reset").click(reset);
 
 function clearBoard() {
   board = {

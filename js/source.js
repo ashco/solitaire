@@ -158,15 +158,10 @@ function checkWin() {
     board.clubs.length === 13
   ) {
     $(".menu").html(
-      "<h2>Winner!</h2><h4>Congratulations on your well deserved and lonely victory!</h4>"
+      "<h2>Winner!</h2><h4>Congrats on your well deserved and lonely victory!</h4><button id='reset'>Reset</button>"
     );
   }
 }
-
-// function reset() {
-//   console.log("reload");
-//   location.reload();
-// }
 
 //adds event listener to columns
 function addClick() {

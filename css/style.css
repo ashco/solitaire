@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: "Rubik";
-  src: url("../fonts/Rubik-Medium.ttf") format("truetype");
+  src: url("../fonts/Rubik-Regular.ttf") format("truetype");
 }
 
 * {
@@ -52,7 +52,14 @@ button {
   border: 3px solid var(--white);
   background-color: hsl(0, 0%, 20%);
   color: var(--white);
-  font-weight: 600;
+}
+
+.drawn,
+.hearts,
+.diamonds,
+.spades,
+.clubs {
+  position: relative;
 }
 
 button:hover {

@@ -1,4 +1,5 @@
 //BOARD STATE IMAGES
+// handles updating top of deck image
 function deckImg() {
   if (board.deck.length === 0) {
     $(".deck").find("img").attr("src", "./img/extra/card_empty_black.png");
@@ -7,6 +8,7 @@ function deckImg() {
   }
 }
 
+// handles updating drawn card image
 function drawnImg() {
   if (board.drawn.length === 0) {
     $(".drawn").find("img").attr("src", "./img/extra/card_empty_black.png");
@@ -27,33 +29,11 @@ function drawnImg() {
   }
 }
 
-// function selectImg(focus) {
-//   console.log(focus);
-
-//   $(focus).addClass("selected");
-// }
-// function selectImg(focus) {
-//   var selectImg = $("<img>");
-//   var selectRow = board[startArr].length - 1;
-//   if (
-//     startArr === "drawn" ||
-//     startArr === "hearts" ||
-//     startArr === "diamonds" ||
-//     startArr === "spades" ||
-//     startArr === "clubs"
-//   ) {
-//     selectRow = 0;
-//   }
-//   selectImg
-//     .addClass("row" + selectRow + " selected")
-//     .attr("src", "./img/extra/card_selected.png")
-//     .click(deselect);
-//   // .attr("src", "./img/extra/card_selected.png");
-//   $(focus).parent().append(selectImg);
-// }
+// handles adding select element
 function selectImg(focus) {
   var selectImg = $("<div />");
-  var selectRow = board[startArr].length - 1;
+  var selectRow = board[startArr].indexOf(startNum);
+
   if (
     startArr === "drawn" ||
     startArr === "hearts" ||
@@ -63,11 +43,7 @@ function selectImg(focus) {
   ) {
     selectRow = 0;
   }
-  selectImg
-    .addClass("row" + selectRow + " selected")
-    // .attr("src", "./img/extra/card_selected.png")
-    .click(deselect);
-  // .attr("src", "./img/extra/card_selected.png");
+  selectImg.addClass("row" + selectRow + " selected").click(deselect);
   $(focus).parent().append(selectImg);
 }
 
