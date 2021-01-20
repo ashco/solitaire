@@ -6,6 +6,10 @@ Game Link: <a href="https://ashco.github.io/solitaire/">https://ashco.github.io/
 
 This project was the result of General Assembly's Web Development Immersive Unit 1 project to build a game using what we had learned in the course so far. It served as a great way to understand how Javascript can be used to create a product through small and specific funcitons. I ran into many challenges and subsequent eureka moments during this game's week long development.
 
+## UPDATE (Jan 19, 2020)
+
+Came back and gave this app a fresh coat of paint, so it is playing and looking much better now. It is still written in plain ol' JS and I'm dealing with the codebase of a 1 week old developer, so I can't make miracles out of it :P.
+
 ### Biggest Issues
 
 My biggest challange slapped me on the face on Day 5 when I realized the ability to move multiple cards at once (my final requirement before hitting MVP) would require very different logic to accomplish. After climbing out of GA's communal pit of dispair I ended up re-whiteboarding everything and making my code much cleaner and workable. A valuable lesson was learned and I will never ever ever put off fully thinking through how to solve a difficult problem just because it seems hard.
@@ -28,15 +32,15 @@ Click once to select, click again to move. Simple but addicting.
 
 There are a few things that I am still not satisifed about with this project. If I had more time I would want to fix/implement the the following:
 
-* If given the time I think I could rewrite a lot of the code logic and make the game cleaner / less prone to errors. Two main approaches I would try:
+- If given the time I think I could rewrite a lot of the code logic and make the game cleaner / less prone to errors. Two main approaches I would try:
   1.  Remove the blank card images and replace them with styled divs. The add/rmv image logic got kind of messy and I think some of it was because adding one card to an empty row kept the image count the same, requiring an if statement that caused more bugs than I care to admit.
   2.  Track the number of flipped cards through another variable. I currently determine which cards are face up with a ".flipped" class on each image. This can be confusing and would likely simplify a lot of things if it was tracked in a variable.
-* Add a legit reset button. I wanted to use a function to loop through and replace the images, but ran short on time and could not figure it out.
-* CSS Grid height is longer than I'd like but I couldn't figure out how to reduce it.
-* Selecting the top right suits cards causes the board to skip down a little to make room for the selector image.
-* Figure out how to DRY up the CSS.
-* Better CSS styling. I would like to take every chance I get to improve my CSS skills because they make a huge difference in how any product is perceived.
-* Add an option to play a harder 3 card draw mode.
-* Sound effects. Gotta appeal to the kids.
+- Add a legit reset button. I wanted to use a function to loop through and replace the images, but ran short on time and could not figure it out.
+- CSS Grid height is longer than I'd like but I couldn't figure out how to reduce it.
+- Selecting the top right suits cards causes the board to skip down a little to make room for the selector image.
+- Figure out how to DRY up the CSS.
+- Better CSS styling. I would like to take every chance I get to improve my CSS skills because they make a huge difference in how any product is perceived.
+- Add an option to play a harder 3 card draw mode.
+- Sound effects. Gotta appeal to the kids.
 
 Enjoy!
