@@ -32,8 +32,27 @@ function drawnImg() {
 
 //   $(focus).addClass("selected");
 // }
+// function selectImg(focus) {
+//   var selectImg = $("<img>");
+//   var selectRow = board[startArr].length - 1;
+//   if (
+//     startArr === "drawn" ||
+//     startArr === "hearts" ||
+//     startArr === "diamonds" ||
+//     startArr === "spades" ||
+//     startArr === "clubs"
+//   ) {
+//     selectRow = 0;
+//   }
+//   selectImg
+//     .addClass("row" + selectRow + " selected")
+//     .attr("src", "./img/extra/card_selected.png")
+//     .click(deselect);
+//   // .attr("src", "./img/extra/card_selected.png");
+//   $(focus).parent().append(selectImg);
+// }
 function selectImg(focus) {
-  var selectImg = $("<img>");
+  var selectImg = $("<div />");
   var selectRow = board[startArr].length - 1;
   if (
     startArr === "drawn" ||
@@ -46,7 +65,7 @@ function selectImg(focus) {
   }
   selectImg
     .addClass("row" + selectRow + " selected")
-    .attr("src", "./img/extra/card_selected.png")
+    // .attr("src", "./img/extra/card_selected.png")
     .click(deselect);
   // .attr("src", "./img/extra/card_selected.png");
   $(focus).parent().append(selectImg);

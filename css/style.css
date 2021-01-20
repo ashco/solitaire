@@ -12,6 +12,30 @@ body {
   color: var(--white);
   box-sizing: none;
   margin: 0;
+  background-color: #000000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg %3E%3Cpolygon fill='%230a0a0a' points='1600 160 0 460 0 350 1600 50'/%3E%3Cpolygon fill='%23141414' points='1600 260 0 560 0 450 1600 150'/%3E%3Cpolygon fill='%231f1f1f' points='1600 360 0 660 0 550 1600 250'/%3E%3Cpolygon fill='%23292929' points='1600 460 0 760 0 650 1600 350'/%3E%3Cpolygon fill='%23333333' points='1600 800 0 800 0 750 1600 450'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.overlay {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background-color: black;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+#logo {
+  z-index: 200;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 3rem;
 }
 
 button {
@@ -70,16 +94,7 @@ img,
   z-index: 100;
 }
 
-/* .deck {
-  grid-area: deck;
-}
-
-.drawn {
-  grid-area: drawn;
-} */
-
 .menu {
-  /* grid-area: menu; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -94,22 +109,6 @@ h4 {
 h2 {
   padding-top: 0.5rem;
 }
-
-/* .hearts {
-  grid-area: hearts;
-}
-
-.diamonds {
-  grid-area: diamonds;
-}
-
-.spades {
-  grid-area: spades;
-}
-
-.clubs {
-  grid-area: clubs;
-} */
 
 .row0 {
   position: absolute;
@@ -245,60 +244,39 @@ h2 {
 
 .col0 {
   position: relative;
-  /* grid-area: col0; */
 }
 
 .col1 {
   position: relative;
-  /* grid-area: col1; */
 }
 
 .col2 {
   position: relative;
-  /* grid-area: col2; */
 }
 
 .col3 {
   position: relative;
-  /* grid-area: col3; */
 }
 
 .col4 {
   position: relative;
-  /* grid-area: col4; */
 }
 
 .col5 {
   position: relative;
-  /* grid-area: col5; */
 }
 
 .col6 {
   position: relative;
-  /* grid-area: col6; */
 }
 
 .selected {
-  /* box-shadow: 0px 0px 3px 5px gold; */
-  /* display: none; */
   position: absolute;
-  /* -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; */
-  box-shadow: 0px 0px 5px 5px hsla(0, 100%, 57.6%, 0.75);
+  box-shadow: 0px 0px 5px 4px hsl(36.6, 96%, 60.8%);
+  height: 201px;
+  width: 129px;
+  margin: 1px;
 }
-
-/* @media screen and (max-width: 680px) {
-  .wrapper {
-    padding: 0.5rem;
-  }
-  .menu h2 {
-    font-size: 18px;
-  }
-} */
 
 @media screen and (max-width: 800px) {
   .wrapper {

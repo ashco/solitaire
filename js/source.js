@@ -163,10 +163,10 @@ function checkWin() {
   }
 }
 
-function reset() {
-  console.log("reload");
-  location.reload();
-}
+// function reset() {
+//   console.log("reload");
+//   location.reload();
+// }
 
 //adds event listener to columns
 function addClick() {

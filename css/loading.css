@@ -1,0 +1,68 @@
+#all {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 200px;
+  width: 200px;
+}
+
+.card {
+  position: absolute;
+  background-size: 152px 213px;
+  height: 212px;
+  width: 150px;
+  border-radius: 5px;
+  border: 5px solid var(--white);
+  /* box-shadow: 0px 0px 5px 1px var(--white); */
+}
+
+#card1 {
+  z-index: 1;
+  animation: a 1.5s 0.5s infinite;
+}
+#card2 {
+  animation: b 1.5s 0.5s infinite;
+}
+
+#text {
+  position: absolute;
+  top: 210px;
+  text-align: center;
+  z-index: 5;
+  width: 150px;
+  color: var(--white);
+  animation: c 2s infinite;
+  padding: 1.25rem 0;
+}
+
+@keyframes a {
+  0% {
+  }
+  30% {
+    transform: translateX(205px) rotate(70deg) rotateY(80deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes b {
+  0% {
+  }
+  100% {
+    z-index: 2;
+  }
+}
+@keyframes c {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
