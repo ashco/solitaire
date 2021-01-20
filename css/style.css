@@ -66,16 +66,20 @@ img,
 
 .wrapper {
   min-height: 100vh;
+  height: 1200px;
+  max-width: 960px;
+  margin: 0 auto;
+  border-left: 5px solid var(--white);
+  border-right: 5px solid var(--white);
+}
+
+main {
+  padding: 2em;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   grid-template-rows: 1fr auto;
   justify-content: flex-start;
-  padding: 2em;
-  max-width: 960px;
-  margin: 0 auto;
-  border-left: 5px solid var(--white);
-  border-right: 5px solid var(--white);
 }
 
 .top-row {
@@ -279,11 +283,17 @@ h2 {
 }
 
 @media screen and (max-width: 800px) {
-  .wrapper {
+  main {
     padding: 0.5rem;
   }
   .menu h2 {
     font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  #logo {
+    display: none;
   }
 }
 
